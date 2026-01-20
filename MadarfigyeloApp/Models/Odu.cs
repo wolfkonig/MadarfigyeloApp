@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MadarfigyeloApp.Models
 {
     public class Odu
     {
-        [Key]
         public int Id { get; set; }
 
         [DisplayName("Odú azonosító")]
@@ -23,11 +21,11 @@ namespace MadarfigyeloApp.Models
         public int BejaratiNyilasMm {  get; set; }
         
         [DisplayName("GPS hosszúság")]
-        [Precision(9, 6)]
+
         public Decimal GpsLatitude { get; set; }
         
         [DisplayName("GPS szélesség")]
-        [Precision(9, 6)]
+
         public Decimal GpsLongitude { get; set; }
         
         [DisplayName("Élőhelykód")]

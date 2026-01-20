@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace MadarfigyeloApp.Models
 {
     public class Odutelep
     {
-        [Key]
         public int Id { get; set; }
         [DisplayName("Azonosító")]
         public string Azonosito { get; set; }

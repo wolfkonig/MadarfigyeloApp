@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MadarfigyeloApp.Models;
+using Refit;
 
-namespace MadarfigyeloApp.API
+namespace MadarfigyeloApp.API;
+
+public interface IOdutelepApi
 {
-    internal interface IOdutelepApi
-    {
-    }
+    [Get("/Odutelep/{id}")]
+    Task<Odutelep> GetOdutelepAsync(int id);
+
+    [Get("/Odutelep")]
+    Task<List<Odutelep>> GetAllOdutelepAsync();
 }

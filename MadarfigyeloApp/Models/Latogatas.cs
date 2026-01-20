@@ -1,15 +1,12 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MadarfigyeloApp.Models
 {
     public class Latogatas
     {
-        [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Id")]
         public int OduId { get; set; }
 
         public Odu? Odu { get; set; }

@@ -43,7 +43,22 @@ namespace MadarfigyeloApp
 
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
-            builder.Services.AddSingleton(RestService.For<IOdutelepApi>(Constants.LocalBaseUrlHttps));
+
+#if DEBUG
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+            };
+#else
+            var handler = new HttpClientHandler();
+#endif
+
+            var httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri(Constants.LocalBaseUrlHttps)
+            };
+
+            builder.Services.AddSingleton(RestService.For<IOdutelepApi>(httpClient));
 
             return builder;
         }

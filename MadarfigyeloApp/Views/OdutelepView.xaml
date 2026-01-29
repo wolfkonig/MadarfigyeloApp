@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
+             xmlns:models="clr-namespace:MadarfigyeloApp.Models"
              x:Class="MadarfigyeloApp.Views.OdutelepView"
+             x:DataType="vm:OdutelepViewModel"
              Title="Odutelep">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <CollectionView ItemsSource="{Binding OdutelepList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Odutelep">
+                    <Grid ColumnDefinitions="*,*,*">
+                        <Label Text="{Binding Azonosito}"
+                               Grid.Column="0" />
+                        <Label Text="{Binding TeruletNev}"
+                               Grid.Column="1" />
+                        <Label Text="{Binding Telepules}"
+                               Grid.Column="2" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>

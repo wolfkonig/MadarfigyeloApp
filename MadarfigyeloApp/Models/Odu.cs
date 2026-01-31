@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MadarfigyeloApp.Models
 {
@@ -43,6 +44,7 @@ namespace MadarfigyeloApp.Models
         public string? OdutTartoNovenyfaj { get; set; }
         [DisplayName("Magasság (m)")]
         public string? MagassagMeter {  get; set; }
-        public ICollection<Latogatas>? Latogatas { get; set; }
+
+        public ICollection<Latogatas>? Latogatasok { get; set; }
      }
 }

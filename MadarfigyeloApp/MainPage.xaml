@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<pages:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
+             xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
              xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
              x:Class="MadarfigyeloApp.MainPage"
              x:DataType="vm:MainPageViewModel">
@@ -15,9 +16,7 @@
 
         <Label Grid.Row="0"
                Text="{x:Static res:AppRes.AppTitle}"
-               Style="{StaticResource Headline}"
-               SemanticProperties.HeadingLevel="Level1" />
-
+               Style="{StaticResource Headline}"/>
     </Grid>
 
-</ContentPage>
+</pages:BasePage>

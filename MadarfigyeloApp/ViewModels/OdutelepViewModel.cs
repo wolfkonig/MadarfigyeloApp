@@ -3,7 +3,7 @@ using MadarfigyeloApp.Models;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class OdutelepViewModel : ViewModelBase
+    public class OdutelepViewModel : BaseViewModel
     {
         private readonly IOdutelepApi _odutelepApi;
         private List<Odutelep> _odutelepList = [];
@@ -19,7 +19,7 @@ namespace MadarfigyeloApp.ViewModels
             _odutelepApi = odutelepApi ?? throw new ArgumentNullException(nameof(odutelepApi));
         }
 
-        public async Task Init()
+        public override async Task InitAsync()
         {
             OdutelepList = await _odutelepApi.GetAllOdutelepAsync();
         }

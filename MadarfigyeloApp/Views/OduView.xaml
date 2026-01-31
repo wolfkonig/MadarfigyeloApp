@@ -5,14 +5,14 @@
                 xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
                 xmlns:models="clr-namespace:MadarfigyeloApp.Models"
                 xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
-                x:Class="MadarfigyeloApp.Views.OdutelepView"
-                x:DataType="vm:OdutelepViewModel"
-                Title="Odutelep">
+                x:Class="MadarfigyeloApp.Views.OduView"
+                x:DataType="vm:OduViewModel"
+                Title="Odu">
 
     <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding OdutelepList}">
+        <CollectionView ItemsSource="{Binding OduList}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Odutelep">
+                <DataTemplate x:DataType="models:Odu">
                     <Border Background="{StaticResource Secondary }"
                             HorizontalOptions="Fill"
                             Margin="5,5,5,0"
@@ -22,13 +22,13 @@
                             <toolkit:Expander.Header>
                                 <Grid ColumnDefinitions="*,*,*"
                                       RowDefinitions="30">
-                                    <Label Text="{Binding Azonosito}"
+                                    <Label Text="{Binding OduAzonosito}"
                                            Grid.Column="0"
                                            Style="{StaticResource ListTextHeader}" />
-                                    <Label Text="{Binding TeruletNev}"
+                                    <Label Text="{Binding Odutelep.Azonosito}"                                           
                                            Grid.Column="1"
                                            Style="{StaticResource ListTextHeader}" />
-                                    <Label Text="{Binding Telepules}"
+                                    <Label Text="{Binding OduTipus}"
                                            Grid.Column="2"
                                            Style="{StaticResource ListTextHeader}" />
                                 </Grid>
@@ -36,36 +36,45 @@
 
                             <Grid ColumnDefinitions="*,*,*"
                                   RowDefinitions="30,30,30">
-                                <Label Text="{Binding UtmNegyzetKod}"
+                                <Label Text="{Binding GpsLatitude}"
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Style="{StaticResource ListText}" />
-                                <Label Text="{Binding KezeloSzervezetNev}"
+                                <Label Text="{Binding GpsLongitude}"
                                        Grid.Column="1"
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />                             
-                                <Label Text="{Binding FelelosSzemelyNev}"
+                                <Label Text="{Binding BejaratiNyilasMm}"
                                        Grid.Column="2"
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />
                                 
-                                <Label Text="{Binding FelelosSzemelyCim}"
+                                <Label Text="{Binding Elohelykod}"
                                        Grid.Column="0"
                                        Grid.Row="1"
-                                       Grid.ColumnSpan="2"
                                        Style="{StaticResource ListText}" />
                                 
-                                <Label Text="{Binding FelelosSzemelyEmail}"
-                                       Grid.Column="3"
+                                <Label Text="{Binding MireVanHelyezve}"
+                                       Grid.Column="1"
                                        Grid.Row="1"
                                        Style="{StaticResource ListText}" />
                                 
-                                <Label Text="{Binding FelelosSzemelyTelefonszam}"
+                                <Label Text="{Binding FelhelyezesModja}"
+                                       Grid.Column="2"
+                                       Grid.Row="1"
+                                       Style="{StaticResource ListText}" />
+                                
+                                <Label Text="{Binding OduTajolasa}"
+                                       Grid.Column="0"
+                                       Grid.Row="2"
+                                       Style="{StaticResource ListText}" />
+
+                                <Label Text="{Binding OdutTartoNovenyfaj}"
                                        Grid.Column="1"
                                        Grid.Row="2"
                                        Style="{StaticResource ListText}" />
-                                
-                                <Label Text="{Binding Megjegyzes}"
+
+                                <Label Text="{Binding MagassagMeter}"
                                        Grid.Column="2"
                                        Grid.Row="2"
                                        Style="{StaticResource ListText}" />

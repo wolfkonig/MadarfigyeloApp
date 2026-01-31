@@ -2,9 +2,9 @@ using MadarfigyeloApp.ViewModels;
 
 namespace MadarfigyeloApp.Views;
 
-public partial class OdutelepView : BasePage
+public partial class OduView : BasePage
 {
-	public OdutelepView(OdutelepViewModel vm) : base(vm)
+	public OduView(OduViewModel vm) : base(vm)
 	{		
 		InitializeComponent();       
     }

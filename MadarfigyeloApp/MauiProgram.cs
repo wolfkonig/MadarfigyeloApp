@@ -1,4 +1,5 @@
-﻿using MadarfigyeloApp.API;
+﻿using CommunityToolkit.Maui;
+using MadarfigyeloApp.API;
 using MadarfigyeloApp.ViewModels;
 using MadarfigyeloApp.Views;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,7 @@ namespace MadarfigyeloApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -37,7 +39,10 @@ namespace MadarfigyeloApp
 
         private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
         {
+            builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<OdutelepViewModel>();
+            builder.Services.AddTransient<OduViewModel>();
+            builder.Services.AddTransient<LatogatasViewModel>();
             return builder;
         }
 
@@ -47,9 +52,11 @@ namespace MadarfigyeloApp
 #if DEBUG
             var handler = new HttpClientHandler
             {
+                // http client handler for DEBUG only - accepts any certificate
                 ServerCertificateCustomValidationCallback = (_, _, _, _) => true
             };
 #else
+            // TODO
             var handler = new HttpClientHandler();
 #endif
 
@@ -59,6 +66,8 @@ namespace MadarfigyeloApp
             };
 
             builder.Services.AddSingleton(RestService.For<IOdutelepApi>(httpClient));
+            builder.Services.AddSingleton(RestService.For<IOduApi>(httpClient));
+            builder.Services.AddSingleton(RestService.For<ILatogatasApi>(httpClient));
 
             return builder;
         }

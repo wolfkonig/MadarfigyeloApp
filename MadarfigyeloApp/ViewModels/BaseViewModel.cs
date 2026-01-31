@@ -3,7 +3,8 @@
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public abstract class ViewModelBase : ObservableObject
+    public abstract class BaseViewModel : ObservableObject
     {
+        public abstract Task InitAsync();
     }
 }

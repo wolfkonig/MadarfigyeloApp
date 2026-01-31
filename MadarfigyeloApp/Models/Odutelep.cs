@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace MadarfigyeloApp.Models
 {
@@ -25,7 +26,7 @@ namespace MadarfigyeloApp.Models
         public string? FelelosSzemelyEmail { get; set; }
         [DisplayName("Megjegyzés")]
         public string? Megjegyzes { get; set; }
-
+        [JsonIgnore]
         public ICollection<Odu>? Oduk {  get; set; }
     }
 }

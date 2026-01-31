@@ -5,7 +5,10 @@
        xmlns:local="clr-namespace:MadarfigyeloApp"
        xmlns:views="clr-namespace:MadarfigyeloApp.Views"
        xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
+       BackgroundColor="{StaticResource Primary}"
+       FlyoutBackgroundColor="{StaticResource Primary}"
        Title="MadarfigyeloApp">
+    
     <TabBar>
         <ShellContent Title="{x:Static res:AppRes.Home}"
                       ContentTemplate="{DataTemplate local:MainPage}"
@@ -16,5 +19,15 @@
                       ContentTemplate="{DataTemplate views:OdutelepView}"
                       Route="odutelep"
                       Icon="bird_house.svg"/>
+
+        <ShellContent Title="{x:Static res:AppRes.Oduk}"
+                      ContentTemplate="{DataTemplate views:OduView}"
+                      Route="odu"
+                      Icon="bird_nest_tree.svg" />
+        
+        <ShellContent Title="{x:Static res:AppRes.Latogatasok}"
+                      ContentTemplate="{DataTemplate views:LatogatasView}"
+                      Route="latogatas"
+                      Icon="nest_with_eggs.svg" />
     </TabBar>
 </Shell>

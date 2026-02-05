@@ -65,6 +65,7 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+        <Setter Property="Margin" Value="5"/>
     </Style>
 
     <Style TargetType="CheckBox">

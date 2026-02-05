@@ -1,4 +1,6 @@
-﻿using MadarfigyeloApp.API;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Mvvm.Input;
+using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
 
 namespace MadarfigyeloApp.ViewModels
@@ -11,21 +13,25 @@ namespace MadarfigyeloApp.ViewModels
         private List<Odu> _oduList = [];
         private List<Odutelep> _odutelepList = [];
 
-
         public List<Odu> OduList
         {
             get => _oduList;
             set => SetProperty(ref _oduList, value);
         }
 
+        public AsyncRelayCommand NewOduCommand { get; private set; }
+
         public OduViewModel(IOduApi oduApi, IOdutelepApi odutelepApi)
         {
             _oduApi = oduApi ?? throw new ArgumentNullException(nameof(oduApi));
             _odutelepApi = odutelepApi ?? throw new ArgumentException(nameof(odutelepApi));
+
+            NewOduCommand = new (NewOdu);
         }
 
         public override async Task InitAsync()
         {
+            IsBusy = true;
             _odutelepList = await _odutelepApi.GetAllOdutelepAsync();
 
             var oduk = await _oduApi.GetAllOduAsync();
@@ -35,6 +41,15 @@ namespace MadarfigyeloApp.ViewModels
             }
 
             OduList = oduk;
+            IsBusy = false;
+        }
+
+        private async Task NewOdu()
+        {
+            IsBusy = true;
+            // TODO
+            await Task.Delay(5000);
+            IsBusy = false;
         }
     }
 }

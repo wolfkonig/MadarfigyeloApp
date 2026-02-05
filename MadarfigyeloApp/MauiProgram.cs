@@ -48,26 +48,30 @@ namespace MadarfigyeloApp
 
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
+            //var handler = new HttpClientHandler
+            //{
+            //    // http client handler for DEBUG only - accepts any certificate
+            //    ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+            //};
+            //var httpClient = new HttpClient(handler)
+            //{
+            //    BaseAddress = new Uri(Constants.BaseUrlHttp),
+            //};
+            //builder.Services.AddSingleton(RestService.For<IOdutelepApi>(httpClient));
+            //builder.Services.AddSingleton(RestService.For<IOduApi>(httpClient));
+            //builder.Services.AddSingleton(RestService.For<ILatogatasApi>(httpClient));
 
-#if DEBUG
-            var handler = new HttpClientHandler
-            {
-                // http client handler for DEBUG only - accepts any certificate
-                ServerCertificateCustomValidationCallback = (_, _, _, _) => true
-            };
-#else
-            // TODO
-            var handler = new HttpClientHandler();
-#endif
+            builder.Services.AddTransient<BasicAuthHandler>();
 
-            var httpClient = new HttpClient(handler)
-            {
-                BaseAddress = new Uri(Constants.LocalBaseUrlHttps)
-            };
-
-            builder.Services.AddSingleton(RestService.For<IOdutelepApi>(httpClient));
-            builder.Services.AddSingleton(RestService.For<IOduApi>(httpClient));
-            builder.Services.AddSingleton(RestService.For<ILatogatasApi>(httpClient));
+            builder.Services.AddRefitClient<IOdutelepApi>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
+                .AddHttpMessageHandler<BasicAuthHandler>();
+            builder.Services.AddRefitClient<IOduApi>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
+                .AddHttpMessageHandler<BasicAuthHandler>();
+            builder.Services.AddRefitClient<ILatogatasApi>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
+                .AddHttpMessageHandler<BasicAuthHandler>();
 
             return builder;
         }

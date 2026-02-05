@@ -5,12 +5,14 @@
                 xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
                 xmlns:models="clr-namespace:MadarfigyeloApp.Models"
                 xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
+                xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.OduView"
                 x:DataType="vm:OduViewModel"
                 Title="Odu">
 
-    <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding OduList}">
+    <Grid RowDefinitions="*,50">
+        <CollectionView ItemsSource="{Binding OduList}"
+                        Grid.Row="0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Odu">
                     <Border Background="{StaticResource Secondary }"
@@ -84,5 +86,10 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+
+        <Button Text="{x:Static res:AppRes.UjOdu}"
+                Command="{Binding NewOduCommand}"
+                Grid.Row="1"/>
+
+    </Grid>
 </pages:BasePage>

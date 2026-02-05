@@ -88,6 +88,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Betöltés....
+        /// </summary>
+        internal static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odúk.
         /// </summary>
         internal static string Oduk {
@@ -102,6 +111,33 @@ namespace MadarfigyeloApp.Resources {
         internal static string Odutelepek {
             get {
                 return ResourceManager.GetString("Odutelepek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Új Látogatás.
+        /// </summary>
+        internal static string UjLatogatas {
+            get {
+                return ResourceManager.GetString("UjLatogatas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Új odú.
+        /// </summary>
+        internal static string UjOdu {
+            get {
+                return ResourceManager.GetString("UjOdu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Új odútelep.
+        /// </summary>
+        internal static string UjOdutelep {
+            get {
+                return ResourceManager.GetString("UjOdutelep", resourceCulture);
             }
         }
     }

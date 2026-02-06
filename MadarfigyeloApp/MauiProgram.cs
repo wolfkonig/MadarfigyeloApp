@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using MadarfigyeloApp.API;
+using MadarfigyeloApp.Services;
 using MadarfigyeloApp.ViewModels;
 using MadarfigyeloApp.Views;
 using Microsoft.Extensions.Logging;
@@ -21,8 +22,7 @@ namespace MadarfigyeloApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 })
                 .RegisterServices()
-                .RegisterViewModels()
-                .RegisterViews();
+                .RegisterViewModels();
 
 #if DEBUG
             builder.Logging.AddDebug();
@@ -31,18 +31,21 @@ namespace MadarfigyeloApp
             return builder.Build();
         }
 
-        private static MauiAppBuilder RegisterViews(this MauiAppBuilder builder)
-        {
-            builder.Services.AddTransient<OdutelepView>();
-            return builder;
-        }
-
         private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
         {
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<OdutelepViewModel>();
             builder.Services.AddTransient<OduViewModel>();
             builder.Services.AddTransient<LatogatasViewModel>();
+            builder.Services.AddTransient<NewOdutelepViewModel>();
+            builder.Services.AddTransient<NewOduViewModel>();
+            builder.Services.AddTransient<NewLatogatasViewModel>();
+
+
+            builder.Services.AddTransientWithShellRoute<NewOdutelepView, NewOdutelepViewModel>(Constants.RouteNewOdutelep);
+            builder.Services.AddTransientWithShellRoute<NewOduView, NewOduViewModel>(Constants.RouteNewOdu);
+            builder.Services.AddTransientWithShellRoute<NewLatogatasView, NewLatogatasViewModel>(Constants.RouteNewLatogatas);
+
             return builder;
         }
 
@@ -62,6 +65,7 @@ namespace MadarfigyeloApp
             //builder.Services.AddSingleton(RestService.For<ILatogatasApi>(httpClient));
 
             builder.Services.AddTransient<BasicAuthHandler>();
+            builder.Services.AddSingleton<INavigationService,ShellNavigationService>();
 
             builder.Services.AddRefitClient<IOdutelepApi>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))

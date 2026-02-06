@@ -61,6 +61,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Állapot.
+        /// </summary>
+        internal static string Allapot {
+            get {
+                return ResourceManager.GetString("Allapot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Madárfigyelő.
         /// </summary>
         internal static string AppTitle {
@@ -70,11 +79,218 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Azonosító.
+        /// </summary>
+        internal static string Azonosito {
+            get {
+                return ResourceManager.GetString("Azonosito", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bejárati nyílás (mm).
+        /// </summary>
+        internal static string BejaratiNyilasMm {
+            get {
+                return ResourceManager.GetString("BejaratiNyilasMm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mégsem.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csere.
+        /// </summary>
+        internal static string Csere {
+            get {
+                return ResourceManager.GetString("Csere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dátum.
+        /// </summary>
+        internal static string Datum {
+            get {
+                return ResourceManager.GetString("Datum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ellenőrzés.
+        /// </summary>
+        internal static string Ellenorzes {
+            get {
+                return ResourceManager.GetString("Ellenorzes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Élőhelykód.
+        /// </summary>
+        internal static string Elohelykod {
+            get {
+                return ResourceManager.GetString("Elohelykod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faj.
+        /// </summary>
+        internal static string Faj {
+            get {
+                return ResourceManager.GetString("Faj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felelős személy cím.
+        /// </summary>
+        internal static string FelelosSzemelyCim {
+            get {
+                return ResourceManager.GetString("FelelosSzemelyCim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felelős személy email.
+        /// </summary>
+        internal static string FelelosSzemelyEmail {
+            get {
+                return ResourceManager.GetString("FelelosSzemelyEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felelős személy név.
+        /// </summary>
+        internal static string FelelosSzemelyNev {
+            get {
+                return ResourceManager.GetString("FelelosSzemelyNev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felelős személy telefonszám.
+        /// </summary>
+        internal static string FelelosSzemelyTelefonszam {
+            get {
+                return ResourceManager.GetString("FelelosSzemelyTelefonszam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felhelyezés módja.
+        /// </summary>
+        internal static string FelhelyezesModja {
+            get {
+                return ResourceManager.GetString("FelhelyezesModja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fészekanyag van.
+        /// </summary>
+        internal static string FeszekanyagVan {
+            get {
+                return ResourceManager.GetString("FeszekanyagVan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiókák kora.
+        /// </summary>
+        internal static string FiokakKora {
+            get {
+                return ResourceManager.GetString("FiokakKora", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiókák vannak.
+        /// </summary>
+        internal static string FiokakVannak {
+            get {
+                return ResourceManager.GetString("FiokakVannak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiókaszám.
+        /// </summary>
+        internal static string FiokaSzam {
+            get {
+                return ResourceManager.GetString("FiokaSzam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPS szélesség.
+        /// </summary>
+        internal static string GpsLatitude {
+            get {
+                return ResourceManager.GetString("GpsLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPS hosszúság.
+        /// </summary>
+        internal static string GpsLongitude {
+            get {
+                return ResourceManager.GetString("GpsLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gyűrűzés.
+        /// </summary>
+        internal static string Gyuruzes {
+            get {
+                return ResourceManager.GetString("Gyuruzes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kezdőlap.
         /// </summary>
         internal static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kezelő szervezet név.
+        /// </summary>
+        internal static string KezeloSzervezetNev {
+            get {
+                return ResourceManager.GetString("KezeloSzervezetNev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kihelyezés.
+        /// </summary>
+        internal static string Kihelyezes {
+            get {
+                return ResourceManager.GetString("Kihelyezes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Látogatás.
+        /// </summary>
+        internal static string Latogatas {
+            get {
+                return ResourceManager.GetString("Latogatas", resourceCulture);
             }
         }
         
@@ -97,6 +313,78 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Magasság (m).
+        /// </summary>
+        internal static string MagassagMeter {
+            get {
+                return ResourceManager.GetString("MagassagMeter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megjegyzés.
+        /// </summary>
+        internal static string Megjegyzes {
+            get {
+                return ResourceManager.GetString("Megjegyzes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megjegyzések.
+        /// </summary>
+        internal static string Megjegyzesek {
+            get {
+                return ResourceManager.GetString("Megjegyzesek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üzenet.
+        /// </summary>
+        internal static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mire van helyezve.
+        /// </summary>
+        internal static string MireVanHelyezve {
+            get {
+                return ResourceManager.GetString("MireVanHelyezve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nem madár lakja.
+        /// </summary>
+        internal static string NemMadarLakja {
+            get {
+                return ResourceManager.GetString("NemMadarLakja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odú.
+        /// </summary>
+        internal static string Odu {
+            get {
+                return ResourceManager.GetString("Odu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odúazonosító.
+        /// </summary>
+        internal static string OduAzonosito {
+            get {
+                return ResourceManager.GetString("OduAzonosito", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odúk.
         /// </summary>
         internal static string Oduk {
@@ -106,11 +394,137 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Odúk.
+        /// </summary>
+        internal static string Oduk1 {
+            get {
+                return ResourceManager.GetString("Oduk1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odú tájolása.
+        /// </summary>
+        internal static string OduTajolasa {
+            get {
+                return ResourceManager.GetString("OduTajolasa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odútelep.
+        /// </summary>
+        internal static string Odutelep {
+            get {
+                return ResourceManager.GetString("Odutelep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odútelepek.
         /// </summary>
         internal static string Odutelepek {
             get {
                 return ResourceManager.GetString("Odutelepek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odútípus.
+        /// </summary>
+        internal static string OduTipus {
+            get {
+                return ResourceManager.GetString("OduTipus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odút tartó növényfaj.
+        /// </summary>
+        internal static string OdutTartoNovenyfaj {
+            get {
+                return ResourceManager.GetString("OdutTartoNovenyfaj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mentés.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takarítás.
+        /// </summary>
+        internal static string Takaritas {
+            get {
+                return ResourceManager.GetString("Takaritas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Település.
+        /// </summary>
+        internal static string Telepules {
+            get {
+                return ResourceManager.GetString("Telepules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terepnapló.
+        /// </summary>
+        internal static string Terepnaplo {
+            get {
+                return ResourceManager.GetString("Terepnaplo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Területnév.
+        /// </summary>
+        internal static string TeruletNev {
+            get {
+                return ResourceManager.GetString("TeruletNev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tevékenység.
+        /// </summary>
+        internal static string Tevekenyseg {
+            get {
+                return ResourceManager.GetString("Tevekenyseg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tojások vannak.
+        /// </summary>
+        internal static string TojasokVannak {
+            get {
+                return ResourceManager.GetString("TojasokVannak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tojásszám.
+        /// </summary>
+        internal static string TojasSzam {
+            get {
+                return ResourceManager.GetString("TojasSzam", resourceCulture);
             }
         }
         
@@ -138,6 +552,24 @@ namespace MadarfigyeloApp.Resources {
         internal static string UjOdutelep {
             get {
                 return ResourceManager.GetString("UjOdutelep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üres odú.
+        /// </summary>
+        internal static string UresOdu {
+            get {
+                return ResourceManager.GetString("UresOdu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UTM négyzetkód.
+        /// </summary>
+        internal static string UtmNegyzetKod {
+            get {
+                return ResourceManager.GetString("UtmNegyzetKod", resourceCulture);
             }
         }
     }

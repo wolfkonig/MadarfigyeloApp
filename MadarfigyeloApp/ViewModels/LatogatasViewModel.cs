@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Services;
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -20,7 +21,7 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _latogatasList, value);
         }
 
-        public LatogatasViewModel(ILatogatasApi latogatasApi, IOduApi oduApi)
+        public LatogatasViewModel(ILatogatasApi latogatasApi, IOduApi oduApi, INavigationService navigationService) : base(navigationService)
         {
             _latogatasApi = latogatasApi ?? throw new ArgumentNullException(nameof(latogatasApi));
             _oduApi = oduApi ?? throw new ArgumentNullException(nameof(oduApi));
@@ -29,7 +30,6 @@ namespace MadarfigyeloApp.ViewModels
 
         public override async Task InitAsync()
         {
-            IsBusy = true;
             _oduList = await _oduApi.GetAllOduAsync();
             var latogatasok = await _latogatasApi.GetAllLatogatasAsync();
             foreach(var latogatas in latogatasok)
@@ -37,15 +37,11 @@ namespace MadarfigyeloApp.ViewModels
                 latogatas.Odu = _oduList.FirstOrDefault(x => x.Id == latogatas.OduId);
             }
             LatogatasList = latogatasok;
-            IsBusy = false;
         }
 
         private async Task NewLatogatas()
         {
-            IsBusy = true;
-            // TODO
-            await Task.Delay(5000);
-            IsBusy = false;
+            await _navigationService.GoToAsync(Constants.RouteNewLatogatas);
         }
     }
 }

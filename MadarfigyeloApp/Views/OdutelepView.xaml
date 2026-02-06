@@ -8,7 +8,7 @@
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.OdutelepView"
                 x:DataType="vm:OdutelepViewModel"
-                Title="Odutelep">
+                Title="{x:Static res:AppRes.Odutelepek}">
     <Grid RowDefinitions="*,50">
         <CollectionView ItemsSource="{Binding OdutelepList}"
                         Grid.Row="0">

@@ -72,6 +72,15 @@
 	  <Compile Update="Views\LatogatasView.xaml.cs">
 	    <DependentUpon>LatogatasView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\NewLatogatasView.xaml.cs">
+	    <DependentUpon>NewLatogatasView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\NewOduView.xaml.cs">
+	    <DependentUpon>NewOduView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\NewOdutelepView.xaml.cs">
+	    <DependentUpon>NewOdutelepView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\OduView.xaml.cs">
 	    <DependentUpon>OduView.xaml</DependentUpon>
 	  </Compile>
@@ -92,6 +101,15 @@
 	    <Generator></Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LatogatasView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NewLatogatasView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NewOduView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NewOdutelepView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\OduView.xaml">

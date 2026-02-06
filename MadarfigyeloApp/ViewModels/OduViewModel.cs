@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Services;
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -21,7 +22,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public AsyncRelayCommand NewOduCommand { get; private set; }
 
-        public OduViewModel(IOduApi oduApi, IOdutelepApi odutelepApi)
+        public OduViewModel(IOduApi oduApi, IOdutelepApi odutelepApi, INavigationService navigationService) : base(navigationService)
         {
             _oduApi = oduApi ?? throw new ArgumentNullException(nameof(oduApi));
             _odutelepApi = odutelepApi ?? throw new ArgumentException(nameof(odutelepApi));
@@ -31,7 +32,6 @@ namespace MadarfigyeloApp.ViewModels
 
         public override async Task InitAsync()
         {
-            IsBusy = true;
             _odutelepList = await _odutelepApi.GetAllOdutelepAsync();
 
             var oduk = await _oduApi.GetAllOduAsync();
@@ -41,15 +41,11 @@ namespace MadarfigyeloApp.ViewModels
             }
 
             OduList = oduk;
-            IsBusy = false;
         }
 
         private async Task NewOdu()
         {
-            IsBusy = true;
-            // TODO
-            await Task.Delay(5000);
-            IsBusy = false;
+            await _navigationService.GoToAsync(Constants.RouteNewOdu);
         }
     }
 }

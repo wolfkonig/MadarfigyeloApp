@@ -8,7 +8,7 @@
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.LatogatasView"
                 x:DataType="vm:LatogatasViewModel"
-                Title="Odu">
+                Title="{x:Static res:AppRes.Latogatasok}">
 
     <Grid RowDefinitions="*,50">
         <CollectionView ItemsSource="{Binding LatogatasList}" 

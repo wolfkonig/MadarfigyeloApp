@@ -8,7 +8,7 @@
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.OduView"
                 x:DataType="vm:OduViewModel"
-                Title="Odu">
+                Title="{x:Static res:AppRes.Oduk}">
 
     <Grid RowDefinitions="*,50">
         <CollectionView ItemsSource="{Binding OduList}"

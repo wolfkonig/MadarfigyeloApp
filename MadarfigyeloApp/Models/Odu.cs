@@ -8,41 +8,29 @@ namespace MadarfigyeloApp.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("Odú azonosító")]
-        public string OduAzonosito { get; set; }
+        public string? OduAzonosito { get; set; }
 
-        [ForeignKey("Id")]
         public int OdutelepId { get; set; }
         public Odutelep? Odutelep { get; set; }
 
-        [DisplayName("Odú típus")]
-        public string OduTipus {  get; set; }
+        public string? OduTipus {  get; set; }
         
-        [DisplayName("Bejárati nyílás átmérője (mm)")]
         public int BejaratiNyilasMm {  get; set; }
-        
-        [DisplayName("GPS hosszúság")]
 
         public Decimal GpsLatitude { get; set; }
         
-        [DisplayName("GPS szélesség")]
-
         public Decimal GpsLongitude { get; set; }
-        
-        [DisplayName("Élőhelykód")]
+
         public string? Elohelykod {  get; set; }
         
-        [DisplayName("Mire van helyezve")]
         public string? MireVanHelyezve { get; set; }
         
-        [DisplayName("Felhelyezés módja")]
         public string? FelhelyezesModja { get; set; }
         
-        [DisplayName("Odú tájolása")]
         public string? OduTajolasa { get; set; }
-        [DisplayName("Odút tartó növényfaj")]
+
         public string? OdutTartoNovenyfaj { get; set; }
-        [DisplayName("Magasság (m)")]
+
         public string? MagassagMeter {  get; set; }
 
         public ICollection<Latogatas>? Latogatasok { get; set; }

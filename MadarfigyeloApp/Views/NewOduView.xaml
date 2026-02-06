@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
+                xmlns:models="clr-namespace:MadarfigyeloApp.Models"
+                xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
+                xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
+                x:Class="MadarfigyeloApp.Views.NewOduView"
+                x:DataType="vm:NewOduViewModel"
+                Title="Odutelep">
+
+    <ScrollView>
+        <Grid Padding="20"
+              ColumnSpacing="15"
+              RowSpacing="10"
+              ColumnDefinitions="Auto, *"
+              RowDefinitions="*, *, *, *, *, *, *, *, *, *, *, *, *">
+
+            <Label Text="{x:Static res:AppRes.Odutelep}"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Picker Grid.Row="0"
+                    Grid.Column="1"
+                    ItemsSource="{Binding Odutelepek}"
+                    SelectedItem="{Binding SelectedOdutelep}"
+                    ItemDisplayBinding="{Binding Azonosito}" />
+
+            <Label Text="{x:Static res:AppRes.OduAzonosito}"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding OduAzonosito}"
+                   Grid.Row="1"
+                   Grid.Column="1" />
+
+            <Label Text="{x:Static res:AppRes.OduTipus}"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding OduTipus}"
+                   Grid.Row="2"
+                   Grid.Column="1" />
+
+            <Label Text="{x:Static res:AppRes.BejaratiNyilasMm}"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding BejaratiNyilasMm}"
+                   Grid.Row="3"
+                   Grid.Column="1"
+                   Keyboard="Numeric" />
+
+            <Label Text="{x:Static res:AppRes.GpsLatitude}"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding GpsLatitude}"
+                   Grid.Row="4"
+                   Grid.Column="1"
+                   Keyboard="Numeric" />
+
+            <Label Text="{x:Static res:AppRes.GpsLongitude}"
+                   Grid.Row="5"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding GpsLongitude}"
+                   Grid.Row="5"
+                   Grid.Column="1"
+                   Keyboard="Numeric" />
+
+            <Label Text="{x:Static res:AppRes.Elohelykod}"
+                   Grid.Row="6"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding Elohelykod}"
+                   Grid.Row="6"
+                   Grid.Column="1" />
+
+            <Label Text="{x:Static res:AppRes.MireVanHelyezve}"
+                   Grid.Row="7"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding MireVanHelyezve}"
+                   Grid.Row="7"
+                   Grid.Column="1" />
+
+            <Label Text="{x:Static res:AppRes.FelhelyezesModja}"
+                   Grid.Row="8"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding FelhelyezesModja}"
+                   Grid.Row="8"
+                   Grid.Column="1" />
+
+            <Label Text="{x:Static res:AppRes.OduTajolasa}"
+                   Grid.Row="9"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding OduTajolasa}"
+                   Grid.Row="9"
+                   Grid.Column="1" />
+
+            <Label Text="{x:Static res:AppRes.OdutTartoNovenyfaj}"
+                   Grid.Row="10"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding OdutTartoNovenyfaj}"
+                   Grid.Row="10"
+                   Grid.Column="1" />
+
+            <Label Text="{x:Static res:AppRes.MagassagMeter}"
+                   Grid.Row="11"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            <Entry Text="{Binding MagassagMeter}"
+                   Grid.Row="11"
+                   Grid.Column="1"
+                   Keyboard="Numeric" />
+
+            <Button Text="{x:Static res:AppRes.Save}"
+                    Grid.Row="12"
+                    Grid.ColumnSpan="2"
+                    Margin="0,20,0,0"
+                    Command="{Binding SaveCommand}" />
+        </Grid>
+    </ScrollView>
+
+</pages:BasePage>

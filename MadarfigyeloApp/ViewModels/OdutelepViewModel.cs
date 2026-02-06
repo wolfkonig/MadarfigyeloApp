@@ -1,13 +1,14 @@
-﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Services;
 
 namespace MadarfigyeloApp.ViewModels
 {
     public class OdutelepViewModel : BaseViewModel
     {
         private readonly IOdutelepApi _odutelepApi;
+
         private List<Odutelep> _odutelepList = [];
 
         public AsyncRelayCommand NewOdutelepCommand { get; private set; }
@@ -18,25 +19,22 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _odutelepList, value);
         }
 
-        public OdutelepViewModel(IOdutelepApi odutelepApi, IPopupService popupService)
+        public OdutelepViewModel(IOdutelepApi odutelepApi, INavigationService navigation, INavigationService navigationService) : base(navigationService)
         {
             _odutelepApi = odutelepApi ?? throw new ArgumentNullException(nameof(odutelepApi));
+            _navigationService = navigation ?? throw new ArgumentNullException(nameof(navigation));
+
             NewOdutelepCommand = new(NewOdutelep);
         }
 
         public override async Task InitAsync()
         {
-            IsBusy = true;
             OdutelepList = await _odutelepApi.GetAllOdutelepAsync();
-            IsBusy = false; 
         }
 
         private async Task NewOdutelep()
         {
-            IsBusy = true;
-            // TODO
-            await Task.Delay(5000);
-            IsBusy = false;
+            await _navigationService.GoToAsync(Constants.RouteNewOdutelep);
         }
     }
 }

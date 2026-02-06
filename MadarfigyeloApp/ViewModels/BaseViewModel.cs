@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MadarfigyeloApp.Services;
 
 
 namespace MadarfigyeloApp.ViewModels
@@ -6,6 +7,13 @@ namespace MadarfigyeloApp.ViewModels
     public abstract class BaseViewModel : ObservableObject
     {
         private bool _isBusy;
+
+        protected INavigationService _navigationService;
+
+        public BaseViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+        }
 
         public bool IsBusy 
         { 

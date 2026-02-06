@@ -144,4 +144,148 @@
   <data name="Loading" xml:space="preserve">
     <value>Betöltés...</value>
   </data>
+  <data name="Allapot" xml:space="preserve">
+    <value>Állapot</value>
+  </data>
+  <data name="Azonosito" xml:space="preserve">
+    <value>Azonosító</value>
+  </data>
+  <data name="BejaratiNyilasMm" xml:space="preserve">
+    <value>Bejárati nyílás (mm)</value>
+  </data>
+  <data name="Datum" xml:space="preserve">
+    <value>Dátum</value>
+  </data>
+  <data name="Elohelykod" xml:space="preserve">
+    <value>Élőhelykód</value>
+  </data>
+  <data name="Faj" xml:space="preserve">
+    <value>Faj</value>
+  </data>
+  <data name="FelelosSzemelyCim" xml:space="preserve">
+    <value>Felelős személy cím</value>
+  </data>
+  <data name="FelelosSzemelyEmail" xml:space="preserve">
+    <value>Felelős személy email</value>
+  </data>
+  <data name="FelelosSzemelyNev" xml:space="preserve">
+    <value>Felelős személy név</value>
+  </data>
+  <data name="FelelosSzemelyTelefonszam" xml:space="preserve">
+    <value>Felelős személy telefonszám</value>
+  </data>
+  <data name="FelhelyezesModja" xml:space="preserve">
+    <value>Felhelyezés módja</value>
+  </data>
+  <data name="FiokaSzam" xml:space="preserve">
+    <value>Fiókaszám</value>
+  </data>
+  <data name="FiokakKora" xml:space="preserve">
+    <value>Fiókák kora</value>
+  </data>
+  <data name="GpsLatitude" xml:space="preserve">
+    <value>GPS szélesség</value>
+  </data>
+  <data name="GpsLongitude" xml:space="preserve">
+    <value>GPS hosszúság</value>
+  </data>
+  <data name="KezeloSzervezetNev" xml:space="preserve">
+    <value>Kezelő szervezet név</value>
+  </data>
+  <data name="Latogatas" xml:space="preserve">
+    <value>Látogatás</value>
+  </data>
+  <data name="MagassagMeter" xml:space="preserve">
+    <value>Magasság (m)</value>
+  </data>
+  <data name="Megjegyzes" xml:space="preserve">
+    <value>Megjegyzés</value>
+  </data>
+  <data name="Megjegyzesek" xml:space="preserve">
+    <value>Megjegyzések</value>
+  </data>
+  <data name="MireVanHelyezve" xml:space="preserve">
+    <value>Mire van helyezve</value>
+  </data>
+  <data name="Odu" xml:space="preserve">
+    <value>Odú</value>
+  </data>
+  <data name="OduAzonosito" xml:space="preserve">
+    <value>Odúazonosító</value>
+  </data>
+  <data name="OduTajolasa" xml:space="preserve">
+    <value>Odú tájolása</value>
+  </data>
+  <data name="OduTipus" xml:space="preserve">
+    <value>Odútípus</value>
+  </data>
+  <data name="Oduk1" xml:space="preserve">
+    <value>Odúk</value>
+  </data>
+  <data name="OdutTartoNovenyfaj" xml:space="preserve">
+    <value>Odút tartó növényfaj</value>
+  </data>
+  <data name="Odutelep" xml:space="preserve">
+    <value>Odútelep</value>
+  </data>
+  <data name="Telepules" xml:space="preserve">
+    <value>Település</value>
+  </data>
+  <data name="TeruletNev" xml:space="preserve">
+    <value>Területnév</value>
+  </data>
+  <data name="Tevekenyseg" xml:space="preserve">
+    <value>Tevékenység</value>
+  </data>
+  <data name="TojasSzam" xml:space="preserve">
+    <value>Tojásszám</value>
+  </data>
+  <data name="UtmNegyzetKod" xml:space="preserve">
+    <value>UTM négyzetkód</value>
+  </data>
+  <data name="Csere" xml:space="preserve">
+    <value>Csere</value>
+  </data>
+  <data name="Ellenorzes" xml:space="preserve">
+    <value>Ellenőrzés</value>
+  </data>
+  <data name="FeszekanyagVan" xml:space="preserve">
+    <value>Fészekanyag van</value>
+  </data>
+  <data name="FiokakVannak" xml:space="preserve">
+    <value>Fiókák vannak</value>
+  </data>
+  <data name="Gyuruzes" xml:space="preserve">
+    <value>Gyűrűzés</value>
+  </data>
+  <data name="Kihelyezes" xml:space="preserve">
+    <value>Kihelyezés</value>
+  </data>
+  <data name="NemMadarLakja" xml:space="preserve">
+    <value>Nem madár lakja</value>
+  </data>
+  <data name="Takaritas" xml:space="preserve">
+    <value>Takarítás</value>
+  </data>
+  <data name="TojasokVannak" xml:space="preserve">
+    <value>Tojások vannak</value>
+  </data>
+  <data name="UresOdu" xml:space="preserve">
+    <value>Üres odú</value>
+  </data>
+  <data name="Terepnaplo" xml:space="preserve">
+    <value>Terepnapló</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Mentés</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégsem</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Üzenet</value>
+  </data>
 </root>

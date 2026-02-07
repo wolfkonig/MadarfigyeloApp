@@ -1,8 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.API;
+﻿using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Services;
-using System.Collections.ObjectModel;
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -14,8 +12,8 @@ namespace MadarfigyeloApp.ViewModels
         // Backing fields
         private Odu? _selectedOdu;
         private DateTime _datum = DateTime.Now;
-        private Tevekenyseg _tevekenyseg;
-        private Allapot _allapot;
+        private TevekenysegModel? _tevekenyseg;
+        private AllapotModel? _allapot;
         private string? _faj;
         private int _tojasSzam;
         private int _fiokaSzam;
@@ -41,8 +39,13 @@ namespace MadarfigyeloApp.ViewModels
             private set => SetProperty(ref _oduk, value);
         }
 
-        public List<Tevekenyseg> Tevekenysegek { get; } = Enum.GetValues(typeof(Tevekenyseg)).Cast<Tevekenyseg>().ToList();
-        public List<Allapot> Allapotok { get; } = Enum.GetValues(typeof(Allapot)).Cast<Allapot>().ToList();
+        public List<TevekenysegModel> Tevekenysegek { get; } = Enum.GetValues<Tevekenyseg>()
+            .Select(t => new TevekenysegModel(t))
+            .ToList();
+
+        public List<AllapotModel> Allapotok { get; } = Enum.GetValues<Allapot>()            
+            .Select(a=>new AllapotModel(a))
+            .ToList();
 
         public Odu? SelectedOdu
         {
@@ -56,13 +59,13 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _datum, value);
         }
 
-        public Tevekenyseg Tevekenyseg
+        public TevekenysegModel Tevekenyseg
         {
             get => _tevekenyseg;
             set => SetProperty(ref _tevekenyseg, value);
         }
 
-        public Allapot Allapot
+        public AllapotModel Allapot
         {
             get => _allapot;
             set => SetProperty(ref _allapot, value);

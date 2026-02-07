@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace MadarfigyeloApp.Models
+﻿namespace MadarfigyeloApp.Models
 {
     public class Latogatas
     {

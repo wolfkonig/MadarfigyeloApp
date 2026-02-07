@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Services;

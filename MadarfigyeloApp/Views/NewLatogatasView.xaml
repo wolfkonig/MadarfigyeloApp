@@ -42,7 +42,9 @@
             <Picker Grid.Row="2"
                     Grid.Column="1"
                     ItemsSource="{Binding Tevekenysegek}"
-                    SelectedItem="{Binding Tevekenyseg}" />
+                    SelectedItem="{Binding Tevekenyseg}"               
+                    ItemDisplayBinding="{Binding Name}"
+                    />
 
             <Label Text="{x:Static res:AppRes.Allapot}"
                    Grid.Row="3"
@@ -51,7 +53,8 @@
             <Picker Grid.Row="3"
                     Grid.Column="1"
                     ItemsSource="{Binding Allapotok}"
-                    SelectedItem="{Binding Allapot}" />
+                    SelectedItem="{Binding Allapot}"
+                    ItemDisplayBinding="{Binding Name}" />
 
             <Label Text="{x:Static res:AppRes.Faj}"
                    Grid.Row="4"

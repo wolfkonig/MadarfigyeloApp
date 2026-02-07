@@ -1,14 +1,7 @@
-﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MadarfigyeloApp.ViewModels
 {

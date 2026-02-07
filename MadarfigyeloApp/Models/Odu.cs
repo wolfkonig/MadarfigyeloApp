@@ -1,8 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace MadarfigyeloApp.Models
+﻿namespace MadarfigyeloApp.Models
 {
     public class Odu
     {

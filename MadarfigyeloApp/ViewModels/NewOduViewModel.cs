@@ -119,14 +119,48 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task SaveAsync()
         {
-            if (SelectedOdutelep == null)
+            if (await Validate())
             {
-                await _navigationService.ShowAlert("Kérjük, válasszon egy odútelepet!");
-                return;
-            }
+                var odu = new Odu
+                {
+                    OduAzonosito = OduAzonosito,
+                    OdutelepId = SelectedOdutelep.Id,
+                    OduTipus = OduTipus,
+                    BejaratiNyilasMm = BejaratiNyilasMm,
+                    GpsLatitude = GpsLatitude,
+                    GpsLongitude = GpsLongitude,
+                    Elohelykod = Elohelykod,
+                    MireVanHelyezve = MireVanHelyezve,
+                    FelhelyezesModja = FelhelyezesModja,
+                    OduTajolasa = OduTajolasa,
+                    OdutTartoNovenyfaj = OdutTartoNovenyfaj,
+                    MagassagMeter = MagassagMeter
+                };
 
-            // Logic to save the Odu linked to SelectedOdutelep.Id
-            await _navigationService.ShowAlert("Az odú adatai mentve.");
+                await _oduApi.PostOduAsync(odu);
+                await _navigationService.PopAsync();
+
+                await _navigationService.ShowAlert(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odu));
+            }
+        }
+
+        private async Task<bool> Validate()
+        {
+            _errors.Clear();
+            if (string.IsNullOrEmpty(OduAzonosito)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduAzonosito)));
+            if (string.IsNullOrEmpty(OduTipus)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduTipus)));
+            if (BejaratiNyilasMm <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(BejaratiNyilasMm)));
+            if (GpsLatitude <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLatitude)));
+            if (GpsLongitude <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLongitude)));
+            if (SelectedOdutelep is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Odutelep)));
+
+            if (_errors.Count > 0)
+            {
+                var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
+                await _navigationService.ShowAlert(message);
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -10,4 +10,7 @@ public interface IOdutelepApi
 
     [Get("/Odutelep")]
     Task<List<Odutelep>> GetAllOdutelepAsync();
+
+    [Post("/Odutelep")]
+    Task PostOdutelepAsync([Body] Odutelep odutelep);
 }

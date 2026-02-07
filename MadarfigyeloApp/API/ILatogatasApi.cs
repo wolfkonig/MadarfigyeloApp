@@ -10,5 +10,8 @@ namespace MadarfigyeloApp.API
 
         [Get("/Latogatas")]
         Task<List<Latogatas>> GetAllLatogatasAsync();
+
+        [Post("/Latogatas")]
+        Task PostLatogatasAsync([Body] Latogatas latogatas);
     }
 }

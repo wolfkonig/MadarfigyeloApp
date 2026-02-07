@@ -10,4 +10,7 @@ public interface IOduApi
 
     [Get("/Odu")]
     Task<List<Odu>> GetAllOduAsync();
+
+    [Post("/Odu")]
+    Task PostOduAsync([Body] Odu odu);
 }

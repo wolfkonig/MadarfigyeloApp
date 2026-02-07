@@ -288,4 +288,13 @@
   <data name="Message" xml:space="preserve">
     <value>Üzenet</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hiba</value>
+  </data>
+  <data name="ErrorEmpty" xml:space="preserve">
+    <value>{0} nem lehet üres!</value>
+  </data>
+  <data name="SaveSuccessful" xml:space="preserve">
+    <value>{0} sikeresen mentve.</value>
+  </data>
 </root>

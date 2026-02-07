@@ -142,6 +142,24 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hiba.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} nem lehet üres!.
+        /// </summary>
+        internal static string ErrorEmpty {
+            get {
+                return ResourceManager.GetString("ErrorEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Faj.
         /// </summary>
         internal static string Faj {
@@ -462,6 +480,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} sikeresen mentve..
+        /// </summary>
+        internal static string SaveSuccessful {
+            get {
+                return ResourceManager.GetString("SaveSuccessful", resourceCulture);
             }
         }
         

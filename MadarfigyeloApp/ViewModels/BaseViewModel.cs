@@ -9,6 +9,7 @@ namespace MadarfigyeloApp.ViewModels
         private bool _isBusy;
 
         protected INavigationService _navigationService;
+        protected List<string> _errors = new();
 
         public BaseViewModel(INavigationService navigationService)
         {

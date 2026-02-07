@@ -1,9 +1,14 @@
-﻿using MadarfigyeloApp.Services;
+﻿using CommunityToolkit.Mvvm.Input;
+using MadarfigyeloApp.API;
+using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Services;
 
 namespace MadarfigyeloApp.ViewModels
 {
     public class NewOdutelepViewModel : BaseViewModel
     {
+        private readonly IOdutelepApi _odutelepApi;
+
         // Backing fields
         private string? _azonosito;
         private string? _telepules;
@@ -16,9 +21,13 @@ namespace MadarfigyeloApp.ViewModels
         private string? _felelosSzemelyEmail;
         private string? _megjegyzes;
 
-        public NewOdutelepViewModel(INavigationService navigationService) : base(navigationService)
+        public NewOdutelepViewModel(INavigationService navigationService, IOdutelepApi odutelepApi) : base(navigationService)
         {
+            _odutelepApi = odutelepApi ?? throw new ArgumentNullException(nameof(odutelepApi));
+            SaveCommand = new(SaveAsync);
         }
+
+        public AsyncRelayCommand SaveCommand { get; }
 
         // Full properties with SetProperty
         public string? Azonosito
@@ -85,5 +94,59 @@ namespace MadarfigyeloApp.ViewModels
         {
            return Task.CompletedTask;
         }
+
+        public async Task SaveAsync()
+        {
+            if (await Validate())
+            {
+                var ot = new Odutelep
+                {
+                    TeruletNev = TeruletNev, //NN
+                    Telepules = Telepules, //NN
+                    Megjegyzes = Megjegyzes,
+                    KezeloSzervezetNev = KezeloSzervezetNev,
+                    Azonosito = Azonosito, //NN
+                    FelelosSzemelyCim = FelelosSzemelyCim,
+                    FelelosSzemelyEmail = FelelosSzemelyEmail,
+                    FelelosSzemelyTelefonszam = FelelosSzemelyTelefonszam,
+                    UtmNegyzetKod = UtmNegyzetKod //NN
+                };
+
+                await _odutelepApi.PostOdutelepAsync(ot);
+                await _navigationService.PopAsync();
+
+                await _navigationService.ShowAlert(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odutelep));
+            }
+        }
+
+        private async Task<bool> Validate()
+        {
+            _errors.Clear();
+            if(string.IsNullOrEmpty(Azonosito))
+            {
+                _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Azonosito)));                
+            }
+            if (string.IsNullOrEmpty(TeruletNev))
+            {
+                _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(TeruletNev)));
+            }
+            if (string.IsNullOrEmpty(Telepules))
+            {
+                _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Telepules)));
+            }
+            if (string.IsNullOrEmpty(UtmNegyzetKod))
+            {
+                _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(UtmNegyzetKod)));
+            }
+
+            if (_errors.Count > 0)
+            {
+                var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
+                await _navigationService.ShowAlert(message);
+                return false;
+            }
+            return true;
+        }
+
     }
 }

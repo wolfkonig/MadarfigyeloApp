@@ -1,4 +1,5 @@
-﻿using MadarfigyeloApp.API;
+﻿using CommunityToolkit.Mvvm.Input;
+using MadarfigyeloApp.API;
 using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Services;
 
@@ -25,7 +26,11 @@ namespace MadarfigyeloApp.ViewModels
         {
             _latogatasApi = latogatasApi ?? throw new ArgumentNullException(nameof(latogatasApi));
             _oduApi = oduApi ?? throw new ArgumentNullException(nameof(oduApi));
+
+            SaveCommand = new(SaveAsync);
         }
+
+        public AsyncRelayCommand SaveCommand { get; }
 
         public override async Task InitAsync()
         {
@@ -101,15 +106,45 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _megjegyzesek, value);
         }
 
-        private async Task Save()
+        public async Task SaveAsync()
         {
-            if (SelectedOdu == null)
+            if (await Validate())
             {
-                await _navigationService.ShowAlert("Kérjük, válasszon egy odút!");
-                return;
+                var ltg = new Latogatas
+                {
+                    OduId = SelectedOdu.Id,
+                    Datum = Datum,
+                    Tevekenyseg = Tevekenyseg.Value,
+                    Allapot = Allapot.Value,
+                    Faj = Faj,
+                    TojasSzam = TojasSzam,
+                    FiokaSzam = FiokaSzam,
+                    FiokakKora = FiokakKora,
+                    Megjegyzesek = Megjegyzesek
+                };
+
+                await _latogatasApi.PostLatogatasAsync(ltg);
+                await _navigationService.PopAsync();
+
+                await _navigationService.ShowAlert(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Latogatas));
             }
-            // Logic to save the Latogatas record
-            await _navigationService.ShowAlert("Látogatás adatai mentve!");
+        }
+
+        private async Task<bool> Validate()
+        {
+            _errors.Clear();
+            if (SelectedOdu is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Odu)));
+            if (Tevekenyseg is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Tevekenyseg)));
+            if (Allapot is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Allapot)));
+            if (string.IsNullOrEmpty(Faj)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Faj)));           
+
+            if (_errors.Count > 0)
+            {
+                var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
+                await _navigationService.ShowAlert(message);
+                return false;
+            }
+            return true;
         }
     }
 }

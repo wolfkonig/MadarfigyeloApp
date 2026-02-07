@@ -12,10 +12,7 @@ public static class EnumExtensions
     /// <exception cref="ArgumentNullException"></exception>
     public static string GetResxText(this Enum value)
     {
-        if (value is null)
-            throw new ArgumentNullException(nameof(value));
-
-        string key = value.ToString(); // must match .resx key exactly
+        ArgumentNullException.ThrowIfNull(value);
 
         if (TryGetResxText(value, out string? text) && text is not null)
         {

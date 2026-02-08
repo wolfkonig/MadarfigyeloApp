@@ -10,6 +10,8 @@ namespace MadarfigyeloApp
 {
     public static class MauiProgram
     {
+        public static Environment CurrentEnvironment { get; } = Environment.Dev;
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -21,6 +23,7 @@ namespace MadarfigyeloApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 })
+                .RegisterClients()
                 .RegisterServices()
                 .RegisterViewModels();
 
@@ -37,10 +40,6 @@ namespace MadarfigyeloApp
             builder.Services.AddTransient<OdutelepViewModel>();
             builder.Services.AddTransient<OduViewModel>();
             builder.Services.AddTransient<LatogatasViewModel>();
-            builder.Services.AddTransient<NewOdutelepViewModel>();
-            builder.Services.AddTransient<NewOduViewModel>();
-            builder.Services.AddTransient<NewLatogatasViewModel>();
-
 
             builder.Services.AddTransientWithShellRoute<NewOdutelepView, NewOdutelepViewModel>(Constants.RouteNewOdutelep);
             builder.Services.AddTransientWithShellRoute<NewOduView, NewOduViewModel>(Constants.RouteNewOdu);
@@ -51,32 +50,49 @@ namespace MadarfigyeloApp
 
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
-            //var handler = new HttpClientHandler
-            //{
-            //    // http client handler for DEBUG only - accepts any certificate
-            //    ServerCertificateCustomValidationCallback = (_, _, _, _) => true
-            //};
-            //var httpClient = new HttpClient(handler)
-            //{
-            //    BaseAddress = new Uri(Constants.BaseUrlHttp),
-            //};
-            //builder.Services.AddSingleton(RestService.For<IOdutelepApi>(httpClient));
-            //builder.Services.AddSingleton(RestService.For<IOduApi>(httpClient));
-            //builder.Services.AddSingleton(RestService.For<ILatogatasApi>(httpClient));
+            builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+            return builder;
+        }
 
-            builder.Services.AddTransient<BasicAuthHandler>();
-            builder.Services.AddSingleton<INavigationService,ShellNavigationService>();
+        private static MauiAppBuilder RegisterClients(this MauiAppBuilder builder)
+        {
+            var refitSettings = new RefitSettings(new NewtonsoftJsonContentSerializer());
 
-            builder.Services.AddRefitClient<IOdutelepApi>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
-                .AddHttpMessageHandler<BasicAuthHandler>();
-            builder.Services.AddRefitClient<IOduApi>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
-                .AddHttpMessageHandler<BasicAuthHandler>();
-            builder.Services.AddRefitClient<ILatogatasApi>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
-                .AddHttpMessageHandler<BasicAuthHandler>();
+            if (CurrentEnvironment == Environment.DevLocal)
+            {
+                var handler = new HttpClientHandler
+                {
+                    // http client handler for DEBUG only - accepts any certificate
+                    ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+                };
+                var httpClient = new HttpClient(handler)
+                {
+                    BaseAddress = new Uri(Constants.LocalBaseUrlHttps),
+                };
+                builder.Services.AddSingleton(RestService.For<IOdutelepApi>(httpClient, refitSettings));
+                builder.Services.AddSingleton(RestService.For<IOduApi>(httpClient, refitSettings));
+                builder.Services.AddSingleton(RestService.For<ILatogatasApi>(httpClient, refitSettings));
+            }
+            else if (CurrentEnvironment == Environment.Dev)
+            {
+                builder.Services.AddTransient<BasicAuthHandler>();
 
+                var baseUri = new Uri(Constants.BaseUrlHttp);
+
+                builder.Services.AddRefitClient<IOdutelepApi>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = baseUri)
+                    .AddHttpMessageHandler<BasicAuthHandler>();
+                builder.Services.AddRefitClient<IOduApi>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = baseUri)
+                    .AddHttpMessageHandler<BasicAuthHandler>();
+                builder.Services.AddRefitClient<ILatogatasApi>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = baseUri)
+                    .AddHttpMessageHandler<BasicAuthHandler>();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
             return builder;
         }
     }

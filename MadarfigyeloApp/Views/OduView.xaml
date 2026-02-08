@@ -11,6 +11,13 @@
                 Title="{x:Static res:AppRes.Oduk}">
 
     <Grid RowDefinitions="*,50">
+        <Image Grid.Row="0"
+               Grid.RowSpan="2"
+               Opacity="0.4"
+               Source="hello.jpg"
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill" />
         <CollectionView ItemsSource="{Binding OduList}"
                         Grid.Row="0">
             <CollectionView.ItemTemplate>

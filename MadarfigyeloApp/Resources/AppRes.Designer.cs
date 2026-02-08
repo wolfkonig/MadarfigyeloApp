@@ -223,11 +223,20 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fiókák kora.
+        ///   Looks up a localized string similar to Fiókák kora: {0}.
         /// </summary>
         internal static string FiokakKora {
             get {
                 return ResourceManager.GetString("FiokakKora", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiókák száma: {0}.
+        /// </summary>
+        internal static string FiokakSzama {
+            get {
+                return ResourceManager.GetString("FiokakSzama", resourceCulture);
             }
         }
         
@@ -534,6 +543,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string Tevekenyseg {
             get {
                 return ResourceManager.GetString("Tevekenyseg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tojások száma: {0}.
+        /// </summary>
+        internal static string TojasokSzama {
+            get {
+                return ResourceManager.GetString("TojasokSzama", resourceCulture);
             }
         }
         

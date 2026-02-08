@@ -5,7 +5,8 @@
              xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
              xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
              x:Class="MadarfigyeloApp.MainPage"
-             x:DataType="vm:MainPageViewModel">
+             x:DataType="vm:MainPageViewModel"
+                Title="{x:Static res:AppRes.AppTitle}">
 
     <Grid RowDefinitions="*">
         <Image Grid.Row="0"
@@ -14,9 +15,6 @@
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
 
-        <Label Grid.Row="0"
-               Text="{x:Static res:AppRes.AppTitle}"
-               Style="{StaticResource Headline}"/>
     </Grid>
 
 </pages:BasePage>

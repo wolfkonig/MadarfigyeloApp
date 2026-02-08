@@ -6,11 +6,19 @@
                 xmlns:models="clr-namespace:MadarfigyeloApp.Models"
                 xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
+                xmlns:util="clr-namespace:MadarfigyeloApp.Utilities"
                 x:Class="MadarfigyeloApp.Views.LatogatasView"
                 x:DataType="vm:LatogatasViewModel"
                 Title="{x:Static res:AppRes.Latogatasok}">
 
     <Grid RowDefinitions="*,50">
+        <Image Grid.Row="0"
+               Grid.RowSpan="2"
+               Opacity="0.4"
+               Source="hello.jpg"
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill" />
         <CollectionView ItemsSource="{Binding LatogatasList}" 
                         Grid.Row="0">
             <CollectionView.ItemTemplate>
@@ -30,7 +38,7 @@
                                     <Label Text="{Binding Datum}"                                           
                                            Grid.Column="1"
                                            Style="{StaticResource ListTextHeader}" />
-                                    <Label Text="{Binding Tevekenyseg}"
+                                    <Label Text="{Binding Tevekenyseg, Converter={util:EnumToResxConverter}}"
                                            Grid.Column="2"
                                            Style="{StaticResource ListTextHeader}" />
                                 </Grid>
@@ -38,7 +46,7 @@
 
                             <Grid ColumnDefinitions="*,*,*"
                                   RowDefinitions="30,30">
-                                <Label Text="{Binding Allapot}"
+                                <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Style="{StaticResource ListText}" />
@@ -46,17 +54,17 @@
                                        Grid.Column="1"
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />                             
-                                <Label Text="{Binding TojasSzam, StringFormat='Tojasok szama: {0}'}"
+                                <Label Text="{Binding TojasSzam, StringFormat={x:Static res:AppRes.TojasokSzama}}"
                                        Grid.Column="2"
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />
 
-                                <Label Text="{Binding FiokaSzam, StringFormat='Fiokak szama: {0}'}"
+                                <Label Text="{Binding FiokaSzam, StringFormat={x:Static res:AppRes.FiokakSzama}}"
                                        Grid.Column="0"
                                        Grid.Row="1"
                                        Style="{StaticResource ListText}" />
 
-                                <Label Text="{Binding FiokakKora, StringFormat='Fiokak kora: {0}'}"
+                                <Label Text="{Binding FiokakKora, StringFormat={x:Static res:AppRes.FiokakKora}}"
                                        Grid.Column="1"
                                        Grid.Row="1"
                                        Style="{StaticResource ListText}" />

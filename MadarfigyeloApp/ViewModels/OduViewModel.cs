@@ -7,8 +7,7 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class OduViewModel : BaseViewModel
     {
-        private readonly IOduApi _oduApi;
-        private readonly IOdutelepApi _odutelepApi;
+        private readonly IApiService _apiService;
 
         private List<Odu> _oduList = [];
         private List<Odutelep> _odutelepList = [];
@@ -21,19 +20,16 @@ namespace MadarfigyeloApp.ViewModels
 
         public AsyncRelayCommand NewOduCommand { get; private set; }
 
-        public OduViewModel(IOduApi oduApi, IOdutelepApi odutelepApi, INavigationService navigationService) : base(navigationService)
+        public OduViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
-            _oduApi = oduApi ?? throw new ArgumentNullException(nameof(oduApi));
-            _odutelepApi = odutelepApi ?? throw new ArgumentException(nameof(odutelepApi));
-
+            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewOduCommand = new (NewOdu);
         }
 
         public override async Task InitAsync()
         {
-            _odutelepList = await _odutelepApi.GetAllOdutelepAsync();
-
-            var oduk = await _oduApi.GetAllOduAsync();
+            _odutelepList = await _apiService.GetAllOdutelepAsync();
+            var oduk = await _apiService.GetAllOduAsync();
             foreach (var odu in oduk)
             {
                 odu.Odutelep = _odutelepList.FirstOrDefault(x => x.Id == odu.OdutelepId);

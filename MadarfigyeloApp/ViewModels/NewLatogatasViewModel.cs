@@ -1,14 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
+using MadarfigyeloApp.Implementations;
 using MadarfigyeloApp.Models;
 
 namespace MadarfigyeloApp.ViewModels
 {
     public class NewLatogatasViewModel : BaseViewModel
     {
-        private readonly ILatogatasApi _latogatasApi;
-        private readonly IOduApi _oduApi;
+        private readonly IApiService _apiService;
 
         // Backing fields
         private Odu? _selectedOdu;
@@ -22,19 +22,17 @@ namespace MadarfigyeloApp.ViewModels
         private string? _megjegyzesek;
         private List<Odu> _oduk = new();
 
-        public NewLatogatasViewModel(ILatogatasApi latogatasApi, IOduApi oduApi, INavigationService navigationService) : base(navigationService)
+        public NewLatogatasViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
-            _latogatasApi = latogatasApi ?? throw new ArgumentNullException(nameof(latogatasApi));
-            _oduApi = oduApi ?? throw new ArgumentNullException(nameof(oduApi));
-
-            SaveCommand = new(SaveAsync);
+            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+             SaveCommand = new(SaveAsync);
         }
 
         public AsyncRelayCommand SaveCommand { get; }
 
         public override async Task InitAsync()
         {
-            Oduk = await _oduApi.GetAllOduAsync();
+            Oduk = await _apiService.GetAllOduAsync();
         }
 
         // Collections for Pickers
@@ -123,10 +121,10 @@ namespace MadarfigyeloApp.ViewModels
                     Megjegyzesek = Megjegyzesek
                 };
 
-                await _latogatasApi.PostLatogatasAsync(ltg);
+                await _apiService.PostLatogatasAsync(ltg);
                 await _navigationService.PopAsync();
 
-                await _navigationService.ShowAlert(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Latogatas));
+                await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Latogatas));
             }
         }
 
@@ -141,7 +139,7 @@ namespace MadarfigyeloApp.ViewModels
             if (_errors.Count > 0)
             {
                 var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
-                await _navigationService.ShowAlert(message);
+                await _navigationService.ShowAlertAsync(message);
                 return false;
             }
             return true;

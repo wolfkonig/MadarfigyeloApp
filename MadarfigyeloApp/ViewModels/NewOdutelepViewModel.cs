@@ -7,7 +7,7 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class NewOdutelepViewModel : BaseViewModel
     {
-        private readonly IOdutelepApi _odutelepApi;
+        private readonly IApiService _apiService;
 
         // Backing fields
         private string? _azonosito;
@@ -21,9 +21,9 @@ namespace MadarfigyeloApp.ViewModels
         private string? _felelosSzemelyEmail;
         private string? _megjegyzes;
 
-        public NewOdutelepViewModel(INavigationService navigationService, IOdutelepApi odutelepApi) : base(navigationService)
+        public NewOdutelepViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
-            _odutelepApi = odutelepApi ?? throw new ArgumentNullException(nameof(odutelepApi));
+            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             SaveCommand = new(SaveAsync);
         }
 
@@ -112,10 +112,10 @@ namespace MadarfigyeloApp.ViewModels
                     UtmNegyzetKod = UtmNegyzetKod //NN
                 };
 
-                await _odutelepApi.PostOdutelepAsync(ot);
+                await _apiService.PostOdutelepAsync(ot);
                 await _navigationService.PopAsync();
 
-                await _navigationService.ShowAlert(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odutelep));
+                await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odutelep));
             }
         }
 
@@ -142,7 +142,7 @@ namespace MadarfigyeloApp.ViewModels
             if (_errors.Count > 0)
             {
                 var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
-                await _navigationService.ShowAlert(message);
+                await _navigationService.ShowAlertAsync(message);
                 return false;
             }
             return true;

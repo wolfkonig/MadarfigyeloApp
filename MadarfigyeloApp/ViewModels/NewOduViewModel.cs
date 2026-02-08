@@ -7,8 +7,8 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class NewOduViewModel : BaseViewModel
     {
-        private readonly IOduApi _oduApi;
-        private readonly IOdutelepApi _odutelepApi;
+        private readonly IApiService _apiService;
+        private readonly ILocationService _locationService;
 
         // Backing fields
         private string? _oduAzonosito;
@@ -27,16 +27,26 @@ namespace MadarfigyeloApp.ViewModels
 
         public AsyncRelayCommand SaveCommand { get; set; }
 
-        public NewOduViewModel(IOduApi oduApi, IOdutelepApi odutelepApi, INavigationService navigationService) : base(navigationService)
+        public NewOduViewModel(IApiService apiService, INavigationService navigationService, ILocationService locationService) : base(navigationService)
         {
-            _oduApi = oduApi ?? throw new ArgumentNullException(nameof(oduApi));
-            _odutelepApi = odutelepApi ?? throw new ArgumentNullException(nameof(odutelepApi));
+            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));
             SaveCommand = new(SaveAsync);
         }
 
         public override async Task InitAsync()
         {
-            Odutelepek = await _odutelepApi.GetAllOdutelepAsync();
+            Odutelepek = await _apiService.GetAllOdutelepAsync();
+            var location = await _locationService.GetCurrentLocationAsync();
+
+            if (location is not null)
+            {
+                GpsLatitude = (decimal)location.Latitude;
+                GpsLongitude = (decimal)location.Longitude;
+
+                var message = await Utilities.GeocodingHelpers.GetAddressAsync(location);
+                await _navigationService.ShowAlertAsync(message);
+            }
         }
 
         public List<Odutelep> Odutelepek 
@@ -137,10 +147,10 @@ namespace MadarfigyeloApp.ViewModels
                     MagassagMeter = MagassagMeter
                 };
 
-                await _oduApi.PostOduAsync(odu);
+                await _apiService.PostOduAsync(odu);
                 await _navigationService.PopAsync();
 
-                await _navigationService.ShowAlert(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odu));
+                await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odu));
             }
         }
 
@@ -157,7 +167,7 @@ namespace MadarfigyeloApp.ViewModels
             if (_errors.Count > 0)
             {
                 var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
-                await _navigationService.ShowAlert(message);
+                await _navigationService.ShowAlertAsync(message);
                 return false;
             }
             return true;

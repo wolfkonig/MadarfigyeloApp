@@ -7,7 +7,7 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class OdutelepViewModel : BaseViewModel
     {
-        private readonly IOdutelepApi _odutelepApi;
+        private readonly IApiService _apiService;
 
         private List<Odutelep> _odutelepList = [];
 
@@ -19,17 +19,15 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _odutelepList, value);
         }
 
-        public OdutelepViewModel(IOdutelepApi odutelepApi, INavigationService navigation, INavigationService navigationService) : base(navigationService)
+        public OdutelepViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
-            _odutelepApi = odutelepApi ?? throw new ArgumentNullException(nameof(odutelepApi));
-            _navigationService = navigation ?? throw new ArgumentNullException(nameof(navigation));
-
+            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewOdutelepCommand = new(NewOdutelep);
         }
 
         public override async Task InitAsync()
         {
-            OdutelepList = await _odutelepApi.GetAllOdutelepAsync();
+            OdutelepList = await _apiService.GetAllOdutelepAsync();
         }
 
         private async Task NewOdutelep()

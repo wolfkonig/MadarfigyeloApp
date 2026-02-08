@@ -6,11 +6,11 @@ namespace MadarfigyeloApp.API;
 public interface IOdutelepApi
 {
     [Get("/Odutelep/{id}")]
-    Task<Odutelep> GetOdutelepAsync(int id);
+    Task<ApiResponse<Odutelep>> GetOdutelepAsync(int id);
 
     [Get("/Odutelep")]
-    Task<List<Odutelep>> GetAllOdutelepAsync();
+    Task<ApiResponse<List<Odutelep>>> GetAllOdutelepAsync();
 
     [Post("/Odutelep")]
-    Task PostOdutelepAsync([Body] Odutelep odutelep);
+    Task<IApiResponse> PostOdutelepAsync([Body] Odutelep odutelep);
 }

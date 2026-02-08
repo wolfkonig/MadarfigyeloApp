@@ -6,11 +6,11 @@ namespace MadarfigyeloApp.API;
 public interface IOduApi
 {
     [Get("/Odu/{id}")]
-    Task<Odu> GetOduAsync(int id);
+    Task<ApiResponse<Odu>> GetOduAsync(int id);
 
     [Get("/Odu")]
-    Task<List<Odu>> GetAllOduAsync();
+    Task<ApiResponse<List<Odu>>> GetAllOduAsync();
 
     [Post("/Odu")]
-    Task PostOduAsync([Body] Odu odu);
+    Task<IApiResponse> PostOduAsync([Body] Odu odu);
 }

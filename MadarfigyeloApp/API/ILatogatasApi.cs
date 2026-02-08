@@ -6,12 +6,12 @@ namespace MadarfigyeloApp.API
     public interface ILatogatasApi
     {
         [Get("/Latogatas/{id}")]
-        Task<Latogatas> GetLatogatasAsync(int id);
+        Task<ApiResponse<Latogatas>> GetLatogatasAsync(int id);
 
         [Get("/Latogatas")]
-        Task<List<Latogatas>> GetAllLatogatasAsync();
+        Task<ApiResponse<List<Latogatas>>> GetAllLatogatasAsync();
 
         [Post("/Latogatas")]
-        Task PostLatogatasAsync([Body] Latogatas latogatas);
+        Task<IApiResponse> PostLatogatasAsync([Body] Latogatas latogatas);
     }
 }

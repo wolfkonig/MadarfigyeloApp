@@ -52,6 +52,7 @@ namespace MadarfigyeloApp
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+            builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddSingleton<ILocationService, LocationService>();
             return builder;
         }

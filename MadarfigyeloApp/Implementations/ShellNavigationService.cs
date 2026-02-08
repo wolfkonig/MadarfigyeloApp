@@ -1,18 +1,8 @@
-﻿using MadarfigyeloApp.Views;
+﻿using MadarfigyeloApp.Contracts;
+using MadarfigyeloApp.Views;
 
-namespace MadarfigyeloApp.Services
+namespace MadarfigyeloApp.Implementations
 {
-    public interface INavigationService
-    {
-        public Task GoToAsync(string route);
-
-        public Task PushAsync(BasePage page);
-
-        public Task PopAsync();
-
-        public Task ShowAlert(string message);
-    }
-
     public class ShellNavigationService : INavigationService
     {
         public async Task GoToAsync(string route)

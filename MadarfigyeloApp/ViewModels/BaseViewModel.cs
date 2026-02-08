@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MadarfigyeloApp.Services;
-
+using MadarfigyeloApp.Contracts;
 
 namespace MadarfigyeloApp.ViewModels
 {

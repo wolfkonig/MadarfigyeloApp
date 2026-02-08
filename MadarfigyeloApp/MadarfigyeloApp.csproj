@@ -15,7 +15,7 @@
 		<ApplicationTitle>MadarfigyeloApp</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.madarfigyeloapp</ApplicationId>
+		<ApplicationId>com.wolfkonig.madarfigyeloapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

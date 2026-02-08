@@ -1,4 +1,4 @@
-﻿using MadarfigyeloApp.Services;
+﻿using MadarfigyeloApp.Contracts;
 
 namespace MadarfigyeloApp.ViewModels
 {

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using MadarfigyeloApp.API;
-using MadarfigyeloApp.Services;
+using MadarfigyeloApp.Contracts;
+using MadarfigyeloApp.Implementations;
 using MadarfigyeloApp.ViewModels;
 using MadarfigyeloApp.Views;
 using Microsoft.Extensions.Logging;
@@ -51,6 +52,7 @@ namespace MadarfigyeloApp
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+            builder.Services.AddSingleton<ILocationService, LocationService>();
             return builder;
         }
 

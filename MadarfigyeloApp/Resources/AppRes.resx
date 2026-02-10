@@ -303,4 +303,16 @@
   <data name="FiokakSzama" xml:space="preserve">
     <value>Fiókák száma: {0}</value>
   </data>
+  <data name="ApiError" xml:space="preserve">
+    <value>Kommunikációs hiba a szerverrel. Kérlek, próbáld újra.</value>
+  </data>
+  <data name="ApiErrorTimeout" xml:space="preserve">
+    <value>Időtúllépés</value>
+  </data>
+  <data name="ApiErrorAuth" xml:space="preserve">
+    <value>Hiányzó jogosultság</value>
+  </data>
+  <data name="ApiErrorBadReq" xml:space="preserve">
+    <value>Hibás üzenet</value>
+  </data>
 </root>

@@ -37,7 +37,7 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             Odutelepek = await _apiService.GetAllOdutelepAsync();
-            var location = await _locationService.GetCurrentLocationAsync();
+            var location = await _locationService.GetCurrentLocationAsync(highAccuracy: true);
 
             if (location is not null)
             {
@@ -147,10 +147,13 @@ namespace MadarfigyeloApp.ViewModels
                     MagassagMeter = MagassagMeter
                 };
 
-                await _apiService.PostOduAsync(odu);
-                await _navigationService.PopAsync();
+                var success = await _apiService.PostOduAsync(odu);
 
-                await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odu));
+                if (success)
+                {
+                    await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odu));
+                    await _navigationService.PopAsync();
+                }
             }
         }
 

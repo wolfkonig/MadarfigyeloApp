@@ -10,16 +10,16 @@ namespace MadarfigyeloApp.Contracts
 {
     public interface IApiService
     {
-        Task<Latogatas> GetLatogatasAsync(int id);
+        Task<Latogatas?> GetLatogatasAsync(int id);
         Task<List<Latogatas>> GetAllLatogatasAsync();
-        Task PostLatogatasAsync(Latogatas latogatas);
+        Task<bool> PostLatogatasAsync(Latogatas latogatas);
 
         Task<List<Odu>> GetAllOduAsync();
-        Task<Odu> GetOduAsync(int id);
-        Task PostOduAsync(Odu odu);
+        Task<Odu?> GetOduAsync(int id);
+        Task<bool> PostOduAsync(Odu odu);
 
-        Task<Odutelep> GetOdutelepAsync(int id);
+        Task<Odutelep?> GetOdutelepAsync(int id);
         Task<List<Odutelep>> GetAllOdutelepAsync();
-        Task PostOdutelepAsync(Odutelep odutelep);
+        Task<bool> PostOdutelepAsync(Odutelep odutelep);
     }
 }

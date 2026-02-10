@@ -20,9 +20,9 @@ namespace MadarfigyeloApp.Implementations
             await Shell.Current.Navigation.PushAsync(page);
         }
 
-        public async Task ShowAlertAsync(string message)
+        public async Task ShowAlertAsync(string message, string? title = null)
         {
-            await Shell.Current.DisplayAlert(null, message, Resources.AppRes.OK);
+            await Shell.Current.DisplayAlert(title, message, Resources.AppRes.OK);
         }
     }
 }

@@ -112,10 +112,13 @@ namespace MadarfigyeloApp.ViewModels
                     UtmNegyzetKod = UtmNegyzetKod //NN
                 };
 
-                await _apiService.PostOdutelepAsync(ot);
-                await _navigationService.PopAsync();
+               var success = await _apiService.PostOdutelepAsync(ot);
 
-                await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odutelep));
+                if (success)
+                {
+                    await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odutelep));
+                    await _navigationService.PopAsync();
+                }
             }
         }
 

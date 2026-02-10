@@ -10,6 +10,6 @@ namespace MadarfigyeloApp.Contracts
 
         public Task PopAsync();
 
-        public Task ShowAlertAsync(string message);
+        public Task ShowAlertAsync(string message, string? title = null);
     }
 }

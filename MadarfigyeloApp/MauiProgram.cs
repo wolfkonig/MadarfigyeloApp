@@ -2,6 +2,7 @@
 using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Implementations;
+using MadarfigyeloApp.Models;
 using MadarfigyeloApp.ViewModels;
 using MadarfigyeloApp.Views;
 using Microsoft.Extensions.Logging;
@@ -63,33 +64,38 @@ namespace MadarfigyeloApp
 
             if (CurrentEnvironment == Environment.DevLocal)
             {
-                var handler = new HttpClientHandler
+                static HttpClient GetHttpClient(string controllerUri)
                 {
-                    // http client handler for DEBUG only - accepts any certificate
-                    ServerCertificateCustomValidationCallback = (_, _, _, _) => true
-                };
-                var httpClient = new HttpClient(handler)
-                {
-                    BaseAddress = new Uri(Constants.LocalBaseUrlHttps),
-                };
-                builder.Services.AddSingleton(RestService.For<IOdutelepApi>(httpClient, refitSettings));
-                builder.Services.AddSingleton(RestService.For<IOduApi>(httpClient, refitSettings));
-                builder.Services.AddSingleton(RestService.For<ILatogatasApi>(httpClient, refitSettings));
+                    var handler = new HttpClientHandler
+                    {
+                        // http client handler for LOCAL DEBUG only - accepts any certificate
+                        ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+                    };
+                    return new HttpClient(handler)
+                    {
+                        BaseAddress = new Uri(Constants.LocalBaseUrlHttps + controllerUri),
+                        Timeout = TimeSpan.FromSeconds(5)
+                    };
+                }                
+
+                builder.Services.AddSingleton(RestService.For<IGenericApi<Odutelep>>(GetHttpClient("/Odutelep"), refitSettings));
+                builder.Services.AddSingleton(RestService.For<IGenericApi<Odu>>(GetHttpClient("/Odu"), refitSettings));
+                builder.Services.AddSingleton(RestService.For <IGenericApi<Latogatas>> (GetHttpClient("/Latogatas"), refitSettings));
             }
             else if (CurrentEnvironment == Environment.Dev)
             {
                 builder.Services.AddTransient<BasicAuthHandler>();
 
-                var baseUri = new Uri(Constants.BaseUrlHttp);
+                builder.Services.AddRefitClient<IGenericApi<Odutelep>>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Odutelep"))
+                    .AddHttpMessageHandler<BasicAuthHandler>();
 
-                builder.Services.AddRefitClient<IOdutelepApi>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = baseUri)
+                builder.Services.AddRefitClient<IGenericApi<Odu>>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Odu"))
                     .AddHttpMessageHandler<BasicAuthHandler>();
-                builder.Services.AddRefitClient<IOduApi>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = baseUri)
-                    .AddHttpMessageHandler<BasicAuthHandler>();
-                builder.Services.AddRefitClient<ILatogatasApi>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = baseUri)
+
+                builder.Services.AddRefitClient<IGenericApi<Latogatas>>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Latogatas"))
                     .AddHttpMessageHandler<BasicAuthHandler>();
             }
             else

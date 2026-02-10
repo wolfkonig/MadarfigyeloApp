@@ -121,10 +121,13 @@ namespace MadarfigyeloApp.ViewModels
                     Megjegyzesek = Megjegyzesek
                 };
 
-                await _apiService.PostLatogatasAsync(ltg);
-                await _navigationService.PopAsync();
+                var success = await _apiService.PostLatogatasAsync(ltg);
 
-                await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Latogatas));
+                if (success)
+                {
+                    await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Latogatas));
+                    await _navigationService.PopAsync();
+                }
             }
         }
 

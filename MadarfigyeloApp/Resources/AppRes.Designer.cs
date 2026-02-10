@@ -70,6 +70,42 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kommunikációs hiba a szerverrel. Kérlek, próbáld újra..
+        /// </summary>
+        internal static string ApiError {
+            get {
+                return ResourceManager.GetString("ApiError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hiányzó jogosultság.
+        /// </summary>
+        internal static string ApiErrorAuth {
+            get {
+                return ResourceManager.GetString("ApiErrorAuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hibás üzenet.
+        /// </summary>
+        internal static string ApiErrorBadReq {
+            get {
+                return ResourceManager.GetString("ApiErrorBadReq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Időtúllépés.
+        /// </summary>
+        internal static string ApiErrorTimeout {
+            get {
+                return ResourceManager.GetString("ApiErrorTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Madárfigyelő.
         /// </summary>
         internal static string AppTitle {

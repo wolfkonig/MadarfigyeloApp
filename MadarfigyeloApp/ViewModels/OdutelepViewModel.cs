@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
 

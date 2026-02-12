@@ -42,6 +42,7 @@ namespace MadarfigyeloApp
             builder.Services.AddTransient<OdutelepViewModel>();
             builder.Services.AddTransient<OduViewModel>();
             builder.Services.AddTransient<LatogatasViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
 
             builder.Services.AddTransientWithShellRoute<NewOdutelepView, NewOdutelepViewModel>(Constants.RouteNewOdutelep);
             builder.Services.AddTransientWithShellRoute<NewOduView, NewOduViewModel>(Constants.RouteNewOdu);
@@ -55,6 +56,7 @@ namespace MadarfigyeloApp
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
             builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddSingleton<ILocationService, LocationService>();
+            builder.Services.AddSingleton<IUserService, TempUserService>();
             return builder;
         }
 
@@ -80,7 +82,7 @@ namespace MadarfigyeloApp
 
                 builder.Services.AddSingleton(RestService.For<IGenericApi<Odutelep>>(GetHttpClient("/Odutelep"), refitSettings));
                 builder.Services.AddSingleton(RestService.For<IGenericApi<Odu>>(GetHttpClient("/Odu"), refitSettings));
-                builder.Services.AddSingleton(RestService.For <IGenericApi<Latogatas>> (GetHttpClient("/Latogatas"), refitSettings));
+                builder.Services.AddSingleton(RestService.For<IGenericApi<Latogatas>> (GetHttpClient("/Latogatas"), refitSettings));
             }
             else if (CurrentEnvironment == Environment.Dev)
             {

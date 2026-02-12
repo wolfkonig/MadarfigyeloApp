@@ -9,10 +9,10 @@
        FlyoutBackgroundColor="{StaticResource Primary}"
        TitleColor="{StaticResource Accent}"
        Title="MadarfigyeloApp">
-    
-    <TabBar>
+
+    <TabBar Route="home">
         <ShellContent Title="{x:Static res:AppRes.Home}"
-                      ContentTemplate="{DataTemplate local:MainPage}"
+                      ContentTemplate="{DataTemplate views:MainPage}"
                       Route="mainPage"
                       Icon="tree_house.svg"/>
 
@@ -31,4 +31,10 @@
                       Route="latogatas"
                       Icon="nest_with_eggs.svg" />
     </TabBar>
+
+
+    <ShellItem Route="login"
+               FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate views:LoginView}" />
+    </ShellItem>
 </Shell>

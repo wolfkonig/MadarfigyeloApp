@@ -1,7 +1,6 @@
 ﻿using MadarfigyeloApp.ViewModels;
-using MadarfigyeloApp.Views;
 
-namespace MadarfigyeloApp
+namespace MadarfigyeloApp.Views
 {
     public partial class MainPage : BasePage
     {

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
+                xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
+                xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
+                x:Class="MadarfigyeloApp.Views.MainPage"
+                x:DataType="vm:MainPageViewModel"
+                Title="{x:Static res:AppRes.AppTitle}">
+
+    <Grid RowDefinitions="50,*">
+
+        <Button Grid.Row="0" />
+        <ImageButton Grid.Row="0" 
+                     ZIndex="1"
+                     HeightRequest="40"
+                     HorizontalOptions="End"
+                     Margin="5"
+                     Source="logout.png"
+                     Command="{Binding LogoutCommand}"/>
+
+        <Image Grid.Row="0" 
+               ZIndex="0"
+               Grid.RowSpan="2"
+               Source="hello.jpg"
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill" />    
+    </Grid>
+
+</pages:BasePage>

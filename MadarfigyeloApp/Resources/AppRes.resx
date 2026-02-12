@@ -315,4 +315,28 @@
   <data name="ApiErrorBadReq" xml:space="preserve">
     <value>Hibás üzenet</value>
   </data>
+  <data name="LoginName" xml:space="preserve">
+    <value>Login név</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Bejelentkezés</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Kijelentkezés</value>
+  </data>
+  <data name="LogoutConfirm" xml:space="preserve">
+    <value>Biztos kijelentkezel?</value>
+  </data>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>Sikertelen bejelentkezés</value>
+  </data>
+  <data name="WrongLoginOrPassword" xml:space="preserve">
+    <value>Hibás felhasználónév vagy jelszó</value>
+  </data>
+  <data name="Utm" xml:space="preserve">
+    <value>UTM: {0}</value>
+  </data>
 </root>

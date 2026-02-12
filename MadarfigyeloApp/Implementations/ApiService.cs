@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Extensions;
-using MadarfigyeloApp.API;
+﻿using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Resources;

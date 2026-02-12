@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Implementations;
 using MadarfigyeloApp.Models;
 
 namespace MadarfigyeloApp.ViewModels

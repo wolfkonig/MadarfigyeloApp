@@ -4,14 +4,20 @@ namespace MadarfigyeloApp.Views;
 
 public abstract class BasePage : ContentPage
 {
-	public BasePage(BaseViewModel vm)
-	{
-		BindingContext = vm ?? throw new ArgumentNullException("Missing ViewModel");
+    public BasePage(BaseViewModel vm)
+    {
+        BindingContext = vm ?? throw new ArgumentNullException("Missing ViewModel for " + this.GetType().Name);
         Appearing += async (_, _) =>
         {
             vm.IsBusy = true;
-            await vm.InitAsync();
-            vm.IsBusy = false;
+            try
+            {
+                await vm.InitAsync();
+            }
+            finally
+            {
+                vm.IsBusy = false;
+            }
         };
 
         // Adding ControlTemplate to show Activity Indicator

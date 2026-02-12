@@ -44,7 +44,7 @@
 
                             <Grid ColumnDefinitions="*,*,*"
                                   RowDefinitions="30,30,30">
-                                <Label Text="{Binding UtmNegyzetKod}"
+                                <Label Text="{Binding UtmNegyzetKod, StringFormat={x:Static res:AppRes.Utm}}"
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Style="{StaticResource ListText}" />

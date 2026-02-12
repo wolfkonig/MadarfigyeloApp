@@ -22,7 +22,12 @@ namespace MadarfigyeloApp.Implementations
 
         public async Task ShowAlertAsync(string message, string? title = null)
         {
-            await Shell.Current.DisplayAlert(title, message, Resources.AppRes.OK);
+            await Shell.Current.DisplayAlert(title, message, Resources.AppRes.OK);           
+        }
+
+        public async Task<bool> ShowQuestionAsync(string title, string message)
+        {
+            return await Shell.Current.DisplayAlert(title, message, Resources.AppRes.OK, Resources.AppRes.Cancel);
         }
     }
 }

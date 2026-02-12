@@ -376,6 +376,51 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bejelentkezés.
+        /// </summary>
+        internal static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sikertelen bejelentkezés.
+        /// </summary>
+        internal static string LoginFailed {
+            get {
+                return ResourceManager.GetString("LoginFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login név.
+        /// </summary>
+        internal static string LoginName {
+            get {
+                return ResourceManager.GetString("LoginName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kijelentkezés.
+        /// </summary>
+        internal static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biztos kijelentkezel?.
+        /// </summary>
+        internal static string LogoutConfirm {
+            get {
+                return ResourceManager.GetString("LogoutConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Magasság (m).
         /// </summary>
         internal static string MagassagMeter {
@@ -520,6 +565,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jelszó.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mentés.
         /// </summary>
         internal static string Save {
@@ -646,11 +700,29 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UTM: {0}.
+        /// </summary>
+        internal static string Utm {
+            get {
+                return ResourceManager.GetString("Utm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UTM négyzetkód.
         /// </summary>
         internal static string UtmNegyzetKod {
             get {
                 return ResourceManager.GetString("UtmNegyzetKod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hibás felhasználónév vagy jelszó.
+        /// </summary>
+        internal static string WrongLoginOrPassword {
+            get {
+                return ResourceManager.GetString("WrongLoginOrPassword", resourceCulture);
             }
         }
     }

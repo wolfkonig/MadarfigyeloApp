@@ -22,7 +22,7 @@ public partial class App : Application
             if (didInitialNav) return;
             didInitialNav = true;
 
-            var loggedInUser = await SecureStorage.Default.GetAsync(Constants.KeyLoggedInUserName);
+            var loggedInUser = Preferences.Default.Get<string?>(Constants.KeyLoggedInUserEmail, null);
 
             if (loggedInUser != null) return;
 
@@ -30,7 +30,7 @@ public partial class App : Application
             Dispatcher.Dispatch(async () =>
             {
                 // Start the app on the login route and clear back stack
-                await shell.GoToAsync("//login");
+                await shell.GoToAsync($"//{Constants.RouteLogin}");
             });
         };
 

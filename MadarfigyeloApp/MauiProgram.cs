@@ -12,7 +12,7 @@ namespace MadarfigyeloApp
 {
     public static class MauiProgram
     {
-        public static Environment CurrentEnvironment { get; } = Environment.Dev;
+        public static Environment CurrentEnvironment { get; } = Environment.DevLocal;
 
         public static MauiApp CreateMauiApp()
         {
@@ -56,7 +56,7 @@ namespace MadarfigyeloApp
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
             builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddSingleton<ILocationService, LocationService>();
-            builder.Services.AddSingleton<IUserService, TempUserService>();
+            builder.Services.AddSingleton<IUserService, UserService>();
             return builder;
         }
 
@@ -83,6 +83,7 @@ namespace MadarfigyeloApp
                 builder.Services.AddSingleton(RestService.For<IGenericApi<Odutelep>>(GetHttpClient("/Odutelep"), refitSettings));
                 builder.Services.AddSingleton(RestService.For<IGenericApi<Odu>>(GetHttpClient("/Odu"), refitSettings));
                 builder.Services.AddSingleton(RestService.For<IGenericApi<Latogatas>> (GetHttpClient("/Latogatas"), refitSettings));
+                builder.Services.AddSingleton(RestService.For<IAuthApi>(GetHttpClient(""), refitSettings));
             }
             else if (CurrentEnvironment == Environment.Dev)
             {
@@ -98,6 +99,10 @@ namespace MadarfigyeloApp
 
                 builder.Services.AddRefitClient<IGenericApi<Latogatas>>(refitSettings)
                     .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Latogatas"))
+                    .AddHttpMessageHandler<BasicAuthHandler>();
+
+                builder.Services.AddRefitClient<IAuthApi>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
                     .AddHttpMessageHandler<BasicAuthHandler>();
             }
             else

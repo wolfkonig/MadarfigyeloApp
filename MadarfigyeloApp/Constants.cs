@@ -14,9 +14,14 @@
         public const string RouteNewOdu = "newOdu";
         public const string RouteLogin = "login";
         public const string RouteHome = "home";
-
+        
         // Preferences keys
-        public const string KeyLoggedInUserName = "loggedInUserName";
+        public const string KeyLoggedInUserEmail = "loggedInUserEmail";
+        public const string KeyLoggedInUserFirstName = "loggedInUserFirstName";
+        public const string KeyLoggedInUserLastName = "loggedInUserLastName";
+
         public const string KeyLoggedInUserPassword = "loggedInUserPassword";
+        public const string KeyLoggedInUserToken = "loggedInUserToken";
+        public const string KeyLoggedInUserTokenExpDate = "loggedInUserTokenExpDate";
     }
 }

@@ -6,8 +6,10 @@ namespace MadarfigyeloApp.Contracts
     {
         Task<bool> LogInUser(string username, string password);
 
-        Task<User?> GetLoggedInUser();
+        Task<bool> RegisterUser(User user);  
 
-        Task<bool> LogOutUser();
+        User? GetLoggedInUser();
+
+        void LogOutUser();
     }
 }

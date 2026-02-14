@@ -18,7 +18,7 @@ namespace MadarfigyeloApp.ViewModels
                var confirmed = await _navigationService.ShowQuestionAsync(AppRes.Logout, AppRes.LogoutConfirm);
                 if (confirmed)
                 {
-                    await _userService.LogOutUser();
+                    _userService.LogOutUser();
                     await _navigationService.GoToAsync($"//{Constants.RouteLogin}");
                 }
             });

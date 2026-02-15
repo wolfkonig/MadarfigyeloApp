@@ -358,7 +358,7 @@
     <value>Érvénytelen e-mail cím</value>
   </data>
   <data name="PasswordTooShort" xml:space="preserve">
-    <value>Jelszó túl rövid</value>
+    <value>A jelszó legalább 6 karakter hosszú legyen, tartalmazzon kis- és nagybetűt és számot, ne tartalmnazzon speciális karaktert.</value>
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
     <value>A két jelszó nem egyezik</value>

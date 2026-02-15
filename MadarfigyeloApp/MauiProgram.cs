@@ -53,6 +53,7 @@ namespace MadarfigyeloApp
 
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
+            builder.Services.AddSingleton<Contracts.ILogger, ConsoleLogger>();
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
             builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddSingleton<ILocationService, LocationService>();
@@ -73,26 +74,24 @@ namespace MadarfigyeloApp
                 };
 
                 builder.Services.AddRefitClient<IAuthApi>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.LocalBaseUrlHttps))
                     .ConfigurePrimaryHttpMessageHandler(() => acceptAllClientHandler);
 
                 builder.Services.AddRefitClient<IGenericApi<Odutelep>>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Odutelep"))
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.LocalBaseUrlHttps + "/Odutelep"))
                     .ConfigurePrimaryHttpMessageHandler(() => acceptAllClientHandler)
                     .AddHttpMessageHandler<TokenAuthHandler>();
 
                 builder.Services.AddRefitClient<IGenericApi<Odu>>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Odu"))
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.LocalBaseUrlHttps + "/Odu"))
                     .ConfigurePrimaryHttpMessageHandler(() => acceptAllClientHandler)
                     .AddHttpMessageHandler<TokenAuthHandler>();
 
                 builder.Services.AddRefitClient<IGenericApi<Latogatas>>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Latogatas"))
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.LocalBaseUrlHttps + "/Latogatas"))
                     .ConfigurePrimaryHttpMessageHandler(() => acceptAllClientHandler)
                     .AddHttpMessageHandler<TokenAuthHandler>();
-
-
-                    
+      
             }
             else if (CurrentEnvironment == Environment.Dev)
             {

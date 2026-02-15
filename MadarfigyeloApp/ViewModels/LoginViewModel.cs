@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
+using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Resources;
+using System.Text.RegularExpressions;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public partial class LoginViewModel : BaseViewModel
     {
         private readonly IUserService _userService;
         private string _loginEmail = string.Empty;
@@ -73,25 +75,39 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task LoginAsync()
         {
+            if(!await Validate())
+            {
+                return;
+            }
 
-            ShowLoading("Logging in...");
-            if (await _userService.LogInUser(LoginEmail, Password))
+            var success = await _userService.LogInUser(LoginEmail, Password);
+            if (success)
             {
                 await _navigationService.GoToAsync($"//{Constants.RouteHome}");
             }
             else
             {
                 await _navigationService.ShowAlertAsync(AppRes.WrongLoginOrPassword, AppRes.LoginFailed);
-                HideLoading();
             }
         }
 
         private async Task RegisterUser()
         {
+            if (await Validate())
+            {
+                var newUser = new UserDto(LoginEmail)
+                {
+                    Password = Password,
+                    FirstName = FirstName,
+                    LastName = LastName
+                };
 
+                var success = await _userService.RegisterUser(newUser);
+                IsRegistering = !success;
+            }
         }
 
-        private bool ValidateRegistration()
+        private async Task<bool> Validate()
         {
             _errors.Clear();
             
@@ -104,27 +120,38 @@ namespace MadarfigyeloApp.ViewModels
                 _errors.Add(string.Format(AppRes.ErrorEmpty, AppRes.Password));
             }
 
-            if (IsRegistering && string.IsNullOrWhiteSpace(FirstName))
+            if (IsRegistering)
             {
-                _errors.Add(string.Format(AppRes.ErrorEmpty, AppRes.FirstName));
+                if (string.IsNullOrWhiteSpace(FirstName))
+                {
+                    _errors.Add(string.Format(AppRes.ErrorEmpty, AppRes.FirstName));
+                }
+                if (string.IsNullOrWhiteSpace(LastName))
+                {
+                    _errors.Add(string.Format(AppRes.ErrorEmpty, AppRes.LastName));
+                }
+                if (!IsValidEmail(LoginEmail))
+                {
+                    _errors.Add(AppRes.InvalidEmailFormat);
+                }
+                else if (!PasswordRegex().IsMatch(Password))
+                {
+                    _errors.Add(AppRes.PasswordTooShort);
+                }
+
+                if (Password != PasswordAgain)
+                {
+                    _errors.Add(AppRes.PasswordsDoNotMatch);
+                }
             }
-            if (IsRegistering && string.IsNullOrWhiteSpace(LastName))
+
+            if (_errors.Count > 0)
             {
-                _errors.Add(string.Format(AppRes.ErrorEmpty, AppRes.LastName));
+                var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
+                await _navigationService.ShowAlertAsync(message);
+                return false;
             }
-            if (IsRegistering && !IsValidEmail(LoginEmail))
-            {
-                _errors.Add(AppRes.InvalidEmailFormat);
-            }
-            else if (IsRegistering && Password.Length < 6)
-            {
-                _errors.Add(AppRes.PasswordTooShort);
-            }
-            if (IsRegistering && Password != PasswordAgain)
-            {
-                _errors.Add(AppRes.PasswordsDoNotMatch);
-            }
-            return _errors.Count == 0;
+            return true;
         }
 
         private static bool IsValidEmail(string email)
@@ -139,5 +166,8 @@ namespace MadarfigyeloApp.ViewModels
                 return false;
             }
         }
+
+        [GeneratedRegex("^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,}$")]
+        private static partial Regex PasswordRegex();
     }
 }

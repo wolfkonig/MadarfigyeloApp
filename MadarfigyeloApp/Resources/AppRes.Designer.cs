@@ -628,7 +628,7 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jelszó túl rövid.
+        ///   Looks up a localized string similar to A jelszó legalább 6 karakter hosszú legyen, tartalmazzon kis- és nagybetűt és számot, ne tartalmnazzon speciális karaktert..
         /// </summary>
         internal static string PasswordTooShort {
             get {

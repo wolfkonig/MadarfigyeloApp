@@ -59,7 +59,7 @@
 
                 <Label Grid.Row="0"
                        Grid.Column="0"
-                       Text="{x:Static res:AppRes.LoginName}" />
+                       Text="{x:Static res:AppRes.Email}" />
                 <Entry Grid.Row="0"
                        Grid.Column="1"
                        Text="{Binding LoginEmail}"/>

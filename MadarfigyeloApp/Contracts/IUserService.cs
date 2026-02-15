@@ -1,14 +1,15 @@
 ﻿using MadarfigyeloApp.Models;
+using Refit;
 
 namespace MadarfigyeloApp.Contracts
 {
     public interface IUserService
     {
-        Task<bool> LogInUser(string username, string password);
+        Task<bool> LogInUser(string email, string password);
 
-        Task<bool> RegisterUser(User user);  
+        Task<bool> RegisterUser(UserDto user);  
 
-        User? GetLoggedInUser();
+        UserDto? GetLoggedInUser();
 
         void LogOutUser();
     }

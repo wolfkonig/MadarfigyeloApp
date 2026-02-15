@@ -339,4 +339,28 @@
   <data name="Utm" xml:space="preserve">
     <value>UTM: {0}</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail cím</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Keresztnév</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Vezetéknév</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Regisztráció</value>
+  </data>
+  <data name="PasswordAgain" xml:space="preserve">
+    <value>Jelszó újra</value>
+  </data>
+  <data name="InvalidEmailFormat" xml:space="preserve">
+    <value>Érvénytelen e-mail cím</value>
+  </data>
+  <data name="PasswordTooShort" xml:space="preserve">
+    <value>Jelszó túl rövid</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>A két jelszó nem egyezik</value>
+  </data>
 </root>

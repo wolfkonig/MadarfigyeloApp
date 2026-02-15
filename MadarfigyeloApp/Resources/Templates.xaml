@@ -11,12 +11,13 @@
                   IsVisible="{TemplateBinding BindingContext.IsBusy}"
                   InputTransparent="False">
 
-                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <ActivityIndicator IsRunning="{TemplateBinding BindingContext.IsBusy}"                               
+                <VerticalStackLayout VerticalOptions="Center"
+                                     HorizontalOptions="Center">
+                    <ActivityIndicator IsRunning="{TemplateBinding BindingContext.IsBusy}"
                                        Color="{StaticResource White}"
-                                       HeightRequest="50" 
+                                       HeightRequest="50"
                                        WidthRequest="50" />
-                    <Label Text="{x:Static res:AppRes.Loading}" 
+                    <Label Text="{TemplateBinding BindingContext.LoadingMessage}"
                            TextColor="{StaticResource White}" />
                 </VerticalStackLayout>
 

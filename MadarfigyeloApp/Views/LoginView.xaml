@@ -4,38 +4,109 @@
                 xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
                 xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 x:Class="MadarfigyeloApp.Views.LoginView"
                 x:DataType="vm:LoginViewModel"
                 Title="{x:Static res:AppRes.AppTitle}"
                 BackgroundColor="{StaticResource Secondary}"
                 Shell.FlyoutBehavior="Disabled">
-    
+
     <Border VerticalOptions="Center"
             BackgroundColor="{StaticResource White}"
             StrokeShape="RoundRectangle 15"
-            Margin="15">   
-        <Grid RowDefinitions="40,40,*,50" 
-              ColumnDefinitions="2*,3*"
-              Margin="15">
-            
-            <Label Grid.Row="1"
-                   Grid.Column="0"
-                   Text="{x:Static res:AppRes.LoginName}" />
-            <Entry Grid.Row="1"
-                   Grid.Column="1"
-                   Text="{Binding LoginName}" 
-                   ClearButtonVisibility="WhileEditing"/>
-            <Label Grid.Row="2"
-                   Grid.Column="0"
-                   Text="{x:Static res:AppRes.Password}" />
-            <Entry Grid.Row="2"
-                   Grid.Column="1"
-                   IsPassword="True"
-                   Text="{Binding Password}" />
-            <Button Grid.Row="3"
-                    Grid.ColumnSpan="2"
-                    Text="{x:Static res:AppRes.Login}"
-                    Command="{Binding LoginCommand}" />
-        </Grid>
+            Margin="15">
+        <VerticalStackLayout>
+            <Grid RowDefinitions="40,40,50"
+                  ColumnDefinitions="2*,3*"
+                  Margin="15"
+                  IsVisible="{Binding IsRegistering, Converter={toolkit:InvertedBoolConverter}}">
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="{x:Static res:AppRes.Email}" />
+                <Entry Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding LoginEmail}"
+                       ClearButtonVisibility="WhileEditing" />
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Text="{x:Static res:AppRes.Password}" />
+                <Entry Grid.Row="1"
+                       Grid.Column="1"
+                       IsPassword="True"
+                       Text="{Binding Password}" />
+                <Button Grid.Row="2"
+                        Grid.Column="2"
+                        Text="{x:Static res:AppRes.Login}"
+                        Command="{Binding LoginCommand}" />
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       HorizontalOptions="Center"
+                       TextDecorations="Underline"
+                       Text="{x:Static res:AppRes.Register}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleRegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                       
+
+            </Grid>
+
+            <Grid RowDefinitions="40,40,40,40,40,50"
+                  ColumnDefinitions="2*,3*"
+                  Margin="15"
+                  IsVisible="{Binding IsRegistering}">
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="{x:Static res:AppRes.LoginName}" />
+                <Entry Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding LoginEmail}"/>
+                
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Text="{x:Static res:AppRes.FirstName}" />
+                <Entry Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding FirstName}" />
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Text="{x:Static res:AppRes.LastName}" />
+                <Entry Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding LastName}" />
+
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Text="{x:Static res:AppRes.Password}" />
+                <Entry Grid.Row="3"
+                       Grid.Column="1"
+                       IsPassword="True"
+                       Text="{Binding Password}" />
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Text="{x:Static res:AppRes.PasswordAgain}" />
+                <Entry Grid.Row="4"
+                       Grid.Column="1"
+                       IsPassword="True"                     
+                       Text="{Binding PasswordAgain}" />
+
+                <Button Grid.Row="5"
+                        Grid.Column="1"
+                        Text="{x:Static res:AppRes.Register}"
+                        Command="{Binding RegisterCommand}" />
+
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       HorizontalOptions="Center"
+                       TextDecorations="Underline"
+                       Text="{x:Static res:AppRes.Cancel}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleRegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </VerticalStackLayout>
     </Border>
 </pages:BasePage>

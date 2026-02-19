@@ -1,7 +1,7 @@
 ﻿using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
 using System.Net.Http.Headers;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace MadarfigyeloApp.API;
 

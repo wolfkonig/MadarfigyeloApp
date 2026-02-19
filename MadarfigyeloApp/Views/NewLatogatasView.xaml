@@ -64,7 +64,7 @@
                    Grid.Row="4"
                    Grid.Column="1" />
 
-            <Label Text="{x:Static res:AppRes.TojasSzam}"
+            <Label Text="{x:Static res:AppRes.TojasokSzama}"
                    Grid.Row="5"
                    Grid.Column="0"
                    VerticalOptions="Center" />
@@ -73,7 +73,7 @@
                    Grid.Column="1"
                    Keyboard="Numeric" />
 
-            <Label Text="{x:Static res:AppRes.FiokaSzam}"
+            <Label Text="{x:Static res:AppRes.FiokakSzama}"
                    Grid.Row="6"
                    Grid.Column="0"
                    VerticalOptions="Center" />

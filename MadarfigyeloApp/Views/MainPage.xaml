@@ -10,14 +10,23 @@
 
     <Grid RowDefinitions="50,*">
 
-        <Button Grid.Row="0" />
-        <ImageButton Grid.Row="0" 
-                     ZIndex="1"
-                     HeightRequest="40"
-                     HorizontalOptions="End"
-                     Margin="5"
-                     Source="logout.png"
-                     Command="{Binding LogoutCommand}"/>
+        <Grid ColumnDefinitions="Auto,*,40"
+              BackgroundColor="White"
+              Opacity="0.5"
+              Grid.Row="0"
+              ZIndex="1">
+
+            <Label Grid.Column="0"
+                   Margin="10,0,0,0"
+                   Text="{Binding LoggedInUser, StringFormat={x:Static res:AppRes.LoggedInAs}}"
+                   FontSize="Medium" />
+
+            <ImageButton Grid.Column="2"
+                         Margin="0,5,10,5"
+                         HeightRequest="35"
+                         Source="logout"
+                         Command="{Binding LogoutCommand}" />
+        </Grid>
 
         <Image Grid.Row="0" 
                ZIndex="0"

@@ -54,17 +54,17 @@
                                        Grid.Column="1"
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />                             
-                                <Label Text="{Binding TojasSzam, StringFormat={x:Static res:AppRes.TojasokSzama}}"
+                                <Label Text="{Binding TojasSzam, StringFormat={x:Static res:AppRes.TojasokSzamaX}}"
                                        Grid.Column="2"
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />
 
-                                <Label Text="{Binding FiokaSzam, StringFormat={x:Static res:AppRes.FiokakSzama}}"
+                                <Label Text="{Binding FiokaSzam, StringFormat={x:Static res:AppRes.FiokakSzamaX}}"
                                        Grid.Column="0"
                                        Grid.Row="1"
                                        Style="{StaticResource ListText}" />
 
-                                <Label Text="{Binding FiokakKora, StringFormat={x:Static res:AppRes.FiokakKora}}"
+                                <Label Text="{Binding FiokakKora, StringFormat={x:Static res:AppRes.FiokakKoraX}}"
                                        Grid.Column="1"
                                        Grid.Row="1"
                                        Style="{StaticResource ListText}" />

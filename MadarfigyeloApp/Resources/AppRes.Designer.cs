@@ -106,7 +106,7 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Madárfigyelő.
+        ///   Looks up a localized string similar to Terepnapló.
         /// </summary>
         internal static string AppTitle {
             get {
@@ -268,7 +268,7 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fiókák kora: {0}.
+        ///   Looks up a localized string similar to Fiókák kora.
         /// </summary>
         internal static string FiokakKora {
             get {
@@ -277,11 +277,29 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fiókák száma: {0}.
+        ///   Looks up a localized string similar to Fiókák kora: {0}.
+        /// </summary>
+        internal static string FiokakKoraX {
+            get {
+                return ResourceManager.GetString("FiokakKoraX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiókák száma.
         /// </summary>
         internal static string FiokakSzama {
             get {
                 return ResourceManager.GetString("FiokakSzama", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiókák száma: {0}.
+        /// </summary>
+        internal static string FiokakSzamaX {
+            get {
+                return ResourceManager.GetString("FiokakSzamaX", resourceCulture);
             }
         }
         
@@ -291,15 +309,6 @@ namespace MadarfigyeloApp.Resources {
         internal static string FiokakVannak {
             get {
                 return ResourceManager.GetString("FiokakVannak", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fiókaszám.
-        /// </summary>
-        internal static string FiokaSzam {
-            get {
-                return ResourceManager.GetString("FiokaSzam", resourceCulture);
             }
         }
         
@@ -408,6 +417,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bejelentkezve: {0}.
+        /// </summary>
+        internal static string LoggedInAs {
+            get {
+                return ResourceManager.GetString("LoggedInAs", resourceCulture);
             }
         }
         
@@ -709,11 +727,20 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tojások száma: {0}.
+        ///   Looks up a localized string similar to Tojások száma.
         /// </summary>
         internal static string TojasokSzama {
             get {
                 return ResourceManager.GetString("TojasokSzama", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tojások száma: {0}.
+        /// </summary>
+        internal static string TojasokSzamaX {
+            get {
+                return ResourceManager.GetString("TojasokSzamaX", resourceCulture);
             }
         }
         
@@ -723,15 +750,6 @@ namespace MadarfigyeloApp.Resources {
         internal static string TojasokVannak {
             get {
                 return ResourceManager.GetString("TojasokVannak", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tojásszám.
-        /// </summary>
-        internal static string TojasSzam {
-            get {
-                return ResourceManager.GetString("TojasSzam", resourceCulture);
             }
         }
         

@@ -11,10 +11,11 @@
                 BackgroundColor="{StaticResource Secondary}"
                 Shell.FlyoutBehavior="Disabled">
 
-    <Border VerticalOptions="Center"
+    <Border VerticalOptions="Start"
             BackgroundColor="{StaticResource White}"
             StrokeShape="RoundRectangle 15"
-            Margin="15">
+            Margin="15,100,15,0">
+        
         <VerticalStackLayout>
             <Grid RowDefinitions="40,40,50"
                   ColumnDefinitions="2*,3*"

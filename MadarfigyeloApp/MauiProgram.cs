@@ -12,7 +12,7 @@ namespace MadarfigyeloApp
 {
     public static class MauiProgram
     {
-        public static Environment CurrentEnvironment { get; } = Environment.DevLocal;
+        public static Environment CurrentEnvironment { get; } = Environment.Dev;
 
         public static MauiApp CreateMauiApp()
         {
@@ -95,23 +95,22 @@ namespace MadarfigyeloApp
             }
             else if (CurrentEnvironment == Environment.Dev)
             {
-                builder.Services.AddTransient<BasicAuthHandler>();
+                builder.Services.AddTransient<TokenAuthHandler>();
 
                 builder.Services.AddRefitClient<IGenericApi<Odutelep>>(refitSettings)
                     .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Odutelep"))
-                    .AddHttpMessageHandler<BasicAuthHandler>();
+                    .AddHttpMessageHandler<TokenAuthHandler>();
 
                 builder.Services.AddRefitClient<IGenericApi<Odu>>(refitSettings)
                     .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Odu"))
-                    .AddHttpMessageHandler<BasicAuthHandler>();
+                    .AddHttpMessageHandler<TokenAuthHandler>();
 
                 builder.Services.AddRefitClient<IGenericApi<Latogatas>>(refitSettings)
                     .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + "/Latogatas"))
-                    .AddHttpMessageHandler<BasicAuthHandler>();
+                    .AddHttpMessageHandler<TokenAuthHandler>();
 
                 builder.Services.AddRefitClient<IAuthApi>(refitSettings)
-                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp))
-                    .AddHttpMessageHandler<BasicAuthHandler>();
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp));
             }
             else
             {

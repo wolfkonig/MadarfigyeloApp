@@ -1,10 +1,11 @@
 ﻿using MadarfigyeloApp.API;
+using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Resources;
 using Refit;
 using System.Text;
 
-namespace MadarfigyeloApp.Contracts
+namespace MadarfigyeloApp.Implementations
 {
     public class UserService : IUserService
     {

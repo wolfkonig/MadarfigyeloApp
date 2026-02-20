@@ -8,6 +8,7 @@ namespace MadarfigyeloApp.ViewModels
     {
         private readonly IApiService _apiService;
         private readonly ILocationService _locationService;
+        private readonly ILogger _logger;
 
         // Backing fields
         private string? _oduAzonosito;
@@ -26,25 +27,44 @@ namespace MadarfigyeloApp.ViewModels
 
         public AsyncRelayCommand SaveCommand { get; set; }
 
-        public NewOduViewModel(IApiService apiService, INavigationService navigationService, ILocationService locationService) : base(navigationService)
+        public NewOduViewModel(
+            IApiService apiService, 
+            INavigationService navigationService, 
+            ILocationService locationService,
+            ILogger logger) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             SaveCommand = new(SaveAsync);
         }
 
         public override async Task InitAsync()
         {
             Odutelepek = await _apiService.GetAllOdutelepAsync();
-            var location = await _locationService.GetCurrentLocationAsync(highAccuracy: true);
+            Location? location = null;
+            try
+            {
+                location = await _locationService.GetCurrentLocationAsync(highAccuracy: true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get current location. ERROR: {ex.Message}");
+
+                var retry = await _navigationService.ShowQuestionAsync("Failed to get current location.","Do you want to retry?");
+                if (retry)
+                {
+                    location = await _locationService.GetCurrentLocationAsync(highAccuracy: false);
+                }
+            }
 
             if (location is not null)
             {
                 GpsLatitude = (decimal)location.Latitude;
                 GpsLongitude = (decimal)location.Longitude;
 
-                var message = await Utilities.GeocodingHelpers.GetAddressAsync(location);
-                await _navigationService.ShowAlertAsync(message);
+                //var message = await Utilities.GeocodingHelpers.GetAddressAsync(location);
+                //await _navigationService.ShowAlertAsync(message);
             }
         }
 

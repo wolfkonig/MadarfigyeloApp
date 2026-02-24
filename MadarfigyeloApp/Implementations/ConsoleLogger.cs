@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace MadarfigyeloApp.Implementations
 {
-    public class ConsoleLogger : ILogger
+    public class ConsoleLogger : ILoggerService
     {
-        void ILogger.LogError(string message)
+        void ILoggerService.LogError(string message)
         {
             Console.WriteLine("##### ERROR: {0}", message);
         }
 
-        void ILogger.LogInfo(string message)
+        void ILoggerService.LogInfo(string message)
         {
             Console.WriteLine("##### INFO: {0}", message);
         }
 
-        void ILogger.LogWarning(string message)
+        void ILoggerService.LogWarning(string message)
         {
             Console.WriteLine("##### WARNING: {0}", message);
         }

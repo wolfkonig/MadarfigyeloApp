@@ -10,9 +10,9 @@ namespace MadarfigyeloApp.Implementations
     public class UserService : IUserService
     {
         private readonly IAuthApi _authApi;
-        private readonly ILogger _logger;  
+        private readonly ILoggerService _logger;  
 
-        public UserService(IAuthApi authApi, ILogger logger)    
+        public UserService(IAuthApi authApi, ILoggerService logger)    
         {
             _authApi = authApi ?? throw new ArgumentNullException(nameof(authApi));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

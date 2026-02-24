@@ -10,7 +10,7 @@
                 x:DataType="vm:OduViewModel"
                 Title="{x:Static res:AppRes.Oduk}">
 
-    <Grid RowDefinitions="*,50">
+    <Grid RowDefinitions="50,*,50">
         <Image Grid.Row="0"
                Grid.RowSpan="2"
                Opacity="0.4"
@@ -18,8 +18,28 @@
                Aspect="AspectFill"
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
+
+        <Grid ColumnDefinitions="2*,3*" 
+              Grid.Row="0" 
+              BackgroundColor="{StaticResource White}" 
+              Opacity="0.6">
+            <Label Text="{x:Static res:AppRes.Odutelep}"
+                   FontSize="Medium"
+                   Grid.Column="0" 
+                   HorizontalOptions="End"
+                   Padding="10,0,10,5"
+                   />
+
+            <Picker ItemsSource="{Binding OdutelepList}"
+                    ItemDisplayBinding="{Binding Azonosito}"
+                    SelectedItem="{Binding SelectedOdutelep}"
+                    FontSize="Medium"
+                    Grid.Column="1"
+                    />
+        </Grid>
+
         <CollectionView ItemsSource="{Binding OduList}"
-                        Grid.Row="0">
+                        Grid.Row="1">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Odu">
                     <Border Background="{StaticResource Secondary }"
@@ -96,7 +116,7 @@
 
         <Button Text="{x:Static res:AppRes.UjOdu}"
                 Command="{Binding NewOduCommand}"
-                Grid.Row="1"/>
+                Grid.Row="2"/>
 
     </Grid>
 </pages:BasePage>

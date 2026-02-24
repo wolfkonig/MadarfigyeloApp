@@ -369,4 +369,7 @@
   <data name="LoggedInAs" xml:space="preserve">
     <value>Bejelentkezve: {0}</value>
   </data>
+  <data name="NoneSelected" xml:space="preserve">
+    <value>Összes mutatása</value>
+  </data>
 </root>

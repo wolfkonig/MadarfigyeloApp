@@ -8,9 +8,9 @@ namespace MadarfigyeloApp.API;
 public class TokenAuthHandler : DelegatingHandler
 {
     private readonly IAuthApi _authApi;
-    private readonly ILogger _logger;
+    private readonly ILoggerService _logger;
 
-    public TokenAuthHandler(IAuthApi authApi, ILogger logger)
+    public TokenAuthHandler(IAuthApi authApi, ILoggerService logger)
     {
         _authApi = authApi ?? throw new ArgumentNullException(nameof(authApi));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -20,7 +20,8 @@ public class TokenAuthHandler : DelegatingHandler
     {
         // 1. Retrieve the token from SecureStorage if not expired
         var expDate = Preferences.Default.Get(Constants.KeyLoggedInUserTokenExpDate, DateTime.MinValue);
-        string? token;
+
+        var token = string.Empty;
         if (expDate > DateTime.Now)
         {
             token = await SecureStorage.Default.GetAsync(Constants.KeyLoggedInUserToken);
@@ -47,7 +48,12 @@ public class TokenAuthHandler : DelegatingHandler
             }
             else
             {
-                throw new Exception("Failed to refresh token. User may need to log in again.");
+                _logger.LogError("Failed to refresh token. User may need to log in again.");
+                SecureStorage.Default.RemoveAll();
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("Token expired and refresh failed. Please log in again.")
+                };
             }
         }
 

@@ -53,7 +53,7 @@ namespace MadarfigyeloApp
 
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
-            builder.Services.AddSingleton<Contracts.ILogger, ConsoleLogger>();
+            builder.Services.AddSingleton<ILoggerService, ConsoleLogger>();
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
             builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddSingleton<ILocationService, LocationService>();
@@ -70,7 +70,7 @@ namespace MadarfigyeloApp
                 builder.Services.AddTransient<TokenAuthHandler>();
                 var acceptAllClientHandler = new HttpClientHandler
                 {
-                    ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
+                    ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                    
                 };
 
                 builder.Services.AddRefitClient<IAuthApi>(refitSettings)

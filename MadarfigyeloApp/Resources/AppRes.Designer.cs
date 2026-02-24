@@ -529,6 +529,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Összes mutatása.
+        /// </summary>
+        internal static string NoneSelected {
+            get {
+                return ResourceManager.GetString("NoneSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odú.
         /// </summary>
         internal static string Odu {

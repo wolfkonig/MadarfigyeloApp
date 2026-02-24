@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MadarfigyeloApp.Contracts
 {
-    public interface ILogger
+    public interface ILoggerService
     {
         void LogInfo(string message);
 

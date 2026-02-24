@@ -8,7 +8,7 @@ namespace MadarfigyeloApp.ViewModels
     {
         private readonly IApiService _apiService;
         private readonly ILocationService _locationService;
-        private readonly ILogger _logger;
+        private readonly ILoggerService _logger;
 
         // Backing fields
         private string? _oduAzonosito;
@@ -31,7 +31,7 @@ namespace MadarfigyeloApp.ViewModels
             IApiService apiService, 
             INavigationService navigationService, 
             ILocationService locationService,
-            ILogger logger) : base(navigationService)
+            ILoggerService logger) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));

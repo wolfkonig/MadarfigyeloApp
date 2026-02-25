@@ -1,4 +1,7 @@
-﻿namespace MadarfigyeloApp.Models
+﻿using MadarfigyeloApp.Resources;
+using System.Text.Json.Serialization;
+
+namespace MadarfigyeloApp.Models
 {
     public class Odu
     {
@@ -28,7 +31,9 @@
         public string? OdutTartoNovenyfaj { get; set; }
 
         public string? MagassagMeter {  get; set; }
-
+        [JsonIgnore]
         public ICollection<Latogatas>? Latogatasok { get; set; }
-     }
+        [JsonIgnore]
+        public static Odu Empty => new() { Id = 0, OduAzonosito = AppRes.NoneSelected };
+    }
 }

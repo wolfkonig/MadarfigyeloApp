@@ -43,7 +43,7 @@
                             </toolkit:Expander.Header>
 
                             <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="30,30,30">
+                                  RowDefinitions="Auto,Auto,Auto">
                                 <Label Text="{Binding UtmNegyzetKod, StringFormat={x:Static res:AppRes.Utm}}"
                                        Grid.Column="0"
                                        Grid.Row="0"

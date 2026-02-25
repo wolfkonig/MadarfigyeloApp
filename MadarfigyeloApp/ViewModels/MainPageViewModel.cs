@@ -29,12 +29,11 @@ namespace MadarfigyeloApp.ViewModels
                     await _navigationService.GoToAsync($"//{Constants.RouteLogin}");
                 }
             });
-
-            LoggedInUser = _userService.GetLoggedInUser()?.Email ?? string.Empty;
         }
 
         public override Task InitAsync()
         {
+            LoggedInUser = _userService.GetLoggedInUser()?.Email ?? string.Empty;
             return Task.CompletedTask;
         }
     }

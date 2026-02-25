@@ -10,22 +10,22 @@ namespace MadarfigyeloApp.ViewModels
         private readonly IApiService _apiService;
 
         private List<Odu> _oduList = [];
-        private List<Odutelep> _odutelepList = [];
-        private Odutelep? _selectedOdutelep;
+        private List<Odutelep> _odutelepList = [Odutelep.Empty];
+        private Odutelep _selectedOdutelep;
 
         public List<Odu> OduList
         {
-            get => [.. _oduList.Where(o => _selectedOdutelep is null || _selectedOdutelep.Id == 0 || o.OdutelepId == _selectedOdutelep.Id)];
+            get => [.. _oduList.Where(o => _selectedOdutelep.Id == 0 || o.OdutelepId == _selectedOdutelep.Id)];
             set => SetProperty(ref _oduList, value);
         }
 
         public List<Odutelep> OdutelepList
         {
-            get => [.. _odutelepList.Concat([new Odutelep { Id = 0, Azonosito = AppRes.NoneSelected }]).OrderBy(x => x.Id)];
+            get => _odutelepList;
             set => SetProperty(ref _odutelepList, value);
         }
 
-        public Odutelep? SelectedOdutelep
+        public Odutelep SelectedOdutelep
         {
             get => _selectedOdutelep;
             set
@@ -41,18 +41,21 @@ namespace MadarfigyeloApp.ViewModels
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewOduCommand = new (NewOdu);
+            SelectedOdutelep = OdutelepList[0];
         }
 
         public override async Task InitAsync()
         {
-            OdutelepList = await _apiService.GetAllOdutelepAsync();
+            var odutelepek = await _apiService.GetAllOdutelepAsync();
+            OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
+            SelectedOdutelep = OdutelepList[0];
+
             var oduk = await _apiService.GetAllOduAsync();
             foreach (var odu in oduk)
             {
                 odu.Odutelep = _odutelepList.FirstOrDefault(x => x.Id == odu.OdutelepId);
             }
             OduList = oduk;
-            SelectedOdutelep = OdutelepList.FirstOrDefault(x=>x.Id == 0);
         }
 
         private async Task NewOdu()

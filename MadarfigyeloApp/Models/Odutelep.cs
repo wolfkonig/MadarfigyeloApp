@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using MadarfigyeloApp.Resources;
+using System.Text.Json.Serialization;
 
 namespace MadarfigyeloApp.Models
 {
@@ -25,5 +26,7 @@ namespace MadarfigyeloApp.Models
         public string? Megjegyzes { get; set; }
         [JsonIgnore]
         public ICollection<Odu>? Oduk {  get; set; }
+        [JsonIgnore]
+        public static Odutelep Empty => new() { Id = 0, Azonosito = AppRes.NoneSelected };
     }
 }

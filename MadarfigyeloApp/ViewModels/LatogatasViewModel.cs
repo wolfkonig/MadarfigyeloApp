@@ -10,8 +10,8 @@ namespace MadarfigyeloApp.ViewModels
         private readonly IApiService _apiService;
 
         private List<Latogatas> _latogatasList = [];
-        private List<Odu> _oduList = [];
-        private Odu? _selectedOdu;
+        private List<Odu> _oduList = [Odu.Empty];
+        private Odu _selectedOdu;
 
         public AsyncRelayCommand NewLatogatasCommand { get; private set; }
 
@@ -23,11 +23,11 @@ namespace MadarfigyeloApp.ViewModels
 
         public List<Odu> OduList
         {
-            get => [.. _oduList.Concat([new Odu { Id = 0, OduAzonosito = AppRes.NoneSelected }]).OrderBy(x => x.Id)];
+            get => _oduList;
             set => SetProperty(ref _oduList, value);
         }
 
-        public Odu? SelectedOdu
+        public Odu SelectedOdu
         {
             get => _selectedOdu;
             set
@@ -41,18 +41,21 @@ namespace MadarfigyeloApp.ViewModels
         {            
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewLatogatasCommand = new(NewLatogatas);
+            SelectedOdu = OduList[0];
         }
 
         public override async Task InitAsync()
         {
-            OduList = await _apiService.GetAllOduAsync();
+            var oduk = await _apiService.GetAllOduAsync();
+            OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
+            SelectedOdu = OduList[0];
+
             var latogatasok = await _apiService.GetAllLatogatasAsync();
             foreach (var latogatas in latogatasok)
             {
                 latogatas.Odu = _oduList.FirstOrDefault(x => x.Id == latogatas.OduId);
             }
             LatogatasList = latogatasok;
-            SelectedOdu = OduList.FirstOrDefault(x => x.Id == 0);
         }
 
         private async Task NewLatogatas()

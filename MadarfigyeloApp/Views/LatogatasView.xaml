@@ -63,7 +63,7 @@
                             </toolkit:Expander.Header>
 
                             <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="30,30">
+                                  RowDefinitions="Auto,Auto">
                                 <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
                                        Grid.Column="0"
                                        Grid.Row="0"

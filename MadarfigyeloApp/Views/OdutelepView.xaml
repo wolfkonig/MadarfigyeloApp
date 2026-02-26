@@ -28,7 +28,7 @@
                             StrokeShape="RoundRectangle 5">
                         <toolkit:Expander>
                             <toolkit:Expander.Header>
-                                <Grid ColumnDefinitions="*,*,*"
+                                <Grid ColumnDefinitions="3*,3*,2*"
                                       RowDefinitions="30">
                                     <Label Text="{Binding Azonosito}"
                                            Grid.Column="0"
@@ -43,7 +43,7 @@
                             </toolkit:Expander.Header>
 
                             <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="Auto,Auto,Auto">
+                                  RowDefinitions="60,60,50">
                                 <Label Text="{Binding UtmNegyzetKod, StringFormat={x:Static res:AppRes.Utm}}"
                                        Grid.Column="0"
                                        Grid.Row="0"

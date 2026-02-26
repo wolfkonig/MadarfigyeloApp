@@ -64,7 +64,7 @@
                             </toolkit:Expander.Header>
 
                             <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="Auto,Auto,Auto">
+                                  RowDefinitions="30,30,30">
                                 <Label Text="{Binding GpsLatitude}"
                                        Grid.Column="0"
                                        Grid.Row="0"

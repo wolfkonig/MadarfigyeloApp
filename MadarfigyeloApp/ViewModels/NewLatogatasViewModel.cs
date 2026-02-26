@@ -137,7 +137,7 @@ namespace MadarfigyeloApp.ViewModels
             if (Allapot is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Allapot)));
             if (string.IsNullOrEmpty(Faj)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Faj)));           
 
-            if (_errors.Count > 0)
+            if (HasErrors)
             {
                 var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
                 await _navigationService.ShowAlertAsync(message);

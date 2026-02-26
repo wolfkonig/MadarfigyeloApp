@@ -9,7 +9,7 @@ namespace MadarfigyeloApp.ViewModels
         private bool _isBusy;
 
         protected INavigationService _navigationService;
-        protected List<string> _errors = new();
+        protected List<string> _errors = [];
         private string _loadingMessage;
 
         public BaseViewModel(INavigationService navigationService)
@@ -23,6 +23,8 @@ namespace MadarfigyeloApp.ViewModels
             get => _isBusy;
             set => SetProperty(ref _isBusy, value);
         }
+
+        public bool HasErrors => _errors.Any();
 
         public string LoadingMessage
         {
@@ -39,17 +41,5 @@ namespace MadarfigyeloApp.ViewModels
         }
 
         public abstract Task InitAsync();
-
-        protected void ShowLoading(string message)
-        {
-            LoadingMessage = message;
-            IsBusy = true;
-        }
-
-        protected void HideLoading()
-        {
-            IsBusy = false;
-            LoadingMessage = string.Empty;
-        }
     }
 }

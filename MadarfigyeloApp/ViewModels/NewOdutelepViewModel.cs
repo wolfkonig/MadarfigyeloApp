@@ -141,7 +141,7 @@ namespace MadarfigyeloApp.ViewModels
                 _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(UtmNegyzetKod)));
             }
 
-            if (_errors.Count > 0)
+            if (HasErrors)
             {
                 var message = _errors.Aggregate((a, b) => $"{a}\r\n{b}");
                 await _navigationService.ShowAlertAsync(message);

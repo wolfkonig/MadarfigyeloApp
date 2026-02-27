@@ -8,7 +8,8 @@
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.OduView"
                 x:DataType="vm:OduViewModel"
-                Title="{x:Static res:AppRes.Oduk}">
+                Title="{x:Static res:AppRes.Oduk}"
+                x:Name="oduRoot">
 
     <Grid RowDefinitions="50,*,50">
         <Image Grid.Row="0"
@@ -78,10 +79,16 @@
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />
                                 
-                                <Label Text="{Binding Elohelykod}"
+                                <!--<Label Text="{Binding Elohelykod}"
                                        Grid.Column="0"
                                        Grid.Row="1"
-                                       Style="{StaticResource ListText}" />
+                                       Style="{StaticResource ListText}" />-->
+
+                                <Button Text="Latogatasok"
+                                        Grid.Column="0"
+                                        Grid.Row="1"
+                                        Command="{Binding BindingContext.LatogatasokCommand, Source={x:Reference oduRoot}}"
+                                        CommandParameter="{Binding Id}"/>
                                 
                                 <Label Text="{Binding MireVanHelyezve}"
                                        Grid.Column="1"

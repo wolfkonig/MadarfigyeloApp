@@ -36,11 +36,13 @@ namespace MadarfigyeloApp.ViewModels
         }
 
         public AsyncRelayCommand NewOduCommand { get; private set; }
+        public AsyncRelayCommand<int> LatogatasokCommand { get; private set; }
 
         public OduViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
-            NewOduCommand = new (NewOdu);
+            NewOduCommand = new(NewOduAsync);
+            LatogatasokCommand = new(LatogatasokAsync);
             SelectedOdutelep = OdutelepList[0];
         }
 
@@ -58,9 +60,14 @@ namespace MadarfigyeloApp.ViewModels
             OduList = oduk;
         }
 
-        private async Task NewOdu()
+        private async Task NewOduAsync()
         {
             await _navigationService.GoToAsync(Constants.RouteNewOdu);
+        }
+
+        private async Task LatogatasokAsync(int oduId)
+        {
+            await _navigationService.GoToAsync($"//latogatas?{Constants.ParamOduId}={oduId}");
         }
     }
 }

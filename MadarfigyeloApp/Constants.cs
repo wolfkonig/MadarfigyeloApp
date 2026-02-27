@@ -23,5 +23,8 @@
         public const string KeyLoggedInUserPassword = "loggedInUserPassword";
         public const string KeyLoggedInUserToken = "loggedInUserToken";
         public const string KeyLoggedInUserTokenExpDate = "loggedInUserTokenExpDate";
+
+        // Paremeters
+        public const string ParamOduId = "oduId";
     }
 }

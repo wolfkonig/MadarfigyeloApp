@@ -4,7 +4,7 @@ using MadarfigyeloApp.Models;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class NewLatogatasViewModel : BaseViewModel
+    public class NewLatogatasViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly IApiService _apiService;
 
@@ -19,6 +19,7 @@ namespace MadarfigyeloApp.ViewModels
         private string? _fiokakKora;
         private string? _megjegyzesek;
         private List<Odu> _oduk = new();
+        private int _selectedOduId = -1;
 
         public NewLatogatasViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
@@ -31,6 +32,8 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             Oduk = await _apiService.GetAllOduAsync();
+            if (_selectedOduId > 0)
+                SelectedOdu = Oduk.FirstOrDefault(x => x.Id == _selectedOduId);
         }
 
         // Collections for Pickers
@@ -51,7 +54,11 @@ namespace MadarfigyeloApp.ViewModels
         public Odu? SelectedOdu
         {
             get => _selectedOdu;
-            set => SetProperty(ref _selectedOdu, value);
+            set
+            {
+                SetProperty(ref _selectedOdu, value);
+                _selectedOduId = value?.Id ?? -1;
+            }
         }
 
         public DateTime Datum
@@ -144,6 +151,15 @@ namespace MadarfigyeloApp.ViewModels
                 return false;
             }
             return true;
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey(Constants.ParamOduId) &&
+                int.TryParse((string)query[Constants.ParamOduId], out int oduId))
+            {
+                _selectedOduId = oduId;
+            }
         }
     }
 }

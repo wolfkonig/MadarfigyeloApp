@@ -5,13 +5,14 @@ using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class LatogatasViewModel : BaseViewModel
+    public class LatogatasViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly IApiService _apiService;
 
         private List<Latogatas> _latogatasList = [];
         private List<Odu> _oduList = [Odu.Empty];
         private Odu _selectedOdu;
+        private int _selectedOduId = -1;
 
         public AsyncRelayCommand NewLatogatasCommand { get; private set; }
 
@@ -48,7 +49,7 @@ namespace MadarfigyeloApp.ViewModels
         {
             var oduk = await _apiService.GetAllOduAsync();
             OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
-            SelectedOdu = OduList[0];
+            SelectedOdu = OduList.FirstOrDefault(x => x.Id == _selectedOduId) ?? OduList[0];
 
             var latogatasok = await _apiService.GetAllLatogatasAsync();
             foreach (var latogatas in latogatasok)
@@ -57,10 +58,25 @@ namespace MadarfigyeloApp.ViewModels
             }
             LatogatasList = latogatasok;
         }
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey(Constants.ParamOduId) && 
+                int.TryParse((string)query[Constants.ParamOduId], out int oduId))
+            {
+                _selectedOduId = oduId;
+            }
+        }
 
         private async Task NewLatogatas()
         {
-            await _navigationService.GoToAsync(Constants.RouteNewLatogatas);
+            if (SelectedOdu != Odu.Empty) 
+            {
+                await _navigationService.GoToAsync($"{Constants.RouteNewLatogatas}?{Constants.ParamOduId}={SelectedOdu.Id}");
+            }
+            else
+            {
+                await _navigationService.GoToAsync(Constants.RouteNewLatogatas);
+            }
         }
     }
 }

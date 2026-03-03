@@ -17,6 +17,8 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref loggedInUser, value);
         }
 
+        public string Version { get; }
+
         public MainPageViewModel(INavigationService navigationService, IUserService userService) : base(navigationService)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
@@ -29,6 +31,7 @@ namespace MadarfigyeloApp.ViewModels
                     await _navigationService.GoToAsync($"//{Constants.RouteLogin}");
                 }
             });
+            Version = AppInfo.VersionString;
         }
 
         public override Task InitAsync()

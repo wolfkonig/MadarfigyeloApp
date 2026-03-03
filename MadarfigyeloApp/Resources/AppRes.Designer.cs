@@ -115,6 +115,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App verzió: {0}.
+        /// </summary>
+        internal static string AppVersionX {
+            get {
+                return ResourceManager.GetString("AppVersionX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Azonosító.
         /// </summary>
         internal static string Azonosito {

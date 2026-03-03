@@ -372,4 +372,7 @@
   <data name="NoneSelected" xml:space="preserve">
     <value>Összes mutatása</value>
   </data>
+  <data name="AppVersionX" xml:space="preserve">
+    <value>App verzió: {0}</value>
+  </data>
 </root>

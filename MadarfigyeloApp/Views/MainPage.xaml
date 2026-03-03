@@ -8,7 +8,7 @@
                 x:DataType="vm:MainPageViewModel"
                 Title="{x:Static res:AppRes.AppTitle}">
 
-    <Grid RowDefinitions="50,*">
+    <Grid RowDefinitions="50,*,30">
 
         <Grid ColumnDefinitions="Auto,*,40"
               BackgroundColor="White"
@@ -30,11 +30,17 @@
 
         <Image Grid.Row="0" 
                ZIndex="0"
-               Grid.RowSpan="2"
+               Grid.RowSpan="3"
                Source="hello.jpg"
                Aspect="AspectFill"
                HorizontalOptions="Fill"
-               VerticalOptions="Fill" />    
+               VerticalOptions="Fill" />
+
+        <Label Grid.Row="2"
+               HorizontalOptions="End"
+               TextColor="{StaticResource Accent}"
+               Text="{Binding Version, StringFormat={x:Static res:AppRes.AppVersionX}}"
+               Margin="0,0,10,0"/>
     </Grid>
 
 </pages:BasePage>

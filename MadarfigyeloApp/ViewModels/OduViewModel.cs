@@ -5,17 +5,18 @@ using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class OduViewModel : BaseViewModel
+    public class OduViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly IApiService _apiService;
 
         private List<Odu> _oduList = [];
         private List<Odutelep> _odutelepList = [Odutelep.Empty];
         private Odutelep _selectedOdutelep;
+        private int _selectedOdutelepId = -1;
 
         public List<Odu> OduList
         {
-            get => [.. _oduList.Where(o => _selectedOdutelep.Id == 0 || o.OdutelepId == _selectedOdutelep.Id)];
+            get => [.. _oduList.Where(o => SelectedOdutelep == null || SelectedOdutelep.Id == 0 || o.OdutelepId == SelectedOdutelep.Id)];
             set => SetProperty(ref _oduList, value);
         }
 
@@ -43,14 +44,13 @@ namespace MadarfigyeloApp.ViewModels
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
-            SelectedOdutelep = OdutelepList[0];
         }
 
         public override async Task InitAsync()
         {
             var odutelepek = await _apiService.GetAllOdutelepAsync();
             OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
-            SelectedOdutelep = OdutelepList[0];
+            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _selectedOdutelepId) ?? OdutelepList[0];
 
             var oduk = await _apiService.GetAllOduAsync();
             foreach (var odu in oduk)
@@ -62,12 +62,28 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task NewOduAsync()
         {
-            await _navigationService.GoToAsync(Constants.RouteNewOdu);
+            if (SelectedOdutelep != Odutelep.Empty)
+            {
+                await _navigationService.GoToAsync($"{Constants.RouteNewOdu}?{Constants.ParamOduTelepId}={SelectedOdutelep.Id}");
+            }
+            else
+            {
+                await _navigationService.GoToAsync(Constants.RouteNewOdu);
+            }
         }
 
         private async Task LatogatasokAsync(int oduId)
         {
-            await _navigationService.GoToAsync($"//latogatas?{Constants.ParamOduId}={oduId}");
+            await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}?{Constants.ParamOduId}={oduId}");
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey(Constants.ParamOduTelepId) &&
+                int.TryParse((string)query[Constants.ParamOduTelepId], out int odutelepId))
+            {
+                _selectedOdutelepId = odutelepId;
+            }
         }
     }
 }

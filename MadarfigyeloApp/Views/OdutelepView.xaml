@@ -8,7 +8,9 @@
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.OdutelepView"
                 x:DataType="vm:OdutelepViewModel"
-                Title="{x:Static res:AppRes.Odutelepek}">
+                Title="{x:Static res:AppRes.Odutelepek}"
+                x:Name="odutelepRoot">
+    
     <Grid RowDefinitions="*,50">
         <Image Grid.Row="0" 
                Grid.RowSpan="2"
@@ -43,7 +45,7 @@
                             </toolkit:Expander.Header>
 
                             <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="60,60,50">
+                                  RowDefinitions="60,60,50,30">
                                 <Label Text="{Binding UtmNegyzetKod, StringFormat={x:Static res:AppRes.Utm}}"
                                        Grid.Column="0"
                                        Grid.Row="0"
@@ -77,6 +79,15 @@
                                        Grid.Column="2"
                                        Grid.Row="2"
                                        Style="{StaticResource ListText}" />
+                                
+                                <Button Text="{x:Static res:AppRes.Oduk}"
+                                        Margin="0"
+                                        Padding="0"
+                                        Grid.Column="0"
+                                        Grid.Row="3"
+                                        Grid.ColumnSpan="3"
+                                        Command="{Binding BindingContext.OdukCommand, Source={x:Reference odutelepRoot}}"
+                                        CommandParameter="{Binding Id}" />
                             </Grid>
                         </toolkit:Expander>
                     </Border>

@@ -12,7 +12,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>MadarfigyeloApp</ApplicationTitle>
+		<ApplicationTitle>Terepnaplo</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.wolfkonig.terepnaplo</ApplicationId>
@@ -26,12 +26,9 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
-		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' or $(RuntimeIdentifier.StartsWith('win'))">android-arm64</RuntimeIdentifier>
-	</PropertyGroup>
+
 
 	<ItemGroup>
 		<!-- App Icon -->
@@ -40,11 +37,7 @@
 		  <ForegroundFile>Resources\AppIcon\appiconfg.svg</ForegroundFile>
 		</MauiIcon>
 
-		<MauiIcon
-			Include="Resources\AppIcon\appicon.svg"
-			ForegroundFile="Resources\AppIcon\appiconfg.svg"
-			ForegroundScale="0.65"
-			Color="#000000" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.65" Color="#000000" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />

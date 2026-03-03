@@ -13,22 +13,22 @@
     <TabBar Route="home">
         <ShellContent Title="{x:Static res:AppRes.Home}"
                       ContentTemplate="{DataTemplate views:MainPage}"
-                      Route="mainPage"
+                      Route="{x:Static local:Constants.RouteMainPage}"
                       Icon="tree_house.svg"/>
 
         <ShellContent Title="{x:Static res:AppRes.Odutelepek}"
                       ContentTemplate="{DataTemplate views:OdutelepView}"
-                      Route="odutelep"
+                      Route="{x:Static local:Constants.RouteOdutelepek}"
                       Icon="bird_house.svg"/>
 
         <ShellContent Title="{x:Static res:AppRes.Oduk}"
                       ContentTemplate="{DataTemplate views:OduView}"
-                      Route="odu"
+                      Route="{x:Static local:Constants.RouteOduk}"
                       Icon="bird_nest_tree.svg" />
         
         <ShellContent Title="{x:Static res:AppRes.Latogatasok}"
                       ContentTemplate="{DataTemplate views:LatogatasView}"
-                      Route="latogatas"
+                      Route="{x:Static local:Constants.RouteLatogatasok}"
                       Icon="nest_with_eggs.svg" />
     </TabBar>
 

@@ -14,7 +14,11 @@
         public const string RouteNewOdu = "newOdu";
         public const string RouteLogin = "login";
         public const string RouteHome = "home";
-        
+        public const string RouteOdutelepek = "odutelep";
+        public const string RouteOduk = "odu";
+        public const string RouteLatogatasok = "latogatas";
+        public const string RouteMainPage = "mainPage";
+
         // Preferences keys
         public const string KeyLoggedInUserEmail = "loggedInUserEmail";
         public const string KeyLoggedInUserFirstName = "loggedInUserFirstName";
@@ -25,6 +29,7 @@
         public const string KeyLoggedInUserTokenExpDate = "loggedInUserTokenExpDate";
 
         // Paremeters
+        public const string ParamOduTelepId = "oduTelepId";
         public const string ParamOduId = "oduId";
     }
 }

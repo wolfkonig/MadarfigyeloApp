@@ -65,7 +65,7 @@
                             </toolkit:Expander.Header>
 
                             <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="30,30,30">
+                                  RowDefinitions="30,30,30,30">
                                 <Label Text="{Binding GpsLatitude}"
                                        Grid.Column="0"
                                        Grid.Row="0"
@@ -79,16 +79,10 @@
                                        Grid.Row="0"                                       
                                        Style="{StaticResource ListText}" />
                                 
-                                <!--<Label Text="{Binding Elohelykod}"
+                                <Label Text="{Binding Elohelykod}"
                                        Grid.Column="0"
                                        Grid.Row="1"
-                                       Style="{StaticResource ListText}" />-->
-
-                                <Button Text="Latogatasok"
-                                        Grid.Column="0"
-                                        Grid.Row="1"
-                                        Command="{Binding BindingContext.LatogatasokCommand, Source={x:Reference oduRoot}}"
-                                        CommandParameter="{Binding Id}"/>
+                                       Style="{StaticResource ListText}" />
                                 
                                 <Label Text="{Binding MireVanHelyezve}"
                                        Grid.Column="1"
@@ -114,6 +108,15 @@
                                        Grid.Column="2"
                                        Grid.Row="2"
                                        Style="{StaticResource ListText}" />
+
+                                <Button Text="{x:Static res:AppRes.Latogatasok}"
+                                        Margin="0"
+                                        Padding="0"
+                                        Grid.Column="0"
+                                        Grid.Row="3"
+                                        Grid.ColumnSpan="3"
+                                        Command="{Binding BindingContext.LatogatasokCommand, Source={x:Reference oduRoot}}"
+                                        CommandParameter="{Binding Id}" />
                             </Grid>
                         </toolkit:Expander>
                     </Border>

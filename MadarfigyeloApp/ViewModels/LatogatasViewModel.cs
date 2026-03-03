@@ -18,7 +18,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public List<Latogatas> LatogatasList
         {
-            get => [.. _latogatasList.Where(l => _selectedOdu is null || _selectedOdu.Id == 0 || l.OduId == _selectedOdu.Id)];
+            get => [.. _latogatasList.Where(l => SelectedOdu is null || SelectedOdu.Id == 0 || l.OduId == SelectedOdu.Id)];
             set => SetProperty(ref _latogatasList, value);
         }
 
@@ -41,8 +41,7 @@ namespace MadarfigyeloApp.ViewModels
         public LatogatasViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {            
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
-            NewLatogatasCommand = new(NewLatogatas);
-            SelectedOdu = OduList[0];
+            NewLatogatasCommand = new(NewLatogatasAsync);
         }
 
         public override async Task InitAsync()
@@ -67,7 +66,7 @@ namespace MadarfigyeloApp.ViewModels
             }
         }
 
-        private async Task NewLatogatas()
+        private async Task NewLatogatasAsync()
         {
             if (SelectedOdu != Odu.Empty) 
             {

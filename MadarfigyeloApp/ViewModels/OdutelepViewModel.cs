@@ -11,6 +11,7 @@ namespace MadarfigyeloApp.ViewModels
         private List<Odutelep> _odutelepList = [];
 
         public AsyncRelayCommand NewOdutelepCommand { get; private set; }
+        public AsyncRelayCommand<int> OdukCommand { get; private set; }
 
         public List<Odutelep> OdutelepList
         {
@@ -22,6 +23,7 @@ namespace MadarfigyeloApp.ViewModels
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewOdutelepCommand = new(NewOdutelep);
+            OdukCommand = new(OdukAsync);
         }
 
         public override async Task InitAsync()
@@ -32,6 +34,11 @@ namespace MadarfigyeloApp.ViewModels
         private async Task NewOdutelep()
         {
             await _navigationService.GoToAsync(Constants.RouteNewOdutelep);
+        }
+
+        private async Task OdukAsync(int odutelepId)
+        {
+            await _navigationService.GoToAsync($"//{Constants.RouteOduk}?{Constants.ParamOduTelepId}={odutelepId}");
         }
     }
 }

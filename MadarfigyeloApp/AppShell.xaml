@@ -14,12 +14,12 @@
         <ShellContent Title="{x:Static res:AppRes.Home}"
                       ContentTemplate="{DataTemplate views:MainPage}"
                       Route="{x:Static local:Constants.RouteMainPage}"
-                      Icon="tree_house.svg"/>
+                      Icon="bird_house.svg"/>
 
         <ShellContent Title="{x:Static res:AppRes.Odutelepek}"
                       ContentTemplate="{DataTemplate views:OdutelepView}"
                       Route="{x:Static local:Constants.RouteOdutelepek}"
-                      Icon="bird_house.svg"/>
+                      Icon="trees.svg"/>
 
         <ShellContent Title="{x:Static res:AppRes.Oduk}"
                       ContentTemplate="{DataTemplate views:OduView}"

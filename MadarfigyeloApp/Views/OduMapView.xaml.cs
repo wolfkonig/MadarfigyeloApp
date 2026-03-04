@@ -6,48 +6,58 @@ namespace MadarfigyeloApp.Views;
 
 public partial class OduMapView : BasePage
 {
-	public OduMapView(OduMapViewModel viewModel) : base(viewModel)
+    public OduMapViewModel ViewModel => (OduMapViewModel)BindingContext;
+
+    public OduMapView(OduMapViewModel viewModel) : base(viewModel)
 	{
 		InitializeComponent();
-        Loaded += OduMapView_Loaded;
-	}
 
-    private async void OduMapView_Loaded(object? sender, EventArgs e)
-    {
-        // Example: list of coordinates to plot
-        var points = new List<(double Lat, double Lng, string Title)>
+        ViewModel.PropertyChanged += (s, e) =>
         {
-            (47.4979, 19.0402, "Budapest"),  // sample
-            (47.9025, 20.3772, "Eger")       // sample
+            if (e.PropertyName == nameof(ViewModel.OduList))
+            {                
+                MyMap.Pins.Clear();
+                if(ViewModel.OduList.Count == 0)
+                {
+                    return;
+                }    
+
+                var firstOdu = ViewModel.OduList.FirstOrDefault(o => o.GpsLatitude != 0 && o.GpsLongitude != 0);
+                var maxDistance =0.0;
+                foreach (var odu in ViewModel.OduList)
+                {
+                    if (odu.GpsLatitude != 0 && odu.GpsLongitude != 0)
+                    {
+                        var distance = firstOdu != null ? Location.CalculateDistance(
+                            new Location((double)firstOdu.GpsLatitude, (double)firstOdu.GpsLongitude), 
+                            new Location((double)odu.GpsLatitude, (double)odu.GpsLongitude), 
+                            DistanceUnits.Kilometers) : 0;
+
+                        if (distance > maxDistance)
+                        {
+                            maxDistance = distance;
+                        }
+
+                        AddPin((double)odu.GpsLatitude, (double)odu.GpsLongitude, odu.OduAzonosito ?? "");
+                    }
+                }
+                
+                MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(
+                    new Location((double)firstOdu.GpsLatitude, (double)firstOdu.GpsLongitude), 
+                    Distance.FromKilometers(maxDistance)));       
+            }
         };
+    }
 
-        // Get user location (optional) – prompts for permission the first time
-        Location? myLoc = null;
-        try
+    private void AddPin(double latitude, double longitude, string label)
+    {
+        var pin = new Pin
         {
-            var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-            myLoc = await Geolocation.Default.GetLocationAsync(request);
-        }
-        catch { /* Handle permissions/denied/timeouts gracefully */ }
-
-        // Center map: user location if available, otherwise first pin
-        var center = myLoc is not null
-            ? new Location(myLoc.Latitude, myLoc.Longitude)
-            : new Location(points[0].Lat, points[0].Lng);
-
-        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromKilometers(10)));
-
-        // Add pins
-        foreach (var p in points)
-        {
-            var pin = new Pin
-            {
-                Location = new Location(p.Lat, p.Lng),
-                Label = p.Title,
-                Type = PinType.Place
-            };
-            MyMap.Pins.Add(pin);
-        }
+            Location = new Location(latitude, longitude),
+            Label = label,
+            Type = PinType.Place
+        };
+        MyMap.Pins.Add(pin);
     }
 
 }

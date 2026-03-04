@@ -85,8 +85,16 @@
                                         Padding="0"
                                         Grid.Column="0"
                                         Grid.Row="3"
-                                        Grid.ColumnSpan="3"
+                                        Grid.ColumnSpan="2"
                                         Command="{Binding BindingContext.OdukCommand, Source={x:Reference odutelepRoot}}"
+                                        CommandParameter="{Binding Id}" />
+
+                                <Button Text="{x:Static res:AppRes.OduMap}"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Grid.Column="2"
+                                        Grid.Row="3"
+                                        Command="{Binding BindingContext.OduMapCommand, Source={x:Reference odutelepRoot}}"
                                         CommandParameter="{Binding Id}" />
                             </Grid>
                         </toolkit:Expander>

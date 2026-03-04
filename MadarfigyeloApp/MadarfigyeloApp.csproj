@@ -11,7 +11,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>Terepnaplo</ApplicationTitle>
+		<ApplicationTitle>Terepnapló</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.wolfkonig.terepnaplo</ApplicationId>
@@ -59,6 +59,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.120" />
 		<PackageReference Include="Refit" Version="9.0.2" />
 		<PackageReference Include="Refit.HttpClientFactory" Version="9.0.2" />
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="9.0.2" />
@@ -114,6 +115,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\NewOdutelepView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\OduMapView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\OduView.xaml">

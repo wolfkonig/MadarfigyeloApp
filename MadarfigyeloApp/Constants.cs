@@ -17,6 +17,7 @@
         public const string RouteOdutelepek = "odutelep";
         public const string RouteOduk = "odu";
         public const string RouteLatogatasok = "latogatas";
+        public const string RouteOduMap = "oduMap";
         public const string RouteMainPage = "mainPage";
 
         // Preferences keys

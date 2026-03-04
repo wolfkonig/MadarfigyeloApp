@@ -30,6 +30,11 @@
                       ContentTemplate="{DataTemplate views:LatogatasView}"
                       Route="{x:Static local:Constants.RouteLatogatasok}"
                       Icon="nest_with_eggs.svg" />
+
+        <ShellContent Title="{x:Static res:AppRes.OduMap}"
+                      ContentTemplate="{DataTemplate views:OduMapView}"
+                      Route="{x:Static local:Constants.RouteOduMap}"
+                      Icon="map.svg" />
     </TabBar>
 
 

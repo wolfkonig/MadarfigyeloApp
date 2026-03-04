@@ -574,11 +574,11 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Odúk.
+        ///   Looks up a localized string similar to Odútérkép.
         /// </summary>
-        internal static string Oduk1 {
+        internal static string OduMap {
             get {
-                return ResourceManager.GetString("Oduk1", resourceCulture);
+                return ResourceManager.GetString("OduMap", resourceCulture);
             }
         }
         

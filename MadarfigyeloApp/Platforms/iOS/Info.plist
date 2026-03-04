@@ -32,5 +32,10 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use your location to show your position on the map.</string>
 
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use your location to show nearby pins.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We use your location to show nearby pins.</string>
+
 </dict>
 </plist>

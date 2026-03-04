@@ -20,6 +20,7 @@ namespace MadarfigyeloApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiMaps()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -43,6 +44,7 @@ namespace MadarfigyeloApp
             builder.Services.AddTransient<OduViewModel>();
             builder.Services.AddTransient<LatogatasViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<OduMapViewModel>();
 
             builder.Services.AddTransientWithShellRoute<NewOdutelepView, NewOdutelepViewModel>(Constants.RouteNewOdutelep);
             builder.Services.AddTransientWithShellRoute<NewOduView, NewOduViewModel>(Constants.RouteNewOdu);

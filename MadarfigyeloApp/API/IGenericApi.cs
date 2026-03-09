@@ -8,7 +8,7 @@ namespace MadarfigyeloApp.API
         Task<IApiResponse<T>> GetAsync(int id);
 
         [Get("")]
-        Task<IApiResponse<List<T>>> GetAllAsync();
+        Task<IApiResponse<List<T>>> GetAllAsync([Header("X-Force-Refresh")] string? forceRefresh = null);
 
         [Post("")]
         Task<IApiResponse> PostAsync([Body] T payload);

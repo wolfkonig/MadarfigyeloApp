@@ -13,8 +13,7 @@ namespace MadarfigyeloApp.ViewModels
         private List<Odu> _oduList = [Odu.Empty];
         private Odu _selectedOdu;
         private int _selectedOduId = -1;
-
-        public AsyncRelayCommand NewLatogatasCommand { get; private set; }
+        private bool _isRefreshing;
 
         public List<Latogatas> LatogatasList
         {
@@ -37,26 +36,27 @@ namespace MadarfigyeloApp.ViewModels
                 OnPropertyChanged(nameof(LatogatasList));
             }
         }
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
+        public AsyncRelayCommand NewLatogatasCommand { get; private set; }
+        public AsyncRelayCommand RefreshCommand { get; private set; }
 
         public LatogatasViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {            
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewLatogatasCommand = new(NewLatogatasAsync);
+            RefreshCommand = new(RefreshAsync);
         }
 
         public override async Task InitAsync()
         {
-            var oduk = await _apiService.GetAllOduAsync();
-            OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
-            SelectedOdu = OduList.FirstOrDefault(x => x.Id == _selectedOduId) ?? OduList[0];
-
-            var latogatasok = await _apiService.GetAllLatogatasAsync();
-            foreach (var latogatas in latogatasok)
-            {
-                latogatas.Odu = _oduList.FirstOrDefault(x => x.Id == latogatas.OduId);
-            }
-            LatogatasList = latogatasok;
+            await LoadAsync(forceRefresh: false);
         }
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.ContainsKey(Constants.ParamOduId) && 
@@ -64,6 +64,33 @@ namespace MadarfigyeloApp.ViewModels
             {
                 _selectedOduId = oduId;
             }
+        }
+
+        protected async Task RefreshAsync()
+        {
+            IsRefreshing = true;
+            try
+            {
+                await LoadAsync(forceRefresh: true);
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
+        }
+
+        private async Task LoadAsync(bool forceRefresh = false)
+        {
+            var oduk = await _apiService.GetAllOduAsync(forceRefresh);
+            OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
+            SelectedOdu = OduList.FirstOrDefault(x => x.Id == _selectedOduId) ?? OduList[0];
+
+            var latogatasok = await _apiService.GetAllLatogatasAsync(forceRefresh);
+            foreach (var latogatas in latogatasok)
+            {
+                latogatas.Odu = _oduList.FirstOrDefault(x => x.Id == latogatas.OduId);
+            }
+            LatogatasList = latogatasok;
         }
 
         private async Task NewLatogatasAsync()

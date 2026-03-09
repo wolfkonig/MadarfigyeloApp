@@ -13,6 +13,7 @@ namespace MadarfigyeloApp.ViewModels
         private List<Odutelep> _odutelepList = [Odutelep.Empty];
         private Odutelep _selectedOdutelep;
         private int _selectedOdutelepId = -1;
+        private bool _isRefreshing;
 
         public List<Odu> OduList
         {
@@ -36,23 +37,49 @@ namespace MadarfigyeloApp.ViewModels
             }
         }
 
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
         public AsyncRelayCommand NewOduCommand { get; private set; }
         public AsyncRelayCommand<int> LatogatasokCommand { get; private set; }
+        public AsyncRelayCommand RefreshCommand { get; private set; }
 
         public OduViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
+            RefreshCommand = new(RefreshAsync);
         }
 
         public override async Task InitAsync()
         {
-            var odutelepek = await _apiService.GetAllOdutelepAsync();
+            await LoadAsync(forceRefresh: false);
+        }
+
+        protected async Task RefreshAsync()
+        {
+            IsRefreshing = true;
+            try
+            {
+                await LoadAsync(forceRefresh: true);
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
+        }
+
+        private async Task LoadAsync(bool forceRefresh)
+        {
+            var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
             OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
             SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _selectedOdutelepId) ?? OdutelepList[0];
 
-            var oduk = await _apiService.GetAllOduAsync();
+            var oduk = await _apiService.GetAllOduAsync(forceRefresh);
             foreach (var odu in oduk)
             {
                 odu.Odutelep = _odutelepList.FirstOrDefault(x => x.Id == odu.OdutelepId);

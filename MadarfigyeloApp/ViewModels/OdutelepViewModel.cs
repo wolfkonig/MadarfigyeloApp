@@ -9,9 +9,7 @@ namespace MadarfigyeloApp.ViewModels
         private readonly IApiService _apiService;
 
         private List<Odutelep> _odutelepList = [];
-
-        public AsyncRelayCommand NewOdutelepCommand { get; private set; }
-        public AsyncRelayCommand<int> OdukCommand { get; private set; }
+        private bool _isRefreshing;
 
         public List<Odutelep> OdutelepList
         {
@@ -19,16 +17,40 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _odutelepList, value);
         }
 
+        public bool IsRefreshing 
+        { 
+            get => _isRefreshing; 
+            set => SetProperty(ref _isRefreshing, value); 
+        }
+
+        public AsyncRelayCommand NewOdutelepCommand { get; private set; }
+        public AsyncRelayCommand<int> OdukCommand { get; private set; }
+        public AsyncRelayCommand RefreshCommand { get; private set; }
+
         public OdutelepViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             NewOdutelepCommand = new(NewOdutelep);
             OdukCommand = new(OdukAsync);
+            RefreshCommand = new(RefreshAsync);
         }
 
         public override async Task InitAsync()
         {
             OdutelepList = await _apiService.GetAllOdutelepAsync();
+        }
+
+        protected async Task RefreshAsync()
+        {
+            IsRefreshing = true;
+            try
+            {
+                OdutelepList = await _apiService.GetAllOdutelepAsync(forceRefresh: true);
+            }
+            finally 
+            {
+                IsRefreshing = false;
+            }
         }
 
         private async Task NewOdutelep()

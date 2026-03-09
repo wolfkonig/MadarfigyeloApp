@@ -19,82 +19,84 @@
                Aspect="AspectFill"
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
-        <CollectionView ItemsSource="{Binding OdutelepList}"
-                        Grid.Row="0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Odutelep">
-                    <Border Background="{StaticResource Secondary }"
-                            HorizontalOptions="Fill"
-                            Margin="5,5,5,0"
-                            Padding="5"
-                            StrokeShape="RoundRectangle 5">
-                        <toolkit:Expander>
-                            <toolkit:Expander.Header>
-                                <Grid ColumnDefinitions="3*,3*,2*"
-                                      RowDefinitions="30">
-                                    <Label Text="{Binding Azonosito}"
+        <RefreshView Grid.Row="0"
+                     IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+                     Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding OdutelepList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Odutelep">
+                        <Border Background="{StaticResource Secondary }"
+                                HorizontalOptions="Fill"
+                                Margin="5,5,5,0"
+                                Padding="5"
+                                StrokeShape="RoundRectangle 5">
+                            <toolkit:Expander>
+                                <toolkit:Expander.Header>
+                                    <Grid ColumnDefinitions="3*,3*,2*"
+                                          RowDefinitions="30">
+                                        <Label Text="{Binding Azonosito}"
+                                               Grid.Column="0"
+                                               Style="{StaticResource ListTextHeader}" />
+                                        <Label Text="{Binding TeruletNev}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource ListTextHeader}" />
+                                        <Label Text="{Binding Telepules}"
+                                               Grid.Column="2"
+                                               Style="{StaticResource ListTextHeader}" />
+                                    </Grid>
+                                </toolkit:Expander.Header>
+
+                                <Grid ColumnDefinitions="*,*,*"
+                                      RowDefinitions="60,60,50,30">
+                                    <Label Text="{Binding UtmNegyzetKod, StringFormat={x:Static res:AppRes.Utm}}"
                                            Grid.Column="0"
-                                           Style="{StaticResource ListTextHeader}" />
-                                    <Label Text="{Binding TeruletNev}"
+                                           Grid.Row="0"
+                                           Style="{StaticResource ListText}" />
+                                    <Label Text="{Binding KezeloSzervezetNev}"
                                            Grid.Column="1"
-                                           Style="{StaticResource ListTextHeader}" />
-                                    <Label Text="{Binding Telepules}"
+                                           Grid.Row="0"
+                                           Style="{StaticResource ListText}" />
+                                    <Label Text="{Binding FelelosSzemelyNev}"
                                            Grid.Column="2"
-                                           Style="{StaticResource ListTextHeader}" />
+                                           Grid.Row="0"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Label Text="{Binding FelelosSzemelyCim}"
+                                           Grid.Column="0"
+                                           Grid.Row="1"
+                                           Grid.ColumnSpan="2"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Label Text="{Binding FelelosSzemelyEmail}"
+                                           Grid.Column="3"
+                                           Grid.Row="1"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Label Text="{Binding FelelosSzemelyTelefonszam}"
+                                           Grid.Column="1"
+                                           Grid.Row="2"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Label Text="{Binding Megjegyzes}"
+                                           Grid.Column="2"
+                                           Grid.Row="2"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Button Text="{x:Static res:AppRes.Oduk}"
+                                            Margin="0"
+                                            Padding="0"
+                                            Grid.Column="0"
+                                            Grid.Row="3"
+                                            Grid.ColumnSpan="3"
+                                            Command="{Binding BindingContext.OdukCommand, Source={x:Reference odutelepRoot}}"
+                                            CommandParameter="{Binding Id}" />
                                 </Grid>
-                            </toolkit:Expander.Header>
-
-                            <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="60,60,50,30">
-                                <Label Text="{Binding UtmNegyzetKod, StringFormat={x:Static res:AppRes.Utm}}"
-                                       Grid.Column="0"
-                                       Grid.Row="0"
-                                       Style="{StaticResource ListText}" />
-                                <Label Text="{Binding KezeloSzervezetNev}"
-                                       Grid.Column="1"
-                                       Grid.Row="0"                                       
-                                       Style="{StaticResource ListText}" />                             
-                                <Label Text="{Binding FelelosSzemelyNev}"
-                                       Grid.Column="2"
-                                       Grid.Row="0"                                       
-                                       Style="{StaticResource ListText}" />
-                                
-                                <Label Text="{Binding FelelosSzemelyCim}"
-                                       Grid.Column="0"
-                                       Grid.Row="1"
-                                       Grid.ColumnSpan="2"
-                                       Style="{StaticResource ListText}" />
-                                
-                                <Label Text="{Binding FelelosSzemelyEmail}"
-                                       Grid.Column="3"
-                                       Grid.Row="1"
-                                       Style="{StaticResource ListText}" />
-                                
-                                <Label Text="{Binding FelelosSzemelyTelefonszam}"
-                                       Grid.Column="1"
-                                       Grid.Row="2"
-                                       Style="{StaticResource ListText}" />
-                                
-                                <Label Text="{Binding Megjegyzes}"
-                                       Grid.Column="2"
-                                       Grid.Row="2"
-                                       Style="{StaticResource ListText}" />
-                                
-                                <Button Text="{x:Static res:AppRes.Oduk}"
-                                        Margin="0"
-                                        Padding="0"
-                                        Grid.Column="0"
-                                        Grid.Row="3"
-                                        Grid.ColumnSpan="3"
-                                        Command="{Binding BindingContext.OdukCommand, Source={x:Reference odutelepRoot}}"
-                                        CommandParameter="{Binding Id}" />
-                            </Grid>
-                        </toolkit:Expander>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
+                            </toolkit:Expander>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
         <Button Text="{x:Static res:AppRes.UjOdutelep}"
                 Command="{Binding NewOdutelepCommand}"
                 Grid.Row="1"/>

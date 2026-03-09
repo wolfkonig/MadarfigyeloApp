@@ -36,68 +36,70 @@
                     FontSize="Medium"
                     Grid.Column="1" />
         </Grid>
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+                     Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding LatogatasList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Latogatas">
+                        <Border Background="{StaticResource Secondary }"
+                                HorizontalOptions="Fill"
+                                Margin="5,5,5,0"
+                                Padding="5"
+                                StrokeShape="RoundRectangle 5">
+                            <toolkit:Expander>
+                                <toolkit:Expander.Header>
+                                    <Grid ColumnDefinitions="*,*,*"
+                                          RowDefinitions="30">
+                                        <Label Text="{Binding Odu.OduAzonosito}"
+                                               Grid.Column="0"
+                                               Style="{StaticResource ListTextHeader}" />
+                                        <Label Text="{Binding Datum}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource ListTextHeader}" />
+                                        <Label Text="{Binding Tevekenyseg, Converter={util:EnumToResxConverter}}"
+                                               Grid.Column="2"
+                                               Style="{StaticResource ListTextHeader}" />
+                                    </Grid>
+                                </toolkit:Expander.Header>
 
-        <CollectionView ItemsSource="{Binding LatogatasList}" 
-                        Grid.Row="1">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Latogatas">
-                    <Border Background="{StaticResource Secondary }"
-                            HorizontalOptions="Fill"
-                            Margin="5,5,5,0"
-                            Padding="5"
-                            StrokeShape="RoundRectangle 5">
-                        <toolkit:Expander>
-                            <toolkit:Expander.Header>
                                 <Grid ColumnDefinitions="*,*,*"
-                                      RowDefinitions="30">
-                                    <Label Text="{Binding Odu.OduAzonosito}"
+                                      RowDefinitions="30,30">
+                                    <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
                                            Grid.Column="0"
-                                           Style="{StaticResource ListTextHeader}" />
-                                    <Label Text="{Binding Datum}"                                           
+                                           Grid.Row="0"
+                                           Style="{StaticResource ListText}" />
+                                    <Label Text="{Binding Faj}"
                                            Grid.Column="1"
-                                           Style="{StaticResource ListTextHeader}" />
-                                    <Label Text="{Binding Tevekenyseg, Converter={util:EnumToResxConverter}}"
+                                           Grid.Row="0"
+                                           Style="{StaticResource ListText}" />
+                                    <Label Text="{Binding TojasSzam, StringFormat={x:Static res:AppRes.TojasokSzamaX}}"
                                            Grid.Column="2"
-                                           Style="{StaticResource ListTextHeader}" />
+                                           Grid.Row="0"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Label Text="{Binding FiokaSzam, StringFormat={x:Static res:AppRes.FiokakSzamaX}}"
+                                           Grid.Column="0"
+                                           Grid.Row="1"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Label Text="{Binding FiokakKora, StringFormat={x:Static res:AppRes.FiokakKoraX}}"
+                                           Grid.Column="1"
+                                           Grid.Row="1"
+                                           Style="{StaticResource ListText}" />
+
+                                    <Label Text="{Binding Megjegyzesek}"
+                                           Grid.Column="2"
+                                           Grid.Row="1"
+                                           Style="{StaticResource ListText}" />
+
                                 </Grid>
-                            </toolkit:Expander.Header>
-
-                            <Grid ColumnDefinitions="*,*,*"
-                                  RowDefinitions="30,30">
-                                <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
-                                       Grid.Column="0"
-                                       Grid.Row="0"
-                                       Style="{StaticResource ListText}" />
-                                <Label Text="{Binding Faj}"
-                                       Grid.Column="1"
-                                       Grid.Row="0"                                       
-                                       Style="{StaticResource ListText}" />                             
-                                <Label Text="{Binding TojasSzam, StringFormat={x:Static res:AppRes.TojasokSzamaX}}"
-                                       Grid.Column="2"
-                                       Grid.Row="0"                                       
-                                       Style="{StaticResource ListText}" />
-
-                                <Label Text="{Binding FiokaSzam, StringFormat={x:Static res:AppRes.FiokakSzamaX}}"
-                                       Grid.Column="0"
-                                       Grid.Row="1"
-                                       Style="{StaticResource ListText}" />
-
-                                <Label Text="{Binding FiokakKora, StringFormat={x:Static res:AppRes.FiokakKoraX}}"
-                                       Grid.Column="1"
-                                       Grid.Row="1"
-                                       Style="{StaticResource ListText}" />
-                                
-                                <Label Text="{Binding Megjegyzesek}"
-                                       Grid.Column="2"
-                                       Grid.Row="1"
-                                       Style="{StaticResource ListText}" />                                
-                              
-                            </Grid>
-                        </toolkit:Expander>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            </toolkit:Expander>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
 
         <Button Text="{x:Static res:AppRes.UjLatogatas}"
                 Command="{Binding NewLatogatasCommand}"

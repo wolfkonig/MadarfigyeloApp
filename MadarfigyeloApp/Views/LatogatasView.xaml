@@ -49,7 +49,7 @@
                                 StrokeShape="RoundRectangle 5">
                             <toolkit:Expander>
                                 <toolkit:Expander.Header>
-                                    <Grid ColumnDefinitions="*,*,*"
+                                    <Grid ColumnDefinitions="2*,4*,2*"
                                           RowDefinitions="30">
                                         <Label Text="{Binding Odu.OduAzonosito}"
                                                Grid.Column="0"
@@ -64,7 +64,7 @@
                                 </toolkit:Expander.Header>
 
                                 <Grid ColumnDefinitions="*,*,*"
-                                      RowDefinitions="30,30">
+                                      RowDefinitions="30,60">
                                     <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
                                            Grid.Column="0"
                                            Grid.Row="0"

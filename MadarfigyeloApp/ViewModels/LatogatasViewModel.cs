@@ -5,14 +5,14 @@ using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class LatogatasViewModel : BaseViewModel, IQueryAttributable
+    public class LatogatasViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
+        private readonly ISettingsService _settingsService;
 
         private List<Latogatas> _latogatasList = [];
         private List<Odu> _oduList = [Odu.Empty];
         private Odu _selectedOdu;
-        private int _selectedOduId = -1;
         private bool _isRefreshing;
 
         public List<Latogatas> LatogatasList
@@ -33,6 +33,7 @@ namespace MadarfigyeloApp.ViewModels
             set
             {
                 SetProperty(ref _selectedOdu, value);
+                _settingsService.SelectedOduId = value?.Id ?? 0;
                 OnPropertyChanged(nameof(LatogatasList));
             }
         }
@@ -45,9 +46,10 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand NewLatogatasCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
 
-        public LatogatasViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
+        public LatogatasViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {            
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewLatogatasCommand = new(NewLatogatasAsync);
             RefreshCommand = new(RefreshAsync);
         }
@@ -55,15 +57,6 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             await LoadAsync(forceRefresh: false);
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(Constants.ParamOduId) && 
-                int.TryParse((string)query[Constants.ParamOduId], out int oduId))
-            {
-                _selectedOduId = oduId;
-            }
         }
 
         protected async Task RefreshAsync()
@@ -83,7 +76,7 @@ namespace MadarfigyeloApp.ViewModels
         {
             var oduk = await _apiService.GetAllOduAsync(forceRefresh);
             OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
-            SelectedOdu = OduList.FirstOrDefault(x => x.Id == _selectedOduId) ?? OduList[0];
+            SelectedOdu = OduList.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId) ?? OduList[0];
 
             var latogatasok = await _apiService.GetAllLatogatasAsync(forceRefresh);
             foreach (var latogatas in latogatasok)
@@ -95,14 +88,7 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task NewLatogatasAsync()
         {
-            if (SelectedOdu != Odu.Empty) 
-            {
-                await _navigationService.GoToAsync($"{Constants.RouteNewLatogatas}?{Constants.ParamOduId}={SelectedOdu.Id}");
-            }
-            else
-            {
-                await _navigationService.GoToAsync(Constants.RouteNewLatogatas);
-            }
+            await _navigationService.GoToAsync(Constants.RouteNewLatogatas);            
         }
     }
 }

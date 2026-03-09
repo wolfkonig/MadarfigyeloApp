@@ -4,9 +4,10 @@ using MadarfigyeloApp.Models;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class NewLatogatasViewModel : BaseViewModel, IQueryAttributable
+    public class NewLatogatasViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
+        private readonly ISettingsService _settingsService;
 
         // Backing fields
         private Odu? _selectedOdu;
@@ -19,12 +20,12 @@ namespace MadarfigyeloApp.ViewModels
         private string? _fiokakKora;
         private string? _megjegyzesek;
         private List<Odu> _oduk = new();
-        private int _selectedOduId = -1;
 
-        public NewLatogatasViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
+        public NewLatogatasViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService ) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
-             SaveCommand = new(SaveAsync);
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
+            SaveCommand = new(SaveAsync);
         }
 
         public AsyncRelayCommand SaveCommand { get; }
@@ -32,8 +33,7 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             Oduk = await _apiService.GetAllOduAsync();
-            if (_selectedOduId > 0)
-                SelectedOdu = Oduk.FirstOrDefault(x => x.Id == _selectedOduId);
+            SelectedOdu = Oduk.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId);
         }
 
         // Collections for Pickers
@@ -57,7 +57,7 @@ namespace MadarfigyeloApp.ViewModels
             set
             {
                 SetProperty(ref _selectedOdu, value);
-                _selectedOduId = value?.Id ?? -1;
+                _settingsService.SelectedOduId = value?.Id ?? 0;
             }
         }
 
@@ -151,15 +151,6 @@ namespace MadarfigyeloApp.ViewModels
                 return false;
             }
             return true;
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(Constants.ParamOduId) &&
-                int.TryParse((string)query[Constants.ParamOduId], out int oduId))
-            {
-                _selectedOduId = oduId;
-            }
         }
     }
 }

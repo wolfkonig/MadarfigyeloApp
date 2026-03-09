@@ -36,8 +36,7 @@
         public const string KeyLoggedInUserToken = "loggedInUserToken";
         public const string KeyLoggedInUserTokenExpDate = "loggedInUserTokenExpDate";
 
-        // Paremeters
-        public const string ParamOduTelepId = "oduTelepId";
-        public const string ParamOduId = "oduId";
+        public const string KeySelectedOdutelepId = "oduTelepId";
+        public const string KeySelectedOduId = "oduId";
     }
 }

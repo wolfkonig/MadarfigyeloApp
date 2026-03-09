@@ -5,14 +5,14 @@ using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class OduViewModel : BaseViewModel, IQueryAttributable
+    public class OduViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
+        private readonly ISettingsService _settingsService;
 
         private List<Odu> _oduList = [];
         private List<Odutelep> _odutelepList = [Odutelep.Empty];
         private Odutelep _selectedOdutelep;
-        private int _selectedOdutelepId = -1;
         private bool _isRefreshing;
 
         public List<Odu> OduList
@@ -33,6 +33,7 @@ namespace MadarfigyeloApp.ViewModels
             set
             {
                 SetProperty(ref _selectedOdutelep, value);
+                _settingsService.SelectedOdutelepId = value?.Id ?? 0;
                 OnPropertyChanged(nameof(OduList));
             }
         }
@@ -47,9 +48,10 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand<int> LatogatasokCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
 
-        public OduViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
+        public OduViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
             RefreshCommand = new(RefreshAsync);
@@ -77,7 +79,7 @@ namespace MadarfigyeloApp.ViewModels
         {
             var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
             OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
-            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _selectedOdutelepId) ?? OdutelepList[0];
+            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
 
             var oduk = await _apiService.GetAllOduAsync(forceRefresh);
             foreach (var odu in oduk)
@@ -89,28 +91,13 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task NewOduAsync()
         {
-            if (SelectedOdutelep != Odutelep.Empty)
-            {
-                await _navigationService.GoToAsync($"{Constants.RouteNewOdu}?{Constants.ParamOduTelepId}={SelectedOdutelep.Id}");
-            }
-            else
-            {
-                await _navigationService.GoToAsync(Constants.RouteNewOdu);
-            }
+            await _navigationService.GoToAsync(Constants.RouteNewOdu);
         }
 
         private async Task LatogatasokAsync(int oduId)
         {
-            await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}?{Constants.ParamOduId}={oduId}");
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(Constants.ParamOduTelepId) &&
-                int.TryParse((string)query[Constants.ParamOduTelepId], out int odutelepId))
-            {
-                _selectedOdutelepId = odutelepId;
-            }
+            _settingsService.SelectedOduId = oduId;
+            await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}");
         }
     }
 }

@@ -7,6 +7,7 @@ namespace MadarfigyeloApp.ViewModels
     public class OdutelepViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
+        private readonly ISettingsService _settingsService;
 
         private List<Odutelep> _odutelepList = [];
         private bool _isRefreshing;
@@ -27,9 +28,10 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand<int> OdukCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
 
-        public OdutelepViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
+        public OdutelepViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewOdutelepCommand = new(NewOdutelep);
             OdukCommand = new(OdukAsync);
             RefreshCommand = new(RefreshAsync);
@@ -60,7 +62,8 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task OdukAsync(int odutelepId)
         {
-            await _navigationService.GoToAsync($"//{Constants.RouteOduk}?{Constants.ParamOduTelepId}={odutelepId}");
+            _settingsService.SelectedOdutelepId = odutelepId;
+            await _navigationService.GoToAsync($"//{Constants.RouteOduk}");
         }
     }
 }

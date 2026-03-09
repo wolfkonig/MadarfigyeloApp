@@ -11,7 +11,7 @@ namespace MadarfigyeloApp.API
     {
         private readonly IConnectivity _connectivity;
 
-        public CachingHandler(IAuthApi authApi, IConnectivity connectivity, ILoggerService logger) : base(authApi, logger)
+        public CachingHandler(IAuthApi authApi, IConnectivity connectivity, ILoggerService logger, ISettingsService settingsService) : base(authApi, logger, settingsService)
         {
             _connectivity = connectivity ?? throw new ArgumentNullException(nameof(connectivity));
         }

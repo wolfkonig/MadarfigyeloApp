@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
-using MadarfigyeloApp.Resources;
+
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -32,9 +32,11 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdu;
             set
             {
-                SetProperty(ref _selectedOdu, value);
-                _settingsService.SelectedOduId = value?.Id ?? 0;
-                OnPropertyChanged(nameof(LatogatasList));
+                if (SetProperty(ref _selectedOdu, value))
+                {
+                    _settingsService.SelectedOduId = value?.Id ?? 0;
+                    OnPropertyChanged(nameof(LatogatasList));
+                }
             }
         }
         public bool IsRefreshing
@@ -75,7 +77,10 @@ namespace MadarfigyeloApp.ViewModels
         private async Task LoadAsync(bool forceRefresh = false)
         {
             var oduk = await _apiService.GetAllOduAsync(forceRefresh);
-            OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
+            if (_oduList.Count == 1 || _oduList.Count == oduk.Count + 1 || forceRefresh)
+            {
+                OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
+            }
             SelectedOdu = OduList.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId) ?? OduList[0];
 
             var latogatasok = await _apiService.GetAllLatogatasAsync(forceRefresh);

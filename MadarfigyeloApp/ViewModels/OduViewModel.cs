@@ -32,9 +32,11 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdutelep;
             set
             {
-                SetProperty(ref _selectedOdutelep, value);
-                _settingsService.SelectedOdutelepId = value?.Id ?? 0;
-                OnPropertyChanged(nameof(OduList));
+                if (SetProperty(ref _selectedOdutelep, value))
+                {
+                    _settingsService.SelectedOdutelepId = value?.Id ?? 0;
+                    OnPropertyChanged(nameof(OduList));
+                }
             }
         }
 
@@ -76,9 +78,12 @@ namespace MadarfigyeloApp.ViewModels
         }
 
         private async Task LoadAsync(bool forceRefresh)
-        {
+        {            
             var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
-            OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
+            if (_odutelepList.Count == 1 || _odutelepList.Count != odutelepek.Count + 1 || forceRefresh)
+            {
+                OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
+            }
             SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
 
             var oduk = await _apiService.GetAllOduAsync(forceRefresh);

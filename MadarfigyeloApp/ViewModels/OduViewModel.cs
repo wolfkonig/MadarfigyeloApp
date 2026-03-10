@@ -80,11 +80,13 @@ namespace MadarfigyeloApp.ViewModels
         private async Task LoadAsync(bool forceRefresh)
         {            
             var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
+            // Only refresh the list if we have new or deleted items or if we explicitly want to refresh.
             if (_odutelepList.Count == 1 || _odutelepList.Count != odutelepek.Count + 1 || forceRefresh)
             {
                 OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
             }
-            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
+            SelectedOdutelep = OdutelepList
+                .SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
 
             var oduk = await _apiService.GetAllOduAsync(forceRefresh);
             foreach (var odu in oduk)

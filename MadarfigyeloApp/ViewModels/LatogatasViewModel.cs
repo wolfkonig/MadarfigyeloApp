@@ -77,6 +77,7 @@ namespace MadarfigyeloApp.ViewModels
         private async Task LoadAsync(bool forceRefresh = false)
         {
             var oduk = await _apiService.GetAllOduAsync(forceRefresh);
+            // Only refresh the list if we have new or deleted items or if we explicitly want to refresh.
             if (_oduList.Count == 1 || _oduList.Count == oduk.Count + 1 || forceRefresh)
             {
                 OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];

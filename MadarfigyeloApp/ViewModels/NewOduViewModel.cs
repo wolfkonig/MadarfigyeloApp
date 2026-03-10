@@ -37,6 +37,7 @@ namespace MadarfigyeloApp.ViewModels
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             SaveCommand = new(SaveAsync);
         }
@@ -190,8 +191,8 @@ namespace MadarfigyeloApp.ViewModels
             if (string.IsNullOrEmpty(OduAzonosito)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduAzonosito)));
             if (string.IsNullOrEmpty(OduTipus)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduTipus)));
             if (BejaratiNyilasMm <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(BejaratiNyilasMm)));
-            if (GpsLatitude <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLatitude)));
-            if (GpsLongitude <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLongitude)));
+            if (GpsLatitude == 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLatitude)));
+            if (GpsLongitude == 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLongitude)));
             if (SelectedOdutelep is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Odutelep)));
 
             if (HasErrors)

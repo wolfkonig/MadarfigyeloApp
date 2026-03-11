@@ -1,6 +1,7 @@
 ﻿using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
+using MonkeyCache.FileStore;
 
 namespace MadarfigyeloApp.Implementations
 {
@@ -62,6 +63,10 @@ namespace MadarfigyeloApp.Implementations
             _settingsService.Remove(Constants.KeyLoggedInUserPassword);
             _settingsService.Remove(Constants.KeyLoggedInUserToken);
             _settingsService.Remove(Constants.KeyLoggedInUserTokenExpDate);
+
+            _settingsService.SelectedOduId = 0;
+            _settingsService.SelectedOdutelepId = 0;
+            Barrel.Current.EmptyAll();
         }
 
         public async Task<bool> RegisterUser(UserDto user)
@@ -71,9 +76,11 @@ namespace MadarfigyeloApp.Implementations
             if (authResponse.Content is AuthResponseDto tokenResponse)
             {
                 _settingsService.Set(Constants.KeyLoggedInUserEmail, tokenResponse.Email);
-                await _settingsService.SecureSet(Constants.KeyLoggedInUserPassword, user.Password);
-                await _settingsService.SecureSet(Constants.KeyLoggedInUserToken, tokenResponse.Token);
                 _settingsService.Set(Constants.KeyLoggedInUserTokenExpDate, tokenResponse.Expiration);
+                await Task.WhenAll(
+                    _settingsService.SecureSet(Constants.KeyLoggedInUserPassword, user.Password),
+                    _settingsService.SecureSet(Constants.KeyLoggedInUserToken, tokenResponse.Token)
+                );
                 return true;
             }
 

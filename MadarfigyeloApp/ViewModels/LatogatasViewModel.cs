@@ -56,9 +56,11 @@ namespace MadarfigyeloApp.ViewModels
 
             PropertyChanged += async (s, e) =>
             {
-                if (e.PropertyName == nameof(SelectedOdu))
+                if (e.PropertyName == nameof(SelectedOdu) && !IsRefreshing && !IsBusy)
                 {
-                    await PopulateLatogatasList(forceRefresh: false);
+                    IsBusy = true;
+                    await PopulateLatogatasList(forceRefresh: false)
+                        .ContinueWith(t => IsBusy = false);
                 }
             };
         }

@@ -20,23 +20,28 @@
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
 
-        <Grid ColumnDefinitions="2*,3*" 
+        <Grid ColumnDefinitions="40,2*,3*" 
               Grid.Row="0" 
               BackgroundColor="{StaticResource White}" 
               Opacity="0.6">
+            
+            <ImageButton Source="refresh.png"
+                         Command="{Binding RefreshCommand}"
+                         HorizontalOptions="End"
+                         Margin="5,0,0,0"
+                         Grid.Column="0" />
+            
             <Label Text="{x:Static res:AppRes.Odutelep}"
                    FontSize="Medium"
-                   Grid.Column="0" 
+                   Grid.Column="1" 
                    HorizontalOptions="End"
-                   Padding="10,0,10,5"
-                   />
-
+                   Padding="10,0,10,5" />
+            
             <Picker ItemsSource="{Binding OdutelepList}"
                     ItemDisplayBinding="{Binding Azonosito}"
                     SelectedItem="{Binding SelectedOdutelep}"
                     FontSize="Medium"
-                    Grid.Column="1"
-                    />
+                    Grid.Column="2" />
         </Grid>
         <RefreshView Grid.Row="1"
                      IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"

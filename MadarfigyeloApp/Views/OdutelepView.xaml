@@ -11,15 +11,28 @@
                 Title="{x:Static res:AppRes.Odutelepek}"
                 x:Name="odutelepRoot">
     
-    <Grid RowDefinitions="*,50">
-        <Image Grid.Row="0" 
+    <Grid RowDefinitions="50,*,60">        
+        <Image Grid.Row="0"
                Grid.RowSpan="2"
                Opacity="0.4"
                Source="hello.jpg"
                Aspect="AspectFill"
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
-        <RefreshView Grid.Row="0"
+        
+        <Grid ColumnDefinitions="40,*"
+              Grid.Row="0"
+              BackgroundColor="{StaticResource White}"
+              Opacity="0.6">
+            
+            <ImageButton Source="refresh.png"
+                         Command="{Binding RefreshCommand}"
+                         HorizontalOptions="End"
+                         Margin="5,0,0,0"
+                         Grid.Column="0" />
+        </Grid>
+        
+        <RefreshView Grid.Row="1"
                      IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
                      Command="{Binding RefreshCommand}">
             <CollectionView ItemsSource="{Binding OdutelepList}">
@@ -99,7 +112,7 @@
         </RefreshView>
         <Button Text="{x:Static res:AppRes.UjOdutelep}"
                 Command="{Binding NewOdutelepCommand}"
-                Grid.Row="1"/>
+                Grid.Row="2"/>
 
     </Grid>
 </pages:BasePage>

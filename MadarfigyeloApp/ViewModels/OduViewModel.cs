@@ -58,9 +58,11 @@ namespace MadarfigyeloApp.ViewModels
 
             PropertyChanged += async (s, e) =>
             {
-                if (e.PropertyName == nameof(SelectedOdutelep))
+                if (e.PropertyName == nameof(SelectedOdutelep) && !IsRefreshing && !IsBusy)
                 {
-                    await PopulateOduList(forceRefresh: false);                    
+                    IsBusy = true;
+                    await PopulateOduList(forceRefresh: false)
+                    .ContinueWith(t => IsBusy = false);                    
                 }
             };
         }

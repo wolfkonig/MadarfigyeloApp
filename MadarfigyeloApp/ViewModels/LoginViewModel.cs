@@ -79,8 +79,17 @@ namespace MadarfigyeloApp.ViewModels
             {
                 return;
             }
+            bool success;
+            IsBusy = true;
+            try
+            {
+                success = await _userService.LogInUser(LoginEmail, Password);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
 
-            var success = await _userService.LogInUser(LoginEmail, Password);
             if (success)
             {
                 await _navigationService.GoToAsync($"//{Constants.RouteHome}");

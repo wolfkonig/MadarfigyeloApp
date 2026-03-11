@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class OduMapViewModel : BaseViewModel, IQueryAttributable
+    public class OduMapViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
         private readonly ILocationService _locationService;
@@ -71,16 +71,7 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task LatogatasokAsync(int oduId)
         {
-            await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}?{Constants.ParamOduId}={oduId}");
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(Constants.ParamOduTelepId) &&
-                int.TryParse((string)query[Constants.ParamOduTelepId], out int odutelepId))
-            {
-                _selectedOdutelepId = odutelepId;
-            }
+            await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}");
         }
     }
 }

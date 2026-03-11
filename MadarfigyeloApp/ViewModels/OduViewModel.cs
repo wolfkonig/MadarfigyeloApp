@@ -5,18 +5,19 @@ using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class OduViewModel : BaseViewModel, IQueryAttributable
+    public class OduViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
+        private readonly ISettingsService _settingsService;
 
         private List<Odu> _oduList = [];
         private List<Odutelep> _odutelepList = [Odutelep.Empty];
         private Odutelep _selectedOdutelep;
-        private int _selectedOdutelepId = -1;
+        private bool _isRefreshing;
 
         public List<Odu> OduList
         {
-            get => [.. _oduList.Where(o => SelectedOdutelep == null || SelectedOdutelep.Id == 0 || o.OdutelepId == SelectedOdutelep.Id)];
+            get => _oduList;
             set => SetProperty(ref _oduList, value);
         }
 
@@ -31,59 +32,89 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdutelep;
             set
             {
+                _settingsService.SelectedOdutelepId = value?.Id ?? 0;
                 SetProperty(ref _selectedOdutelep, value);
                 OnPropertyChanged(nameof(OduList));
             }
         }
 
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
         public AsyncRelayCommand NewOduCommand { get; private set; }
         public AsyncRelayCommand<int> LatogatasokCommand { get; private set; }
+        public AsyncRelayCommand RefreshCommand { get; private set; }
 
-        public OduViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
+        public OduViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
+            RefreshCommand = new(RefreshAsync);
+
+            PropertyChanged += async (s, e) =>
+            {
+                if (e.PropertyName == nameof(SelectedOdutelep) && !IsRefreshing && !IsBusy)
+                {
+                    IsBusy = true;
+                    await PopulateOduList(forceRefresh: false)
+                    .ContinueWith(t => IsBusy = false);                    
+                }
+            };
         }
 
         public override async Task InitAsync()
         {
-            var odutelepek = await _apiService.GetAllOdutelepAsync();
-            OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
-            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _selectedOdutelepId) ?? OdutelepList[0];
+            await Task.WhenAll(
+                PopulateOdutelepDropdown(forceRefresh: false),
+                PopulateOduList(forceRefresh: false)
+            );
+        }
 
-            var oduk = await _apiService.GetAllOduAsync();
-            foreach (var odu in oduk)
+        protected async Task RefreshAsync()
+        {
+            IsRefreshing = true;
+            await Task.WhenAll(
+                    PopulateOdutelepDropdown(forceRefresh: true),
+                    PopulateOduList(forceRefresh: true))
+                .ContinueWith(t => IsRefreshing = false);
+        }
+
+        private async Task PopulateOduList(bool forceRefresh)
+        {
+            if (_settingsService.SelectedOdutelepId == 0)
             {
-                odu.Odutelep = _odutelepList.FirstOrDefault(x => x.Id == odu.OdutelepId);
+                OduList = await _apiService.GetAllOduAsync(forceRefresh);
             }
-            OduList = oduk;
+            else
+            {
+                OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
+            }
+        }
+
+        private async Task PopulateOdutelepDropdown(bool forceRefresh)
+        {
+            var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
+            if (_odutelepList.Count == 1 || forceRefresh)
+            {
+                OdutelepList = [Odutelep.Empty, .. odutelepek];
+            }
+            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
         }
 
         private async Task NewOduAsync()
         {
-            if (SelectedOdutelep != Odutelep.Empty)
-            {
-                await _navigationService.GoToAsync($"{Constants.RouteNewOdu}?{Constants.ParamOduTelepId}={SelectedOdutelep.Id}");
-            }
-            else
-            {
-                await _navigationService.GoToAsync(Constants.RouteNewOdu);
-            }
+            await _navigationService.GoToAsync(Constants.RouteNewOdu);
         }
 
         private async Task LatogatasokAsync(int oduId)
         {
-            await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}?{Constants.ParamOduId}={oduId}");
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(Constants.ParamOduTelepId) &&
-                int.TryParse((string)query[Constants.ParamOduTelepId], out int odutelepId))
-            {
-                _selectedOdutelepId = odutelepId;
-            }
+            _settingsService.SelectedOduId = oduId;
+            await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}");
         }
     }
 }

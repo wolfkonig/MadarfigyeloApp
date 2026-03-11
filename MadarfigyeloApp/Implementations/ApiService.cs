@@ -26,23 +26,23 @@ namespace MadarfigyeloApp.Implementations
             _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
         }
 
-        public async Task<List<Latogatas>> GetAllLatogatasAsync()
+        public async Task<List<Latogatas>> GetAllLatogatasAsync(bool forceRefresh = false)
         {
-            var response = await _latogatasApi.GetAllAsync();
+            var response = await _latogatasApi.GetAllAsync(forceRefresh ? "true" : "false");
             await HandleResponseAsync(response);
             return response.Content ?? [];
         }
 
-        public async Task<List<Odu>> GetAllOduAsync()
+        public async Task<List<Odu>> GetAllOduAsync(bool forceRefresh = false)
         {
-            var response = await _oduApi.GetAllAsync();
+            var response = await _oduApi.GetAllAsync(forceRefresh ? "true" : "false");
             await HandleResponseAsync(response);
             return response.Content ?? [];
         }
 
-        public async Task<List<Odutelep>> GetAllOdutelepAsync()
+        public async Task<List<Odutelep>> GetAllOdutelepAsync(bool forceRefresh = false)
         {
-            var response = await _odutelepApi.GetAllAsync();
+            var response = await _odutelepApi.GetAllAsync(forceRefresh ? "true" : "false");
             await HandleResponseAsync(response);
             return response.Content ?? [];
         }
@@ -54,11 +54,25 @@ namespace MadarfigyeloApp.Implementations
             return response.Content;
         }
 
+        public async Task<List<Latogatas>> GetLatogatasByOduAsync(int oduId, bool forceRefresh = false)
+        {
+            var response = await _latogatasApi.GetByParentAsync(oduId, forceRefresh ? "true" : "false");
+            await HandleResponseAsync(response);
+            return response.Content ?? [];
+        }
+
         public async Task<Odu?> GetOduAsync(int id)
         {
             var response = await _oduApi.GetAsync(id);
             await HandleResponseAsync(response);
             return response.Content;
+        }
+
+        public async Task<List<Odu>> GetOduByOdutelepAsync(int odutelepId, bool forceRefresh = false)
+        {
+            var response = await _oduApi.GetByParentAsync(odutelepId, forceRefresh ? "true" : "false");
+            await HandleResponseAsync(response);
+            return response.Content ?? [];
         }
 
         public async Task<Odutelep?> GetOdutelepAsync(int id)

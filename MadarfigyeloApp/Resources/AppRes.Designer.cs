@@ -412,7 +412,7 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Látogatások.
+        ///   Looks up a localized string similar to Biotika.
         /// </summary>
         internal static string Latogatasok {
             get {

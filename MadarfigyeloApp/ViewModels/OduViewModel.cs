@@ -17,7 +17,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public List<Odu> OduList
         {
-            get => [.. _oduList.Where(o => SelectedOdutelep == null || SelectedOdutelep.Id == 0 || o.OdutelepId == SelectedOdutelep.Id)];
+            get => _oduList;
             set => SetProperty(ref _oduList, value);
         }
 
@@ -32,11 +32,9 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdutelep;
             set
             {
-                if (SetProperty(ref _selectedOdutelep, value))
-                {
-                    _settingsService.SelectedOdutelepId = value?.Id ?? 0;
-                    OnPropertyChanged(nameof(OduList));
-                }
+                _settingsService.SelectedOdutelepId = value?.Id ?? 0;
+                SetProperty(ref _selectedOdutelep, value);
+                OnPropertyChanged(nameof(OduList));
             }
         }
 
@@ -57,43 +55,53 @@ namespace MadarfigyeloApp.ViewModels
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
             RefreshCommand = new(RefreshAsync);
+
+            PropertyChanged += async (s, e) =>
+            {
+                if (e.PropertyName == nameof(SelectedOdutelep))
+                {
+                    await PopulateOduList(forceRefresh: false);                    
+                }
+            };
         }
 
         public override async Task InitAsync()
         {
-            await LoadAsync(forceRefresh: false);
+            await Task.WhenAll(
+                PopulateOdutelepDropdown(forceRefresh: false),
+                PopulateOduList(forceRefresh: false)
+            );
         }
 
         protected async Task RefreshAsync()
         {
             IsRefreshing = true;
-            try
+            await Task.WhenAll(
+                    PopulateOdutelepDropdown(forceRefresh: true),
+                    PopulateOduList(forceRefresh: true))
+                .ContinueWith(t => IsRefreshing = false);
+        }
+
+        private async Task PopulateOduList(bool forceRefresh)
+        {
+            if (_settingsService.SelectedOdutelepId == 0)
             {
-                await LoadAsync(forceRefresh: true);
+                OduList = await _apiService.GetAllOduAsync(forceRefresh);
             }
-            finally
+            else
             {
-                IsRefreshing = false;
+                OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
             }
         }
 
-        private async Task LoadAsync(bool forceRefresh)
-        {            
+        private async Task PopulateOdutelepDropdown(bool forceRefresh)
+        {
             var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
-            // Only refresh the list if we have new or deleted items or if we explicitly want to refresh.
-            if (_odutelepList.Count == 1 || _odutelepList.Count != odutelepek.Count + 1 || forceRefresh)
+            if (_odutelepList.Count == 1 || forceRefresh)
             {
-                OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
+                OdutelepList = [Odutelep.Empty, .. odutelepek];
             }
-            SelectedOdutelep = OdutelepList
-                .SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
-
-            var oduk = await _apiService.GetAllOduAsync(forceRefresh);
-            foreach (var odu in oduk)
-            {
-                odu.Odutelep = _odutelepList.FirstOrDefault(x => x.Id == odu.OdutelepId);
-            }
-            OduList = oduk;
+            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
         }
 
         private async Task NewOduAsync()

@@ -10,6 +10,9 @@ namespace MadarfigyeloApp.API
         [Get("")]
         Task<IApiResponse<List<T>>> GetAllAsync([Header("X-Force-Refresh")] string? forceRefresh = null);
 
+        [Get("/ByParent/{parentId}")]
+        Task<IApiResponse<List<T>>> GetByParentAsync(int parentId, [Header("X-Force-Refresh")] string? forceRefresh = null);
+
         [Post("")]
         Task<IApiResponse> PostAsync([Body] T payload);
     }

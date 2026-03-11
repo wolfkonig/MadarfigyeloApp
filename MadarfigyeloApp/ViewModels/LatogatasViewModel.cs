@@ -17,7 +17,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public List<Latogatas> LatogatasList
         {
-            get => [.. _latogatasList.Where(l => SelectedOdu is null || SelectedOdu.Id == 0 || l.OduId == SelectedOdu.Id)];
+            get => _latogatasList;
             set => SetProperty(ref _latogatasList, value);
         }
 
@@ -32,13 +32,12 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdu;
             set
             {
-                if (SetProperty(ref _selectedOdu, value))
-                {
-                    _settingsService.SelectedOduId = value?.Id ?? 0;
-                    OnPropertyChanged(nameof(LatogatasList));
-                }
+                _settingsService.SelectedOduId = value?.Id ?? 0;
+                SetProperty(ref _selectedOdu, value);
+                OnPropertyChanged(nameof(LatogatasList));               
             }
         }
+
         public bool IsRefreshing
         {
             get => _isRefreshing;
@@ -54,42 +53,53 @@ namespace MadarfigyeloApp.ViewModels
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewLatogatasCommand = new(NewLatogatasAsync);
             RefreshCommand = new(RefreshAsync);
+
+            PropertyChanged += async (s, e) =>
+            {
+                if (e.PropertyName == nameof(SelectedOdu))
+                {
+                    await PopulateLatogatasList(forceRefresh: false);
+                }
+            };
         }
 
         public override async Task InitAsync()
         {
-            await LoadAsync(forceRefresh: false);
+            await Task.WhenAll(
+                PopulateOduDropdown(forceRefresh: false),
+                PopulateLatogatasList(forceRefresh: false)
+            );
         }
 
         protected async Task RefreshAsync()
         {
             IsRefreshing = true;
-            try
-            {
-                await LoadAsync(forceRefresh: true);
-            }
-            finally
-            {
-                IsRefreshing = false;
-            }
+            await Task.WhenAll(
+                PopulateOduDropdown(forceRefresh: true),
+                PopulateLatogatasList(forceRefresh: true)
+            ).ContinueWith(t => IsRefreshing = false);
         }
 
-        private async Task LoadAsync(bool forceRefresh = false)
+        private async Task PopulateLatogatasList(bool forceRefresh = false)
+        {
+            if(_settingsService.SelectedOduId == 0)
+            {
+                LatogatasList = await _apiService.GetAllLatogatasAsync(forceRefresh);
+            }
+            else
+            {
+                LatogatasList = await _apiService.GetLatogatasByOduAsync(_settingsService.SelectedOduId, forceRefresh);
+            }            
+        }
+
+        private async Task PopulateOduDropdown(bool forceRefresh = false)
         {
             var oduk = await _apiService.GetAllOduAsync(forceRefresh);
-            // Only refresh the list if we have new or deleted items or if we explicitly want to refresh.
-            if (_oduList.Count == 1 || _oduList.Count == oduk.Count + 1 || forceRefresh)
+            if (_oduList.Count == 1 || forceRefresh)
             {
-                OduList = [.. oduk.Concat([Odu.Empty]).OrderBy(x => x.Id)];
+                OduList = [Odu.Empty, .. oduk];
             }
             SelectedOdu = OduList.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId) ?? OduList[0];
-
-            var latogatasok = await _apiService.GetAllLatogatasAsync(forceRefresh);
-            foreach (var latogatas in latogatasok)
-            {
-                latogatas.Odu = _oduList.FirstOrDefault(x => x.Id == latogatas.OduId);
-            }
-            LatogatasList = latogatasok;
         }
 
         private async Task NewLatogatasAsync()

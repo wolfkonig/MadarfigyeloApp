@@ -93,7 +93,7 @@ namespace MadarfigyeloApp
                     .AddHttpMessageHandler<TokenAuthHandler>();
 
                 builder.Services.AddRefitClient<IGenericApi<Latogatas>>(refitSettings)
-                    .ConfigureHttpClient(c => new Uri(Constants.LocalBaseUrlHttps + Constants.LatogatasEndpoint))
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.LocalBaseUrlHttps + Constants.LatogatasEndpoint))
                     .ConfigurePrimaryHttpMessageHandler(() => acceptAllClientHandler)
                     .AddHttpMessageHandler<TokenAuthHandler>();
       

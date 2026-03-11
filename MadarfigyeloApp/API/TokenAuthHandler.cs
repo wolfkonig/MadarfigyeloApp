@@ -9,28 +9,30 @@ public class TokenAuthHandler : DelegatingHandler
 {
     private readonly IAuthApi _authApi;
     private readonly ILoggerService _logger;
+    private readonly ISettingsService _settingsService;
 
-    public TokenAuthHandler(IAuthApi authApi, ILoggerService logger)
+    public TokenAuthHandler(IAuthApi authApi, ILoggerService logger, ISettingsService settingsService)
     {
         _authApi = authApi ?? throw new ArgumentNullException(nameof(authApi));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         // 1. Retrieve the token from SecureStorage if not expired
-        var expDate = Preferences.Default.Get(Constants.KeyLoggedInUserTokenExpDate, DateTime.MinValue);
+        var expDate = _settingsService.Get(Constants.KeyLoggedInUserTokenExpDate, DateTime.MinValue);
 
         var token = string.Empty;
         if (expDate > DateTime.Now)
         {
-            token = await SecureStorage.Default.GetAsync(Constants.KeyLoggedInUserToken);
+            token = await _settingsService.SecureGet(Constants.KeyLoggedInUserToken);
         }
         else
         {
             // 2. If token expired, attempt to refresh it using stored credentials
-            var password = await SecureStorage.Default.GetAsync(Constants.KeyLoggedInUserPassword) ?? "";
-            var email = Preferences.Default.Get(Constants.KeyLoggedInUserEmail, string.Empty);
+            var password = await _settingsService.SecureGet(Constants.KeyLoggedInUserPassword) ?? "";
+            var email = _settingsService.Get(Constants.KeyLoggedInUserEmail, string.Empty);
             var loginDto = new LoginDto
             {
                 Email = email,
@@ -43,13 +45,13 @@ public class TokenAuthHandler : DelegatingHandler
             {
                 token = tokenResponse.Token;
                 // Store the new token and its expiration date
-                await SecureStorage.Default.SetAsync(Constants.KeyLoggedInUserToken, token);
-                Preferences.Default.Set(Constants.KeyLoggedInUserTokenExpDate, tokenResponse.Expiration);
+                await _settingsService.SecureSet(Constants.KeyLoggedInUserToken, token);
+                _settingsService.Set(Constants.KeyLoggedInUserTokenExpDate, tokenResponse.Expiration);
             }
             else
             {
                 _logger.LogError("Failed to refresh token. User may need to log in again.");
-                SecureStorage.Default.RemoveAll();
+                _settingsService.RemoveAll();
                 return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
                 {
                     Content = new StringContent("Token expired and refresh failed. Please log in again.")

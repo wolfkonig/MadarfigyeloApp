@@ -4,11 +4,12 @@ using MadarfigyeloApp.Models;
 
 namespace MadarfigyeloApp.ViewModels
 {
-    public class NewOduViewModel : BaseViewModel, IQueryAttributable
+    public class NewOduViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
         private readonly ILocationService _locationService;
         private readonly ILoggerService _logger;
+        private readonly ISettingsService _settingsService;
 
         // Backing fields
         private string? _oduAzonosito;
@@ -24,7 +25,6 @@ namespace MadarfigyeloApp.ViewModels
         private string? _odutTartoNovenyfaj;
         private string? _magassagMeter;
         private List<Odutelep> _odutelepek = new();
-        private int _selectedOdutelepId = -1;
 
         public AsyncRelayCommand SaveCommand { get; set; }
 
@@ -32,10 +32,12 @@ namespace MadarfigyeloApp.ViewModels
             IApiService apiService, 
             INavigationService navigationService, 
             ILocationService locationService,
+            ISettingsService settingsService,
             ILoggerService logger) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             SaveCommand = new(SaveAsync);
         }
@@ -43,7 +45,8 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             Odutelepek = await _apiService.GetAllOdutelepAsync();
-            SelectedOdutelep = Odutelepek.SingleOrDefault(x => x.Id == _selectedOdutelepId);
+            
+            SelectedOdutelep = Odutelepek.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId);
             Location? location = null;
             try
             {
@@ -88,7 +91,7 @@ namespace MadarfigyeloApp.ViewModels
             set
             {
                 SetProperty(ref _selectedOdutelep, value);
-                _selectedOdutelepId = value?.Id ?? -1;
+                _settingsService.SelectedOdutelepId = value?.Id ?? 0;
             }
         }
 
@@ -188,8 +191,8 @@ namespace MadarfigyeloApp.ViewModels
             if (string.IsNullOrEmpty(OduAzonosito)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduAzonosito)));
             if (string.IsNullOrEmpty(OduTipus)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduTipus)));
             if (BejaratiNyilasMm <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(BejaratiNyilasMm)));
-            if (GpsLatitude <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLatitude)));
-            if (GpsLongitude <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLongitude)));
+            if (GpsLatitude == 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLatitude)));
+            if (GpsLongitude == 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLongitude)));
             if (SelectedOdutelep is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Odutelep)));
 
             if (HasErrors)
@@ -199,15 +202,6 @@ namespace MadarfigyeloApp.ViewModels
                 return false;
             }
             return true;
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(Constants.ParamOduTelepId) &&
-                int.TryParse((string)query[Constants.ParamOduTelepId], out int odutelepId))
-            {
-                _selectedOdutelepId = odutelepId;
-            }
         }
     }
 }

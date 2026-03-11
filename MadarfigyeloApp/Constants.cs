@@ -2,11 +2,19 @@
 {
     public static class Constants
     {
+        // Settings
+        public const int CacheInvalidationIntervalHours = 24;
+
         // URLs
         public const string LocalBaseUrlHttp = "http://10.0.2.2:5000/api";
         public const string LocalBaseUrlHttps = "https://10.0.2.2:5001/api";
         public const string BaseUrlHttp = "http://wolfkonig-001-site1.site4future.com/api";
         public const string BaseUrlHttps = "https://wolfkonig-001-site1.site4future.com/api";
+
+        public const string LoginEndpoint = "/auth/login";
+        public const string OdutelepEndpoint = "/odutelep";
+        public const string OduEndpoint = "/odu";
+        public const string LatogatasEndpoint = "/latogatas";
 
         // Routes
         public const string RouteNewLatogatas = "newLatogatas";
@@ -28,8 +36,7 @@
         public const string KeyLoggedInUserToken = "loggedInUserToken";
         public const string KeyLoggedInUserTokenExpDate = "loggedInUserTokenExpDate";
 
-        // Paremeters
-        public const string ParamOduTelepId = "oduTelepId";
-        public const string ParamOduId = "oduId";
+        public const string KeySelectedOdutelepId = "oduTelepId";
+        public const string KeySelectedOduId = "oduId";
     }
 }

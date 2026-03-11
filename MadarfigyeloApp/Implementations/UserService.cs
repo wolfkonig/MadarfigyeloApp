@@ -1,9 +1,7 @@
 ﻿using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
-using MadarfigyeloApp.Resources;
-using Refit;
-using System.Text;
+using MonkeyCache.FileStore;
 
 namespace MadarfigyeloApp.Implementations
 {
@@ -11,24 +9,26 @@ namespace MadarfigyeloApp.Implementations
     {
         private readonly IAuthApi _authApi;
         private readonly ILoggerService _logger;  
+        private readonly ISettingsService _settingsService;
 
-        public UserService(IAuthApi authApi, ILoggerService logger)    
+        public UserService(IAuthApi authApi, ILoggerService logger, ISettingsService settingsService)    
         {
             _authApi = authApi ?? throw new ArgumentNullException(nameof(authApi));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
         }
 
         public UserDto? GetLoggedInUser()
         {
-            var email = Preferences.Default.Get(Constants.KeyLoggedInUserEmail, string.Empty);
+            var email = _settingsService.Get(Constants.KeyLoggedInUserEmail, string.Empty);
             if (string.IsNullOrEmpty(email))
             {
                 return null;
             }
             var user = new UserDto(email)
             {
-                FirstName = Preferences.Default.Get(Constants.KeyLoggedInUserFirstName, string.Empty),
-                LastName = Preferences.Default.Get(Constants.KeyLoggedInUserLastName, string.Empty)
+                FirstName = _settingsService.Get(Constants.KeyLoggedInUserFirstName, string.Empty),
+                LastName = _settingsService.Get(Constants.KeyLoggedInUserLastName, string.Empty)
             };
             return user;
         }
@@ -44,10 +44,10 @@ namespace MadarfigyeloApp.Implementations
             var authResponse = await _authApi.LogInUser(login);
             if (authResponse.Content is AuthResponseDto tokenResponse)
             {
-                Preferences.Default.Set(Constants.KeyLoggedInUserEmail, tokenResponse.Email);
-                await SecureStorage.Default.SetAsync(Constants.KeyLoggedInUserPassword, password);
-                await SecureStorage.Default.SetAsync(Constants.KeyLoggedInUserToken, tokenResponse.Token);
-                Preferences.Default.Set(Constants.KeyLoggedInUserTokenExpDate, tokenResponse.Expiration);
+                _settingsService.Set(Constants.KeyLoggedInUserEmail, tokenResponse.Email);
+                await _settingsService.SecureSet(Constants.KeyLoggedInUserPassword, password);
+                await _settingsService.SecureSet(Constants.KeyLoggedInUserToken, tokenResponse.Token);
+                _settingsService.Set(Constants.KeyLoggedInUserTokenExpDate, tokenResponse.Expiration);
                 return true;
             }
 
@@ -57,12 +57,16 @@ namespace MadarfigyeloApp.Implementations
 
         public void LogOutUser()
         {
-            Preferences.Default.Remove(Constants.KeyLoggedInUserEmail);
-            Preferences.Default.Remove(Constants.KeyLoggedInUserFirstName);
-            Preferences.Default.Remove(Constants.KeyLoggedInUserLastName);
-            SecureStorage.Default.Remove(Constants.KeyLoggedInUserPassword);
-            SecureStorage.Default.Remove(Constants.KeyLoggedInUserToken);
-            Preferences.Default.Remove(Constants.KeyLoggedInUserTokenExpDate);
+            _settingsService.Remove(Constants.KeyLoggedInUserEmail);
+            _settingsService.Remove(Constants.KeyLoggedInUserFirstName);
+            _settingsService.Remove(Constants.KeyLoggedInUserLastName);
+            _settingsService.Remove(Constants.KeyLoggedInUserPassword);
+            _settingsService.Remove(Constants.KeyLoggedInUserToken);
+            _settingsService.Remove(Constants.KeyLoggedInUserTokenExpDate);
+
+            _settingsService.SelectedOduId = 0;
+            _settingsService.SelectedOdutelepId = 0;
+            Barrel.Current.EmptyAll();
         }
 
         public async Task<bool> RegisterUser(UserDto user)
@@ -71,10 +75,12 @@ namespace MadarfigyeloApp.Implementations
 
             if (authResponse.Content is AuthResponseDto tokenResponse)
             {
-                Preferences.Default.Set(Constants.KeyLoggedInUserEmail, tokenResponse.Email);
-                await SecureStorage.Default.SetAsync(Constants.KeyLoggedInUserPassword, user.Password);
-                await SecureStorage.Default.SetAsync(Constants.KeyLoggedInUserToken, tokenResponse.Token);
-                Preferences.Default.Set(Constants.KeyLoggedInUserTokenExpDate, tokenResponse.Expiration);
+                _settingsService.Set(Constants.KeyLoggedInUserEmail, tokenResponse.Email);
+                _settingsService.Set(Constants.KeyLoggedInUserTokenExpDate, tokenResponse.Expiration);
+                await Task.WhenAll(
+                    _settingsService.SecureSet(Constants.KeyLoggedInUserPassword, user.Password),
+                    _settingsService.SecureSet(Constants.KeyLoggedInUserToken, tokenResponse.Token)
+                );
                 return true;
             }
 

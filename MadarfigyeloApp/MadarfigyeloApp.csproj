@@ -17,8 +17,8 @@
 		<ApplicationId>com.wolfkonig.terepnaplo</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-		<ApplicationVersion>6</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.3</ApplicationDisplayVersion>
+		<ApplicationVersion>9</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -59,6 +59,8 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
+
+		<PackageReference Include="MonkeyCache.FileStore" Version="2.1.1" />
 		<PackageReference Include="Refit" Version="9.0.2" />
 		<PackageReference Include="Refit.HttpClientFactory" Version="9.0.2" />
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="9.0.2" />

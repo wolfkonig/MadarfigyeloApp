@@ -2,6 +2,7 @@ using MadarfigyeloApp.ViewModels;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
+
 namespace MadarfigyeloApp.Views;
 
 public partial class OduMapView : BasePage
@@ -55,8 +56,15 @@ public partial class OduMapView : BasePage
         {
             Location = new Location(latitude, longitude),
             Label = label,
-            Type = PinType.Place
+            Type = PinType.Place           
         };
+
+        pin.MarkerClicked += (s, e) =>
+        {
+            ViewModel.SelectedOduId = ViewModel.OduList.FirstOrDefault(o => o.OduAzonosito == label)?.Id ?? 0;
+            ViewModel.OduSelected = true;
+        };
+
         MyMap.Pins.Add(pin);
     }
 

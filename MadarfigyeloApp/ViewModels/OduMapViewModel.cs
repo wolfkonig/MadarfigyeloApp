@@ -13,16 +13,16 @@ namespace MadarfigyeloApp.ViewModels
     {
         private readonly IApiService _apiService;
         private readonly ILocationService _locationService;
+        private readonly ISettingsService _settingsService;
 
         private List<Odu> _oduList = [];
         private List<Odutelep> _odutelepList = [Odutelep.Empty];
         private Odutelep _selectedOdutelep;
-        private int _selectedOdutelepId = -1;
-        private Location? _currentLocation;
+        private bool _oduSelected;
 
         public List<Odu> OduList
         {
-            get => [.. _oduList.Where(o => SelectedOdutelep == null || SelectedOdutelep.Id == 0 || o.OdutelepId == SelectedOdutelep.Id)];
+            get => _oduList;
             set => SetProperty(ref _oduList, value);
         }
 
@@ -37,40 +37,78 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdutelep;
             set
             {
+                _settingsService.SelectedOdutelepId = value?.Id ?? 0;
                 SetProperty(ref _selectedOdutelep, value);
                 OnPropertyChanged(nameof(OduList));
             }
         }
 
+        public bool OduSelected 
+        { 
+            get => _oduSelected; 
+            set => _oduSelected = value; 
+        }
+
+        public int SelectedOduId { get; set; }
+
         public AsyncRelayCommand NewOduCommand { get; private set; }
-        public AsyncRelayCommand<int> LatogatasokCommand { get; private set; }
+        public AsyncRelayCommand LatogatasokCommand { get; private set; }
 
         public OduMapViewModel(
             IApiService apiService, 
             INavigationService navigationService, 
-            ILocationService locationService) : base(navigationService)
+            ILocationService locationService,
+            ISettingsService settingsService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             LatogatasokCommand = new(LatogatasokAsync);
+
+            PropertyChanged += async (s, e) =>
+            {
+                if (e.PropertyName == nameof(SelectedOdutelep) && !IsBusy)
+                {
+                    IsBusy = true;
+                    await PopulateOduList()
+                    .ContinueWith(t => IsBusy = false);
+                }
+            };
         }
 
         public override async Task InitAsync()
         {
-            var odutelepek = await _apiService.GetAllOdutelepAsync();
-            OdutelepList = [.. odutelepek.Concat([Odutelep.Empty]).OrderBy(x => x.Id)];
-            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _selectedOdutelepId) ?? OdutelepList[0];
-
-            var oduk = await _apiService.GetAllOduAsync();
-            foreach (var odu in oduk)
-            {
-                odu.Odutelep = _odutelepList.FirstOrDefault(x => x.Id == odu.OdutelepId);
-            }
-            OduList = oduk;
+            await Task.WhenAll(
+                PopulateOdutelepDropdown(),
+                PopulateOduList()
+            );
         }
 
-        private async Task LatogatasokAsync(int oduId)
+        private async Task PopulateOduList()
         {
+            if (_settingsService.SelectedOdutelepId == 0)
+            {
+                OduList = await _apiService.GetAllOduAsync();
+            }
+            else
+            {
+                OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId);
+            }
+        }
+
+        private async Task PopulateOdutelepDropdown()
+        {
+            var odutelepek = await _apiService.GetAllOdutelepAsync();
+            if (_odutelepList.Count == 1)
+            {
+                OdutelepList = [Odutelep.Empty, .. odutelepek];
+            }
+            SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
+        }
+
+        private async Task LatogatasokAsync()
+        {
+            _settingsService.SelectedOduId = SelectedOduId;
             await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}");
         }
     }

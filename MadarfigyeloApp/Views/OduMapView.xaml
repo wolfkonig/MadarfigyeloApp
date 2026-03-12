@@ -8,12 +8,14 @@
                 xmlns:util="clr-namespace:MadarfigyeloApp.Utilities"
                 xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
                 x:Class="MadarfigyeloApp.Views.OduMapView"
-                Title="OduMapView">
+                x:DataType="vm:OduMapViewModel"
+                Title="{x:Static res:AppRes.OduMap}">
 
     <Grid RowDefinitions="50,*">
 
         <Grid ColumnDefinitions="2*,3*"
               Grid.Row="0"
+              Grid.RowSpan="2"
               BackgroundColor="{StaticResource White}"
               Opacity="0.6">
             <Label Text="{x:Static res:AppRes.Odutelep}"
@@ -31,8 +33,19 @@
 
         <maps:Map Grid.Row="1" 
                   x:Name="MyMap"
-                  MapType="Street"
-                  IsShowingUser="True" />
+                  MapType="Hybrid"
+                  IsShowingUser="True"
+                  ZIndex="0"/>
+
+        <Button Text="Ugras az odura" 
+                Command="{Binding LatogatasokCommand}"
+                IsVisible="{Binding OduSelected}"
+                Grid.Row="1"
+                HorizontalOptions="Start"
+                VerticalOptions="End"
+                WidthRequest="150"
+                HeightRequest="30"
+                ZIndex="1"/>
     </Grid>
 
 </pages:BasePage>

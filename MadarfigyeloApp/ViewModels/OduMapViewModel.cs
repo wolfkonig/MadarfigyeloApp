@@ -1,11 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Maui.Maps;
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -19,6 +15,8 @@ namespace MadarfigyeloApp.ViewModels
         private List<Odutelep> _odutelepList = [Odutelep.Empty];
         private Odutelep _selectedOdutelep;
         private bool _oduSelected;
+        private Location _currentLocation;
+        private bool _satelliteChecked;
 
         public List<Odu> OduList
         {
@@ -43,11 +41,29 @@ namespace MadarfigyeloApp.ViewModels
             }
         }
 
+        public Location CurrentLocation 
+        { 
+            get => _currentLocation; 
+            set => SetProperty(ref _currentLocation, value); 
+        }
+
         public bool OduSelected 
         { 
             get => _oduSelected; 
-            set => _oduSelected = value; 
+            set => SetProperty(ref _oduSelected, value); 
         }
+
+        public bool SatelliteChecked
+        {
+            get => _satelliteChecked;
+            set
+            {
+                SetProperty(ref _satelliteChecked, value);
+                OnPropertyChanged(nameof(MapType));
+            }
+        }
+
+        public MapType MapType => SatelliteChecked ? MapType.Hybrid : MapType.Street;
 
         public int SelectedOduId { get; set; }
 
@@ -80,17 +96,14 @@ namespace MadarfigyeloApp.ViewModels
         {
             await Task.WhenAll(
                 PopulateOdutelepDropdown(),
-                PopulateOduList()
+                PopulateOduList(),
+                GetLocation()
             );
         }
 
         private async Task PopulateOduList()
         {
-            if (_settingsService.SelectedOdutelepId == 0)
-            {
-                OduList = await _apiService.GetAllOduAsync();
-            }
-            else
+            if (_settingsService.SelectedOdutelepId != 0)
             {
                 OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId);
             }
@@ -110,6 +123,15 @@ namespace MadarfigyeloApp.ViewModels
         {
             _settingsService.SelectedOduId = SelectedOduId;
             await _navigationService.GoToAsync($"//{Constants.RouteLatogatasok}");
+        }
+
+        private async Task GetLocation()
+        {
+            var location = await _locationService.GetCurrentLocationAsync(timeout: TimeSpan.FromSeconds(10));
+            if (location != null)
+            {
+                CurrentLocation = location;
+            }
         }
     }
 }

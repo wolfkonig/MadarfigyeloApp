@@ -375,4 +375,10 @@
   <data name="OduMap" xml:space="preserve">
     <value>Odútérkép</value>
   </data>
+  <data name="JumpToOdu" xml:space="preserve">
+    <value>Ugrás az odúra</value>
+  </data>
+  <data name="Satellite" xml:space="preserve">
+    <value>Műhold</value>
+  </data>
 </root>

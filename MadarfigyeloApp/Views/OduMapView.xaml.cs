@@ -13,25 +13,43 @@ public partial class OduMapView : BasePage
 	{
 		InitializeComponent();
 
+        OduMap.MapClicked += (s, e) =>
+        {
+            ViewModel.SelectedOduId = 0;
+            ViewModel.OduSelected = false;
+        };
+
         ViewModel.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ViewModel.OduList))
-            {                
-                MyMap.Pins.Clear();
-                if(ViewModel.OduList.Count == 0)
+            // If no odutelep is selected, move the map to the current location
+            if (e.PropertyName == nameof(ViewModel.CurrentLocation) 
+                && ViewModel.CurrentLocation != null 
+                && ViewModel.SelectedOdutelep.Id == 0)
+            {
+                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(
+                    ViewModel.CurrentLocation,
+                    Distance.FromKilometers(1)));
+            }
+
+            // If odutelep is selected, add pins for all odus and move the map to show all pins
+            if (e.PropertyName == nameof(ViewModel.OduList) 
+                && ViewModel.SelectedOdutelep.Id != 0)
+            {
+                OduMap.Pins.Clear();
+                if (ViewModel.OduList.Count == 0)
                 {
                     return;
-                }    
+                }
 
                 var firstOdu = ViewModel.OduList.FirstOrDefault(o => o.GpsLatitude != 0 && o.GpsLongitude != 0);
-                var maxDistance =0.0;
+                var maxDistance = 0.0;
                 foreach (var odu in ViewModel.OduList)
                 {
                     if (odu.GpsLatitude != 0 && odu.GpsLongitude != 0)
                     {
                         var distance = firstOdu != null ? Location.CalculateDistance(
-                            new Location((double)firstOdu.GpsLatitude, (double)firstOdu.GpsLongitude), 
-                            new Location((double)odu.GpsLatitude, (double)odu.GpsLongitude), 
+                            new Location((double)firstOdu.GpsLatitude, (double)firstOdu.GpsLongitude),
+                            new Location((double)odu.GpsLatitude, (double)odu.GpsLongitude),
                             DistanceUnits.Kilometers) : 0;
 
                         if (distance > maxDistance)
@@ -42,10 +60,10 @@ public partial class OduMapView : BasePage
                         AddPin((double)odu.GpsLatitude, (double)odu.GpsLongitude, odu.OduAzonosito ?? "");
                     }
                 }
-                
-                MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(
-                    new Location((double)firstOdu.GpsLatitude, (double)firstOdu.GpsLongitude), 
-                    Distance.FromKilometers(maxDistance)));       
+
+                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(
+                    new Location((double)firstOdu.GpsLatitude, (double)firstOdu.GpsLongitude),
+                    Distance.FromKilometers(maxDistance)));
             }
         };
     }
@@ -65,7 +83,7 @@ public partial class OduMapView : BasePage
             ViewModel.OduSelected = true;
         };
 
-        MyMap.Pins.Add(pin);
+        OduMap.Pins.Add(pin);
     }
 
 }

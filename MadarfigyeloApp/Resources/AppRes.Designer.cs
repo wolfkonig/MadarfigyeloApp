@@ -376,6 +376,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ugrás az odúra.
+        /// </summary>
+        internal static string JumpToOdu {
+            get {
+                return ResourceManager.GetString("JumpToOdu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kezelő szervezet név.
         /// </summary>
         internal static string KezeloSzervezetNev {
@@ -678,6 +687,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Műhold.
+        /// </summary>
+        internal static string Satellite {
+            get {
+                return ResourceManager.GetString("Satellite", resourceCulture);
             }
         }
         

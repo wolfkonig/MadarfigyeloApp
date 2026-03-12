@@ -18,14 +18,15 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _odutelepList, value);
         }
 
-        public bool IsRefreshing 
-        { 
-            get => _isRefreshing; 
-            set => SetProperty(ref _isRefreshing, value); 
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
         }
 
         public AsyncRelayCommand NewOdutelepCommand { get; private set; }
         public AsyncRelayCommand<int> OdukCommand { get; private set; }
+        public AsyncRelayCommand<int> OduMapCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
 
         public OdutelepViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
@@ -35,6 +36,7 @@ namespace MadarfigyeloApp.ViewModels
             NewOdutelepCommand = new(NewOdutelep);
             OdukCommand = new(OdukAsync);
             RefreshCommand = new(RefreshAsync);
+            OduMapCommand = new(OduMapAsync);
         }
 
         public override async Task InitAsync()
@@ -49,7 +51,7 @@ namespace MadarfigyeloApp.ViewModels
             {
                 OdutelepList = await _apiService.GetAllOdutelepAsync(forceRefresh: true);
             }
-            finally 
+            finally
             {
                 IsRefreshing = false;
             }
@@ -64,6 +66,12 @@ namespace MadarfigyeloApp.ViewModels
         {
             _settingsService.SelectedOdutelepId = odutelepId;
             await _navigationService.GoToAsync($"//{Constants.RouteOduk}");
+        }
+
+        private async Task OduMapAsync(int odutelepId)
+        {
+            _settingsService.SelectedOdutelepId = odutelepId;
+            await _navigationService.GoToAsync($"//{Constants.RouteOduMap}");
         }
     }
 }

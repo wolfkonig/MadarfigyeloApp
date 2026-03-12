@@ -11,16 +11,31 @@
                 x:DataType="vm:OduMapViewModel"
                 Title="{x:Static res:AppRes.OduMap}">
 
-    <Grid RowDefinitions="50,*">
+    <Grid >
 
-        <Grid ColumnDefinitions="2*,3*"
-              Grid.Row="0"
-              Grid.RowSpan="2"
+        <Grid ColumnDefinitions="40,2*,2*,3*"
+              ZIndex="1"
+              HeightRequest="50"
+              VerticalOptions="Start"
               BackgroundColor="{StaticResource White}"
               Opacity="0.6">
+
+            <CheckBox Grid.Column="0" 
+                      HeightRequest="50"
+                      WidthRequest="50"
+                      IsChecked="{Binding SatelliteChecked}"
+                      Margin="0,0,0,5"
+                      Scale="1.2"/>
+
+            <Label Grid.Column="1"
+                   Text="{x:Static res:AppRes.Satellite}"
+                   HorizontalOptions="Start"
+                   FontSize="Medium" 
+                   Padding="0,0,0,5"/>
+
             <Label Text="{x:Static res:AppRes.Odutelep}"
                    FontSize="Medium"
-                   Grid.Column="0"
+                   Grid.Column="2"
                    HorizontalOptions="End"
                    Padding="10,0,10,5" />
 
@@ -28,16 +43,16 @@
                     ItemDisplayBinding="{Binding Azonosito}"
                     SelectedItem="{Binding SelectedOdutelep}"
                     FontSize="Medium"
-                    Grid.Column="1" />
+                    Grid.Column="3" />
         </Grid>
 
         <maps:Map Grid.Row="1" 
-                  x:Name="MyMap"
-                  MapType="Hybrid"
+                  x:Name="OduMap"
+                  MapType="{Binding MapType}"
                   IsShowingUser="True"
                   ZIndex="0"/>
 
-        <Button Text="Ugras az odura" 
+        <Button Text="{x:Static res:AppRes.JumpToOdu}" 
                 Command="{Binding LatogatasokCommand}"
                 IsVisible="{Binding OduSelected}"
                 Grid.Row="1"

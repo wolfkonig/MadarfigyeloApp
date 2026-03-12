@@ -139,7 +139,7 @@
     <value>Új odú</value>
   </data>
   <data name="UjLatogatas" xml:space="preserve">
-    <value>Új Látogatás</value>
+    <value>Új Biotika</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Betöltés...</value>
@@ -187,7 +187,7 @@
     <value>Kezelő szervezet név</value>
   </data>
   <data name="Latogatas" xml:space="preserve">
-    <value>Látogatás</value>
+    <value>Biotika</value>
   </data>
   <data name="MagassagMeter" xml:space="preserve">
     <value>Magasság (m)</value>

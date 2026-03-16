@@ -381,4 +381,25 @@
   <data name="Satellite" xml:space="preserve">
     <value>Műhold</value>
   </data>
+  <data name="LocationLoading" xml:space="preserve">
+    <value>Lokáció betöltése...</value>
+  </data>
+  <data name="LocationError" xml:space="preserve">
+    <value>Lokáció betöltése sikertelen.</value>
+  </data>
+  <data name="LocationErrorRetry" xml:space="preserve">
+    <value>Lokáció betöltése sikertelen. Újra próbálod?</value>
+  </data>
+  <data name="LocationAccuracyError" xml:space="preserve">
+    <value>A lokáció pontossága {0} méter. Újra próbálod?</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>GPS lokáció</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Igen</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nem</value>
+  </data>
 </root>

@@ -121,6 +121,22 @@ namespace MadarfigyeloApp.ViewModels
                 {
                     CentreMapCircle = Utilities.LocationHelpers.GetMinimumBoundingCircle(oduk.Select(o => o.Location).ToList());
                 }
+                else if (oduk.Count == 1)
+                {
+                    CentreMapCircle = new Circle()
+                    {
+                        Center = oduk[0].Location,
+                        Radius = Distance.FromMeters(100),
+                    };
+                }
+                else
+                {
+                    CentreMapCircle = new Circle()
+                    {
+                        Center = CurrentLocation,
+                        Radius = Distance.FromMeters(100),
+                    };
+                }
                 OduList = oduk;
             }
         }

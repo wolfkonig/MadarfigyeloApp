@@ -4,7 +4,8 @@
     {
         // Settings
         public const int CacheInvalidationIntervalHours = 24;
-        public const int LocationTimeoutSeconds = 12;
+        public const int LocationTimeoutSeconds = 8;
+        public const int LocationDesiredAccuracyMeters = 5;
 
         // URLs
         public const string LocalBaseUrlHttp = "http://10.0.2.2:5000/api";

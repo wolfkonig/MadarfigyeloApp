@@ -29,5 +29,10 @@ namespace MadarfigyeloApp.Implementations
         {
             return await Shell.Current.DisplayAlert(title, message, Resources.AppRes.OK, Resources.AppRes.Cancel);
         }
+
+        public async Task<bool> ShowQuestionAsync(string title, string message, string acceptButtonText, string cancelButtonText)
+        {
+            return await Shell.Current.DisplayAlert(title, message, acceptButtonText, cancelButtonText);
+        }
     }
 }

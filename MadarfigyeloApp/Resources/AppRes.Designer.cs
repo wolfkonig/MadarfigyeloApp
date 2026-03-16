@@ -439,6 +439,51 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GPS lokáció.
+        /// </summary>
+        internal static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A lokáció pontossága {0} méter. Újra próbálod?.
+        /// </summary>
+        internal static string LocationAccuracyError {
+            get {
+                return ResourceManager.GetString("LocationAccuracyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lokáció betöltése sikertelen..
+        /// </summary>
+        internal static string LocationError {
+            get {
+                return ResourceManager.GetString("LocationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lokáció betöltése sikertelen. Újra próbálod?.
+        /// </summary>
+        internal static string LocationErrorRetry {
+            get {
+                return ResourceManager.GetString("LocationErrorRetry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lokáció betöltése....
+        /// </summary>
+        internal static string LocationLoading {
+            get {
+                return ResourceManager.GetString("LocationLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bejelentkezve: {0}.
         /// </summary>
         internal static string LoggedInAs {
@@ -543,6 +588,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string NemMadarLakja {
             get {
                 return ResourceManager.GetString("NemMadarLakja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nem.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
         
@@ -849,6 +903,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string WrongLoginOrPassword {
             get {
                 return ResourceManager.GetString("WrongLoginOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Igen.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

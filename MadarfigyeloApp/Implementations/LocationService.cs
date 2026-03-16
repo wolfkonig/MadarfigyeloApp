@@ -32,7 +32,11 @@
                     return location;
 
                 // Fallback to last known (fast, may be older)
-                return await Geolocation.Default.GetLastKnownLocationAsync().ConfigureAwait(false);
+                if (!highAccuracy)
+                {
+                    return await Geolocation.Default.GetLastKnownLocationAsync().ConfigureAwait(false);
+                }
+                return null;
             }
             catch (FeatureNotEnabledException)
             {

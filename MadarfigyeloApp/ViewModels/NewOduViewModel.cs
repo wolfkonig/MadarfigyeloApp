@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -45,9 +46,17 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             Odutelepek = await _apiService.GetAllOdutelepAsync();
-            
+
             SelectedOdutelep = Odutelepek.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId);
+            await GetLocation();
+        }
+
+        private async Task GetLocation()
+        {
             Location? location = null;
+            LoadingMessage = AppRes.LocationLoading;
+            IsBusy = true;
+
             try
             {
                 location = await _locationService.GetCurrentLocationAsync(highAccuracy: true);
@@ -55,21 +64,32 @@ namespace MadarfigyeloApp.ViewModels
             catch (Exception ex)
             {
                 _logger.LogError($"Failed to get current location. ERROR: {ex.Message}");
-
-                var retry = await _navigationService.ShowQuestionAsync("Failed to get current location.","Do you want to retry?");
-                if (retry)
-                {
-                    location = await _locationService.GetCurrentLocationAsync(highAccuracy: false);
-                }
+            }
+            finally
+            {
+                LoadingMessage = string.Empty;
+                IsBusy = false;
             }
 
-            if (location is not null)
+            var retry = false;
+            if (location is null || location.Latitude == 0 || location.Longitude == 0)
+            {
+                retry = await _navigationService.ShowQuestionAsync(AppRes.Location, AppRes.LocationErrorRetry, AppRes.Yes, AppRes.No);
+            }
+            else if (location.Accuracy > Constants.LocationDesiredAccuracyMeters)
+            {
+                var message = string.Format(AppRes.LocationAccuracyError, Math.Round((decimal)location.Accuracy, 2));
+                retry = await _navigationService.ShowQuestionAsync(AppRes.Location, message, AppRes.Yes, AppRes.No);
+            }
+
+            if (retry)
+            {
+                await GetLocation();
+            }
+            else if (location is not null)
             {
                 GpsLatitude = (decimal)location.Latitude;
                 GpsLongitude = (decimal)location.Longitude;
-
-                //var message = await Utilities.GeocodingHelpers.GetAddressAsync(location);
-                //await _navigationService.ShowAlertAsync(message);
             }
         }
 

@@ -1,6 +1,8 @@
-﻿namespace MadarfigyeloApp.Utilities
+﻿using Microsoft.Maui.Controls.Maps;
+
+namespace MadarfigyeloApp.Utilities
 {
-    public static class GeocodingHelpers
+    public static class LocationHelpers
     {
         public static async Task<string?> GetAddressAsync(Location location)
         {
@@ -11,6 +13,11 @@
             if (place is null) return null;
 
             return $"{place.Thoroughfare} {place.SubThoroughfare}, {place.Locality}, {place.AdminArea} {place.PostalCode}, {place.CountryName}";
+        }
+
+        public static Circle? GetMinimumBoundingCircle(List<Location> locations)
+        {
+            return MinimumBoundingCircle.FindMinimumBoundingCircle(locations);
         }
     }
 }

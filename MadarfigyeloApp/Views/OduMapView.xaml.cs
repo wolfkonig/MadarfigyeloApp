@@ -2,7 +2,6 @@ using MadarfigyeloApp.ViewModels;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
-
 namespace MadarfigyeloApp.Views;
 
 public partial class OduMapView : BasePage
@@ -22,14 +21,14 @@ public partial class OduMapView : BasePage
 
         ViewModel.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ViewModel.CurrentLocation) && ViewModel.CurrentLocation != null && ViewModel.SelectedOdutelep.Id == 0)
+            if (e.PropertyName == nameof(ViewModel.CurrentLocation) && ViewModel.CentreMapCircle is not null && ViewModel.SelectedOdutelep.Id == 0)
             {
                 OduMap.Pins.Clear();
-                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CurrentLocation, Distance.FromKilometers(1)));
+                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CentreMapCircle.Center, ViewModel.CentreMapCircle.Radius));
             }
 
             // If odutelep is selected, add pins for all odus and move the map to show all pins
-            if (e.PropertyName == nameof(ViewModel.OduList))
+            if (e.PropertyName == nameof(ViewModel.OduList) && ViewModel.CentreMapCircle is not null)
             {
                 // Clear up old pins and selection
                 OduMap.Pins.Clear();
@@ -38,28 +37,17 @@ public partial class OduMapView : BasePage
                     // If no odutelep is selected, move the map to the current location
                     if (ViewModel.CurrentLocation != null)
                     {
-                        OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CurrentLocation, Distance.FromKilometers(1)));
+                        OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CentreMapCircle.Center, ViewModel.CentreMapCircle.Radius));
                     }
                     return;
                 }
 
-                var radiusKm = 0.0;
-                foreach (var odu in ViewModel.OduList)
+                foreach (var odu in ViewModel.OduList.Where(odu => odu.GpsLatitude != 0 && odu.GpsLongitude != 0))
                 {
-                    if (odu.GpsLatitude != 0 && odu.GpsLongitude != 0)
-                    {
-                        var distance = Location.CalculateDistance(ViewModel.CentreMapLocation, odu.Location, DistanceUnits.Kilometers);
-
-                        if (distance > radiusKm)
-                        {
-                            radiusKm = distance;
-                        }
-
-                        AddPin((double)odu.GpsLatitude, (double)odu.GpsLongitude, odu.OduAzonosito ?? "", odu.Id);
-                    }
+                    AddPin((double)odu.GpsLatitude, (double)odu.GpsLongitude, odu.OduAzonosito ?? "", odu.Id);
                 }
 
-                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CentreMapLocation, Distance.FromKilometers(radiusKm)));
+                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CentreMapCircle.Center, ViewModel.CentreMapCircle.Radius));
             }
         };
     }

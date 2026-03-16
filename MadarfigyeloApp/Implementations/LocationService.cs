@@ -2,85 +2,9 @@
 {
     using MadarfigyeloApp.Contracts;
     using System;
-    using System.Collections.Generic;
-    using ProjNet.CoordinateSystems;
-    using ProjNet.CoordinateSystems.Transformations;
 
     public sealed class LocationService : ILocationService
-    {
-        public Location FindCentre(List<Location> locations)
-        {
-            // 1. Define projections
-            var csFactory = new CoordinateSystemFactory();
-            var ctFactory = new CoordinateTransformationFactory();
-
-            // WGS84 (lat/lon)
-            var wgs84 = csFactory.CreateGeographicCoordinateSystem(
-                "WGS84",
-                AngularUnit.Degrees,
-                HorizontalDatum.WGS84,
-                PrimeMeridian.Greenwich,
-                new AxisInfo("Lon", AxisOrientationEnum.East),
-                new AxisInfo("Lat", AxisOrientationEnum.North)
-            );
-
-            // UTM Zone 33N (covers Hungary well)
-            var utm33 = csFactory.CreateProjectedCoordinateSystem(
-                "UTM33N",
-                wgs84,
-                csFactory.CreateProjection("UTM33N", "Transverse_Mercator",
-                    new List<ProjectionParameter>
-                    {
-                    new ProjectionParameter("latitude_of_origin", 0),
-                    new ProjectionParameter("central_meridian", 15),
-                    new ProjectionParameter("scale_factor", 0.9996),
-                    new ProjectionParameter("false_easting", 500000),
-                    new ProjectionParameter("false_northing", 0)
-                    }),
-                LinearUnit.Metre,
-                new AxisInfo("East", AxisOrientationEnum.East),
-                new AxisInfo("North", AxisOrientationEnum.North)
-            );
-
-            var toUtm = ctFactory.CreateFromCoordinateSystems(wgs84, utm33);
-            var toWgs = ctFactory.CreateFromCoordinateSystems(utm33, wgs84);
-
-            // 2. Convert to projected coordinates
-            var xy = new List<(double x, double y)>();
-            foreach (var loc in locations)
-            {
-                double[] p = toUtm.MathTransform.Transform([loc.Longitude, loc.Latitude]);
-                xy.Add((p[0], p[1]));
-            }
-
-            // 3. Compute 2D polygon centroid (shoelace formula)
-            double A = 0;
-            double Cx = 0;
-            double Cy = 0;
-
-            for (int i = 0; i < xy.Count; i++)
-            {
-                var (x0, y0) = xy[i];
-                var (x1, y1) = xy[(i + 1) % xy.Count];
-
-                double cross = x0 * y1 - x1 * y0;
-                A += cross;
-                Cx += (x0 + x1) * cross;
-                Cy += (y0 + y1) * cross;
-            }
-
-            A *= 0.5;
-            Cx /= (6 * A);
-            Cy /= (6 * A);
-
-            // 4. Convert centroid back to lat/lon
-            double[] ll = toWgs.MathTransform.Transform([Cx, Cy]);
-            double lonCentroid = ll[0];
-            double latCentroid = ll[1];
-
-            return new Location(latCentroid, lonCentroid);
-        }
-
+    {       
         public async Task<Location?> GetCurrentLocationAsync(
             bool highAccuracy = true,
             TimeSpan? timeout = null,

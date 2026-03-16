@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
+using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
 namespace MadarfigyeloApp.ViewModels
@@ -17,7 +18,7 @@ namespace MadarfigyeloApp.ViewModels
         private bool _oduSelected;
         private Location _currentLocation;
         private bool _satelliteChecked;
-        private Location _centreMapLocation;
+        private Circle? _centreMapCircle = null;
 
         public List<Odu> OduList
         {
@@ -47,10 +48,10 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _currentLocation, value); 
         }
 
-        public Location CentreMapLocation 
+        public Circle? CentreMapCircle 
         { 
-            get => _centreMapLocation; 
-            set => SetProperty(ref _centreMapLocation, value); 
+            get => _centreMapCircle; 
+            set => SetProperty(ref _centreMapCircle, value); 
         }
 
         public bool OduSelected 
@@ -116,9 +117,9 @@ namespace MadarfigyeloApp.ViewModels
             if (_settingsService.SelectedOdutelepId != 0)
             {
                 var oduk = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId);
-                if (oduk.Count > 0)
+                if (oduk.Count > 1)
                 {
-                    CentreMapLocation = _locationService.FindCentre(oduk.Select(o => o.Location).ToList());
+                    CentreMapCircle = Utilities.LocationHelpers.GetMinimumBoundingCircle(oduk.Select(o => o.Location).ToList());
                 }
                 OduList = oduk;
             }
@@ -145,11 +146,12 @@ namespace MadarfigyeloApp.ViewModels
             var location = await _locationService.GetCurrentLocationAsync(timeout: TimeSpan.FromSeconds(10));
             if (location != null)
             {
+                CentreMapCircle ??= new Circle()
+                    {
+                        Center = location,
+                        Radius = Distance.FromMeters(100),
+                    };
                 CurrentLocation = location;
-                if (CentreMapLocation == null)
-                {
-                    CentreMapLocation = CurrentLocation;
-                }
             }
         }
     }

@@ -13,5 +13,7 @@
             bool highAccuracy = true,
             TimeSpan? timeout = null,
             CancellationToken cancellationToken = default);
+
+        Location FindCentre(List<Location> locations);
     }
 }

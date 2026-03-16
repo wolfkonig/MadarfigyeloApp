@@ -17,6 +17,7 @@ namespace MadarfigyeloApp.ViewModels
         private bool _oduSelected;
         private Location _currentLocation;
         private bool _satelliteChecked;
+        private Location _centreMapLocation;
 
         public List<Odu> OduList
         {
@@ -37,7 +38,6 @@ namespace MadarfigyeloApp.ViewModels
             {
                 _settingsService.SelectedOdutelepId = value?.Id ?? 0;
                 SetProperty(ref _selectedOdutelep, value);
-                OnPropertyChanged(nameof(OduList));
             }
         }
 
@@ -45,6 +45,12 @@ namespace MadarfigyeloApp.ViewModels
         { 
             get => _currentLocation; 
             set => SetProperty(ref _currentLocation, value); 
+        }
+
+        public Location CentreMapLocation 
+        { 
+            get => _centreMapLocation; 
+            set => SetProperty(ref _centreMapLocation, value); 
         }
 
         public bool OduSelected 
@@ -105,7 +111,12 @@ namespace MadarfigyeloApp.ViewModels
         {
             if (_settingsService.SelectedOdutelepId != 0)
             {
-                OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId);
+                var oduk = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId);
+                if (oduk.Count > 0)
+                {
+                    CentreMapLocation = _locationService.FindCentre(oduk.Select(o => o.Location).ToList());
+                }
+                OduList = oduk;
             }
         }
 
@@ -131,6 +142,10 @@ namespace MadarfigyeloApp.ViewModels
             if (location != null)
             {
                 CurrentLocation = location;
+                if (CentreMapLocation == null)
+                {
+                    CentreMapLocation = CurrentLocation;
+                }
             }
         }
     }

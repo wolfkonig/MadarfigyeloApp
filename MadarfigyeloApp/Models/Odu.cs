@@ -31,9 +31,14 @@ namespace MadarfigyeloApp.Models
         public string? OdutTartoNovenyfaj { get; set; }
 
         public string? MagassagMeter {  get; set; }
+
         [JsonIgnore]
         public ICollection<Latogatas>? Latogatasok { get; set; }
+
         [JsonIgnore]
         public static Odu Empty => new() { Id = 0, OduAzonosito = AppRes.NoneSelected };
+
+        [JsonIgnore]
+        public Location Location => new Location((double)GpsLatitude, (double)GpsLongitude);
     }
 }

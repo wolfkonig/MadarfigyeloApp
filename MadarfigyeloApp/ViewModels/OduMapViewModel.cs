@@ -92,14 +92,18 @@ namespace MadarfigyeloApp.ViewModels
                 if (e.PropertyName == nameof(SelectedOdutelep) && !IsBusy)
                 {
                     IsBusy = true;
+                    OduSelected = false;
+                    SelectedOduId = 0;
                     await PopulateOduList()
-                    .ContinueWith(t => IsBusy = false);
+                        .ContinueWith(t => IsBusy = false);
                 }
             };
         }
 
         public override async Task InitAsync()
         {
+            OduSelected = false;
+            SelectedOduId = 0;
             await Task.WhenAll(
                 PopulateOdutelepDropdown(),
                 PopulateOduList(),
@@ -125,7 +129,7 @@ namespace MadarfigyeloApp.ViewModels
             var odutelepek = await _apiService.GetAllOdutelepAsync();
             if (_odutelepList.Count == 1)
             {
-                OdutelepList = [Odutelep.Empty, .. odutelepek];
+                OdutelepList = [new Odutelep() { Id = 0 }, .. odutelepek];
             }
             SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
         }

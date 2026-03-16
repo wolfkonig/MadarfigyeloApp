@@ -19,18 +19,25 @@ public partial class OduMapView : BasePage
             ViewModel.OduSelected = false;
         };
 
+
         ViewModel.PropertyChanged += (s, e) =>
         {
-            // If odutelep is selected, add pins for all odus and move the map to show all pins
-            if (e.PropertyName == nameof(ViewModel.OduList) 
-                && ViewModel.SelectedOdutelep.Id != 0)
+            if (e.PropertyName == nameof(ViewModel.CurrentLocation) && ViewModel.CurrentLocation != null && ViewModel.SelectedOdutelep.Id == 0)
             {
                 OduMap.Pins.Clear();
-                if (ViewModel.OduList.Count == 0)
+                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CurrentLocation, Distance.FromKilometers(1)));
+            }
+
+            // If odutelep is selected, add pins for all odus and move the map to show all pins
+            if (e.PropertyName == nameof(ViewModel.OduList))
+            {
+                // Clear up old pins and selection
+                OduMap.Pins.Clear();
+                if (ViewModel.OduList.Count == 0 || ViewModel.SelectedOdutelep.Id == 0)
                 {
+                    // If no odutelep is selected, move the map to the current location
                     if (ViewModel.CurrentLocation != null)
                     {
-                        // If no odutelep is selected, move the map to the current location
                         OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CurrentLocation, Distance.FromKilometers(1)));
                     }
                     return;
@@ -48,7 +55,7 @@ public partial class OduMapView : BasePage
                             radiusKm = distance;
                         }
 
-                        AddPin((double)odu.GpsLatitude, (double)odu.GpsLongitude, odu.OduAzonosito ?? "");
+                        AddPin((double)odu.GpsLatitude, (double)odu.GpsLongitude, odu.OduAzonosito ?? "", odu.Id);
                     }
                 }
 
@@ -57,18 +64,18 @@ public partial class OduMapView : BasePage
         };
     }
 
-    private void AddPin(double latitude, double longitude, string label)
+    private void AddPin(double latitude, double longitude, string label, int oduId)
     {
         var pin = new Pin
         {
             Location = new Location(latitude, longitude),
             Label = label,
-            Type = PinType.Place           
+            Type = PinType.Generic           
         };
 
         pin.MarkerClicked += (s, e) =>
         {
-            ViewModel.SelectedOduId = ViewModel.OduList.FirstOrDefault(o => o.OduAzonosito == label)?.Id ?? 0;
+            ViewModel.SelectedOduId = oduId;
             ViewModel.OduSelected = true;
         };
 

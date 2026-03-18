@@ -21,33 +21,30 @@ public partial class OduMapView : BasePage
 
         ViewModel.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ViewModel.CurrentLocation) && ViewModel.CentreMapCircle is not null && ViewModel.SelectedOdutelep.Id == 0)
+            // Clear pins if no Odutelep selected
+            if (e.PropertyName is nameof(ViewModel.CurrentLocation) or nameof(ViewModel.SelectedOdutelep) 
+                && ViewModel.ShowMapRegion is not null 
+                && ViewModel.SelectedOdutelep.Id == 0)
             {
                 OduMap.Pins.Clear();
-                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CentreMapCircle.Center, ViewModel.CentreMapCircle.Radius));
+                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CurrentLocation, Distance.FromMeters(100)));
             }
 
             // If odutelep is selected, add pins for all odus and move the map to show all pins
-            if (e.PropertyName == nameof(ViewModel.OduList) && ViewModel.CentreMapCircle is not null)
+            if (e.PropertyName == nameof(ViewModel.OduList) 
+                && ViewModel.ShowMapRegion is not null 
+                && ViewModel.OduList.Count != 0 
+                && ViewModel.SelectedOdutelep.Id != 0)
             {
                 // Clear up old pins and selection
                 OduMap.Pins.Clear();
-                if (ViewModel.OduList.Count == 0 || ViewModel.SelectedOdutelep.Id == 0)
-                {
-                    // If no odutelep is selected, move the map to the current location
-                    if (ViewModel.CurrentLocation != null)
-                    {
-                        OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CentreMapCircle.Center, ViewModel.CentreMapCircle.Radius));
-                    }
-                    return;
-                }
 
                 foreach (var odu in ViewModel.OduList.Where(odu => odu.GpsLatitude != 0 && odu.GpsLongitude != 0))
                 {
                     AddPin((double)odu.GpsLatitude, (double)odu.GpsLongitude, odu.OduAzonosito ?? "", odu.Id);
                 }
 
-                OduMap.MoveToRegion(MapSpan.FromCenterAndRadius(ViewModel.CentreMapCircle.Center, ViewModel.CentreMapCircle.Radius));
+                OduMap.MoveToRegion(ViewModel.ShowMapRegion);
             }
         };
     }

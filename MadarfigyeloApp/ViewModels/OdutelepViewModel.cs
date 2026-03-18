@@ -35,13 +35,14 @@ namespace MadarfigyeloApp.ViewModels
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewOdutelepCommand = new(NewOdutelep);
             OdukCommand = new(OdukAsync);
-            RefreshCommand = new(RefreshAsync);
+            RefreshCommand = new(RefreshAsync); 
             OduMapCommand = new(OduMapAsync);
         }
 
         public override async Task InitAsync()
         {
-            OdutelepList = await _apiService.GetAllOdutelepAsync();
+            OdutelepList = await _apiService.GetAllOdutelepAsync(_settingsService.ForceRefresh);
+            _settingsService.ForceRefresh = false;
         }
 
         protected async Task RefreshAsync()

@@ -41,5 +41,6 @@
 
         public const string KeySelectedOdutelepId = "oduTelepId";
         public const string KeySelectedOduId = "oduId";
+        public const string KeyForceRefresh = "forceRefresh";
     }
 }

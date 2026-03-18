@@ -7,6 +7,7 @@ namespace MadarfigyeloApp.ViewModels
     public class NewOdutelepViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
+        private readonly ISettingsService _settingsService;
 
         // Backing fields
         private string? _azonosito;
@@ -20,9 +21,10 @@ namespace MadarfigyeloApp.ViewModels
         private string? _felelosSzemelyEmail;
         private string? _megjegyzes;
 
-        public NewOdutelepViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
+        public NewOdutelepViewModel(IApiService apiService, ISettingsService settingsService, INavigationService navigationService) : base(navigationService)
         {
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             SaveCommand = new(SaveAsync);
         }
 
@@ -116,6 +118,7 @@ namespace MadarfigyeloApp.ViewModels
                 if (success)
                 {
                     await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odutelep));
+                    _settingsService.ForceRefresh = true;
                     await _navigationService.PopAsync();
                 }
             }

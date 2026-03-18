@@ -402,4 +402,7 @@
   <data name="No" xml:space="preserve">
     <value>Nem</value>
   </data>
+  <data name="ShowEmptyMap" xml:space="preserve">
+    <value>Nincs kiválasztva</value>
+  </data>
 </root>

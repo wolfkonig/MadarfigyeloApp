@@ -7,13 +7,20 @@ namespace MadarfigyeloApp.Implementations
     {
         public int SelectedOdutelepId 
         {
-            get => Get<int>(Constants.KeySelectedOdutelepId, Odutelep.Empty.Id);
+            get => Get(Constants.KeySelectedOdutelepId, Odutelep.Empty.Id);
             set => Set(Constants.KeySelectedOdutelepId, value);
         }
+
         public int SelectedOduId 
         { 
-            get => Get<int>(Constants.KeySelectedOduId, Odu.Empty.Id); 
+            get => Get(Constants.KeySelectedOduId, Odu.Empty.Id); 
             set => Set(Constants.KeySelectedOduId, value ); 
+        }
+
+        public bool ForceRefresh
+        {
+            get => Get(Constants.KeyForceRefresh, false);
+            set => Set(Constants.KeyForceRefresh, value);
         }
 
         public T? Get<T>(string key, T? defaultValue = default)

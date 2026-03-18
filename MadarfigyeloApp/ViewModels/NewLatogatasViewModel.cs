@@ -131,6 +131,7 @@ namespace MadarfigyeloApp.ViewModels
                 if (success)
                 {
                     await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Latogatas));
+                    _settingsService.ForceRefresh = true;
                     await _navigationService.PopAsync();
                 }
             }

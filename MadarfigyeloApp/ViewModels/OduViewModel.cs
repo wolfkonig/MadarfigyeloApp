@@ -70,9 +70,10 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             await Task.WhenAll(
-                PopulateOdutelepDropdown(forceRefresh: false),
-                PopulateOduList(forceRefresh: false)
+                PopulateOdutelepDropdown(_settingsService.ForceRefresh),
+                PopulateOduList(_settingsService.ForceRefresh)
             );
+            _settingsService.ForceRefresh = false;
         }
 
         protected async Task RefreshAsync()

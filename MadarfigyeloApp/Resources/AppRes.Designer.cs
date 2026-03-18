@@ -772,6 +772,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nincs kiválasztva.
+        /// </summary>
+        internal static string ShowEmptyMap {
+            get {
+                return ResourceManager.GetString("ShowEmptyMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Takarítás.
         /// </summary>
         internal static string Takaritas {

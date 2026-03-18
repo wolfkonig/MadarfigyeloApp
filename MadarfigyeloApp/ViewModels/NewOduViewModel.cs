@@ -46,7 +46,6 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             Odutelepek = await _apiService.GetAllOdutelepAsync();
-
             SelectedOdutelep = Odutelepek.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId);
             await GetLocation();
         }
@@ -199,7 +198,8 @@ namespace MadarfigyeloApp.ViewModels
 
                 if (success)
                 {
-                    await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Odu));
+                    await _navigationService.ShowAlertAsync(string.Format(AppRes.SaveSuccessful, Resources.AppRes.Odu));
+                    _settingsService.ForceRefresh = true;
                     await _navigationService.PopAsync();
                 }
             }

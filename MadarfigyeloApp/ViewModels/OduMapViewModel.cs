@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Resources;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
@@ -18,7 +19,7 @@ namespace MadarfigyeloApp.ViewModels
         private bool _oduSelected;
         private Location _currentLocation;
         private bool _satelliteChecked;
-        private Circle? _centreMapCircle = null;
+        private MapSpan _showMapRegion;
 
         public List<Odu> OduList
         {
@@ -48,11 +49,7 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _currentLocation, value); 
         }
 
-        public Circle? CentreMapCircle 
-        { 
-            get => _centreMapCircle; 
-            set => SetProperty(ref _centreMapCircle, value); 
-        }
+        public MapSpan ShowMapRegion { get => _showMapRegion; set => SetProperty(ref _showMapRegion, value); }
 
         public bool OduSelected 
         { 
@@ -95,7 +92,7 @@ namespace MadarfigyeloApp.ViewModels
                     IsBusy = true;
                     OduSelected = false;
                     SelectedOduId = 0;
-                    await PopulateOduList()
+                    await PopulateOduList(forceRefresh: false)
                         .ContinueWith(t => IsBusy = false);
                 }
             };
@@ -106,47 +103,43 @@ namespace MadarfigyeloApp.ViewModels
             OduSelected = false;
             SelectedOduId = 0;
             await Task.WhenAll(
-                PopulateOdutelepDropdown(),
-                PopulateOduList(),
-                GetLocation()
+                PopulateOdutelepDropdown(_settingsService.ForceRefresh),
+                PopulateOduList(_settingsService.ForceRefresh)
             );
+            _settingsService.ForceRefresh = false;
+
+            await GetLocation();
         }
 
-        private async Task PopulateOduList()
+        private async Task PopulateOduList(bool forceRefresh)
         {
-            if (_settingsService.SelectedOdutelepId != 0)
+            if (_settingsService.SelectedOdutelepId == 0)
             {
-                var oduk = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId);
-                if (oduk.Count > 1)
-                {
-                    CentreMapCircle = Utilities.LocationHelpers.GetMinimumBoundingCircle(oduk.Select(o => o.Location).ToList());
-                }
-                else if (oduk.Count == 1)
-                {
-                    CentreMapCircle = new Circle()
-                    {
-                        Center = oduk[0].Location,
-                        Radius = Distance.FromMeters(100),
-                    };
-                }
-                else
-                {
-                    CentreMapCircle = new Circle()
-                    {
-                        Center = CurrentLocation,
-                        Radius = Distance.FromMeters(100),
-                    };
-                }
-                OduList = oduk;
+                return;
             }
+            var oduk = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
+            if (oduk.Count > 1)
+            {
+                var mapCircle = Utilities.LocationHelpers.GetMinimumBoundingCircle(oduk.Select(o => o.Location).ToList());
+                ShowMapRegion = MapSpan.FromCenterAndRadius(mapCircle.Center, mapCircle.Radius);
+            }
+            else if (oduk.Count == 1)
+            {
+                ShowMapRegion = MapSpan.FromCenterAndRadius(oduk[0].Location, Distance.FromMeters(100));                
+            }
+            else
+            {
+                ShowMapRegion = MapSpan.FromCenterAndRadius(CurrentLocation, Distance.FromMeters(100));
+            }
+            OduList = oduk;
         }
 
-        private async Task PopulateOdutelepDropdown()
+        private async Task PopulateOdutelepDropdown(bool forceRefresh)
         {
-            var odutelepek = await _apiService.GetAllOdutelepAsync();
+            var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
             if (_odutelepList.Count == 1)
             {
-                OdutelepList = [new Odutelep() { Id = 0 }, .. odutelepek];
+                OdutelepList = [new Odutelep() { Id = 0, Azonosito = AppRes.ShowEmptyMap }, .. odutelepek];
             }
             SelectedOdutelep = OdutelepList.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
         }
@@ -162,11 +155,7 @@ namespace MadarfigyeloApp.ViewModels
             var location = await _locationService.GetCurrentLocationAsync(timeout: TimeSpan.FromSeconds(10));
             if (location != null)
             {
-                CentreMapCircle ??= new Circle()
-                    {
-                        Center = location,
-                        Radius = Distance.FromMeters(100),
-                    };
+                ShowMapRegion = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(100));
                 CurrentLocation = location;
             }
         }

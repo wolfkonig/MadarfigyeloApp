@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
-using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -46,6 +45,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public AsyncRelayCommand NewOduCommand { get; private set; }
         public AsyncRelayCommand<int> LatogatasokCommand { get; private set; }
+        public AsyncRelayCommand<int> EditOduCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
 
         public OduViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
@@ -54,6 +54,7 @@ namespace MadarfigyeloApp.ViewModels
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
+            EditOduCommand = new(EditOduAsync);
             RefreshCommand = new(RefreshAsync);
 
             PropertyChanged += async (s, e) =>
@@ -62,7 +63,7 @@ namespace MadarfigyeloApp.ViewModels
                 {
                     IsBusy = true;
                     await PopulateOduList(forceRefresh: false)
-                    .ContinueWith(t => IsBusy = false);                    
+                    .ContinueWith(t => IsBusy = false);
                 }
             };
         }
@@ -110,6 +111,12 @@ namespace MadarfigyeloApp.ViewModels
         private async Task NewOduAsync()
         {
             await _navigationService.GoToAsync(Constants.RouteNewOdu);
+        }
+
+        private async Task EditOduAsync(int oduId)
+        {
+            _settingsService.SelectedOduId = oduId;
+            await _navigationService.GoToAsync(Constants.RouteEditOdu);
         }
 
         private async Task LatogatasokAsync(int oduId)

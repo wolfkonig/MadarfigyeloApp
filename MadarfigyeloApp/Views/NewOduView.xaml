@@ -8,7 +8,7 @@
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.NewOduView"
                 x:DataType="vm:NewOduViewModel"
-                Title="{x:Static res:AppRes.UjOdu}">
+                Title="{Binding PageTitle}">
 
     <ScrollView>
         <Grid Padding="20"

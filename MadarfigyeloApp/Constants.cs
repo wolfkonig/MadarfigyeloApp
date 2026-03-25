@@ -22,6 +22,7 @@
         public const string RouteNewLatogatas = "newLatogatas";
         public const string RouteNewOdutelep = "newOdutelep";
         public const string RouteNewOdu = "newOdu";
+        public const string RouteEditOdu = "editOdu";
         public const string RouteLogin = "login";
         public const string RouteHome = "home";
         public const string RouteOdutelepek = "odutelep";

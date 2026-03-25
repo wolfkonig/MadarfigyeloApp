@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace MadarfigyeloApp.Models
+﻿namespace MadarfigyeloApp.Models
 {
     public class UserDto
     {

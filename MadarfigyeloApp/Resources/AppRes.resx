@@ -405,4 +405,7 @@
   <data name="ShowEmptyMap" xml:space="preserve">
     <value>Nincs kiválasztva</value>
   </data>
+  <data name="EditOdu" xml:space="preserve">
+    <value>Odú módosítása</value>
+  </data>
 </root>

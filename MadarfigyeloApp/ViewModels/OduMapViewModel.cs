@@ -2,7 +2,6 @@
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
 using MadarfigyeloApp.Resources;
-using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
 namespace MadarfigyeloApp.ViewModels

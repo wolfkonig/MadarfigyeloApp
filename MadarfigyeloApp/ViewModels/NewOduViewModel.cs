@@ -7,10 +7,10 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class NewOduViewModel : BaseViewModel
     {
-        private readonly IApiService _apiService;
-        private readonly ILocationService _locationService;
-        private readonly ILoggerService _logger;
-        private readonly ISettingsService _settingsService;
+        protected readonly IApiService _apiService;
+        protected readonly ILocationService _locationService;
+        protected readonly ILoggerService _logger;
+        protected readonly ISettingsService _settingsService;
 
         // Backing fields
         private string? _oduAzonosito;
@@ -27,7 +27,7 @@ namespace MadarfigyeloApp.ViewModels
         private string? _magassagMeter;
         private List<Odutelep> _odutelepek = new();
 
-        public AsyncRelayCommand SaveCommand { get; set; }
+        public virtual AsyncRelayCommand SaveCommand { get; set; }
 
         public NewOduViewModel(
             IApiService apiService, 
@@ -91,6 +91,8 @@ namespace MadarfigyeloApp.ViewModels
                 GpsLongitude = (decimal)location.Longitude;
             }
         }
+
+        public virtual string PageTitle => AppRes.UjOdu;
 
         public List<Odutelep> Odutelepek 
         { 
@@ -174,7 +176,7 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _magassagMeter, value);
         }
 
-        private async Task SaveAsync()
+        protected virtual async Task SaveAsync()
         {
             if (await Validate())
             {
@@ -198,22 +200,22 @@ namespace MadarfigyeloApp.ViewModels
 
                 if (success)
                 {
-                    await _navigationService.ShowAlertAsync(string.Format(AppRes.SaveSuccessful, Resources.AppRes.Odu));
+                    await _navigationService.ShowAlertAsync(string.Format(AppRes.SaveSuccessful, AppRes.Odu));
                     _settingsService.ForceRefresh = true;
                     await _navigationService.PopAsync();
                 }
             }
         }
 
-        private async Task<bool> Validate()
+        protected async Task<bool> Validate()
         {
             _errors.Clear();
-            if (string.IsNullOrEmpty(OduAzonosito)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduAzonosito)));
-            if (string.IsNullOrEmpty(OduTipus)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(OduTipus)));
-            if (BejaratiNyilasMm <= 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(BejaratiNyilasMm)));
-            if (GpsLatitude == 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLatitude)));
-            if (GpsLongitude == 0) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(GpsLongitude)));
-            if (SelectedOdutelep is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Odutelep)));
+            if (string.IsNullOrEmpty(OduAzonosito)) _errors.Add(string.Format(AppRes.ErrorEmpty, nameof(OduAzonosito)));
+            if (string.IsNullOrEmpty(OduTipus)) _errors.Add(string.Format(AppRes.ErrorEmpty, nameof(OduTipus)));
+            if (BejaratiNyilasMm <= 0) _errors.Add(string.Format(AppRes.ErrorEmpty, nameof(BejaratiNyilasMm)));
+            if (GpsLatitude == 0) _errors.Add(string.Format(AppRes.ErrorEmpty, nameof(GpsLatitude)));
+            if (GpsLongitude == 0) _errors.Add(string.Format(AppRes.ErrorEmpty, nameof(GpsLongitude)));
+            if (SelectedOdutelep is null || SelectedOdutelep.Id == 0) _errors.Add(string.Format(AppRes.ErrorEmpty, nameof(Odutelep)));
 
             if (HasErrors)
             {

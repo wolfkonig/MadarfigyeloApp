@@ -169,6 +169,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Odú módosítása.
+        /// </summary>
+        internal static string EditOdu {
+            get {
+                return ResourceManager.GetString("EditOdu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ellenőrzés.
         /// </summary>
         internal static string Ellenorzes {

@@ -1,8 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using MonkeyCache.FileStore;
-using Microsoft.Maui.Networking;
+﻿using MonkeyCache.FileStore;
 using MadarfigyeloApp.Contracts;
 
 namespace MadarfigyeloApp.API

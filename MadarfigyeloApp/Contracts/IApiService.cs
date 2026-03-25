@@ -13,6 +13,7 @@ namespace MadarfigyeloApp.Contracts
         Task<List<Odu>> GetOduByOdutelepAsync(int odutelepId, bool forceRefresh = false);
         Task<Odu?> GetOduAsync(int id);
         Task<bool> PostOduAsync(Odu odu);
+        Task<bool> UpdateOduAsync(Odu odu);
 
         Task<Odutelep?> GetOdutelepAsync(int id);
         Task<List<Odutelep>> GetAllOdutelepAsync(bool forceRefresh = false);

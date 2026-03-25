@@ -100,6 +100,24 @@ namespace MadarfigyeloApp.Implementations
             return await HandleResponseAsync(response);
         }
 
+        public async Task<bool> UpdateOduAsync(Odu odu)
+        {
+            var response = await _oduApi.PutAsync(odu.Id, odu);
+            return await HandleResponseAsync(response);
+        }
+
+        public async Task<bool> UpdateOdutelep(Odutelep odutelep)
+        {
+            var response = await _odutelepApi.PutAsync(odutelep.Id, odutelep);
+            return await HandleResponseAsync(response);
+        }
+
+        public async Task<bool> UpdateLatogatas(Latogatas latogatas)
+        {
+            var response = await _latogatasApi.PutAsync(latogatas.Id, latogatas);
+            return await HandleResponseAsync(response);
+        }
+
         private async Task<bool> HandleResponseAsync(IApiResponse apiResponse)
         {
             if(apiResponse.IsSuccessful)

@@ -1,5 +1,4 @@
 ﻿using MadarfigyeloApp.Models;
-using Refit;
 
 namespace MadarfigyeloApp.Contracts
 {

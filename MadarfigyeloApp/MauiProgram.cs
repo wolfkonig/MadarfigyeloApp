@@ -50,6 +50,7 @@ namespace MadarfigyeloApp
             builder.Services.AddTransientWithShellRoute<NewOdutelepView, NewOdutelepViewModel>(Constants.RouteNewOdutelep);
             builder.Services.AddTransientWithShellRoute<NewOduView, NewOduViewModel>(Constants.RouteNewOdu);
             builder.Services.AddTransientWithShellRoute<NewLatogatasView, NewLatogatasViewModel>(Constants.RouteNewLatogatas);
+            builder.Services.AddTransientWithShellRoute<EditOduView, EditOduViewModel>(Constants.RouteEditOdu);
 
             return builder;
         }
@@ -67,7 +68,7 @@ namespace MadarfigyeloApp
 
         private static MauiAppBuilder RegisterClients(this MauiAppBuilder builder)
         {
-            builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+            builder.Services.AddSingleton(Connectivity.Current);
             builder.Services.AddTransient<TokenAuthHandler>();
             builder.Services.AddTransient<CachingHandler>();
 
@@ -75,6 +76,7 @@ namespace MadarfigyeloApp
 
             if (CurrentEnvironment == Environment.DevLocal)
             {
+                // Accept all SSL certificates (including self-signed) for local development
                 var acceptAllClientHandler = new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                    

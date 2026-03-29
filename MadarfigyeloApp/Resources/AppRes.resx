@@ -408,4 +408,7 @@
   <data name="EditOdu" xml:space="preserve">
     <value>Odú módosítása</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Módosítás</value>
+  </data>
 </root>

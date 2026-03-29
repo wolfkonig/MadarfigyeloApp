@@ -17,12 +17,6 @@ namespace MadarfigyeloApp.Implementations
             set => Set(Constants.KeySelectedOduId, value ); 
         }
 
-        public bool ForceRefresh
-        {
-            get => Get(Constants.KeyForceRefresh, false);
-            set => Set(Constants.KeyForceRefresh, value);
-        }
-
         public T? Get<T>(string key, T? defaultValue = default)
         {
             return Preferences.Default.Get(key, defaultValue);

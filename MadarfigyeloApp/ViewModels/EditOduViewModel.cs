@@ -27,6 +27,11 @@ namespace MadarfigyeloApp.ViewModels
                     OduTajolasa = odu.OduTajolasa;
                     OdutTartoNovenyfaj = odu.OdutTartoNovenyfaj;
                     MagassagMeter = odu.MagassagMeter;
+
+                    if (_settingsService.SelectedOdutelepId == 0)
+                    {
+                        _settingsService.SelectedOdutelepId = odu.OdutelepId;
+                    }
                 }
             }
             await base.InitAsync();
@@ -63,7 +68,6 @@ namespace MadarfigyeloApp.ViewModels
             if (success)
             {
                 await _navigationService.ShowAlertAsync(string.Format(AppRes.SaveSuccessful, AppRes.Odu));
-                _settingsService.ForceRefresh = true;
                 await _navigationService.PopAsync();
             }
         }

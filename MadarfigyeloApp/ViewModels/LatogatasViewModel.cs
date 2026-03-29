@@ -46,13 +46,16 @@ namespace MadarfigyeloApp.ViewModels
 
         public AsyncRelayCommand NewLatogatasCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
+        public AsyncRelayCommand<int> EditOduCommand { get; private set; }
 
         public LatogatasViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {            
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
+
             NewLatogatasCommand = new(NewLatogatasAsync);
             RefreshCommand = new(RefreshAsync);
+            EditOduCommand = new(EditOduAsync);
 
             PropertyChanged += async (s, e) =>
             {
@@ -68,10 +71,9 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             await Task.WhenAll(
-                PopulateOduDropdown(_settingsService.ForceRefresh),
-                PopulateLatogatasList(_settingsService.ForceRefresh)
+                PopulateOduDropdown(),
+                PopulateLatogatasList()
             );
-            _settingsService.ForceRefresh = false;
         }
 
         protected async Task RefreshAsync()
@@ -108,6 +110,12 @@ namespace MadarfigyeloApp.ViewModels
         private async Task NewLatogatasAsync()
         {
             await _navigationService.GoToAsync(Constants.RouteNewLatogatas);            
+        }
+
+        private async Task EditOduAsync(int oduId)
+        {
+            _settingsService.SelectedOduId = oduId;
+            await _navigationService.GoToAsync(Constants.RouteEditOdu);
         }
     }
 }

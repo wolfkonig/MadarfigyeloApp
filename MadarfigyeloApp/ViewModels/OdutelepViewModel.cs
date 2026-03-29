@@ -41,8 +41,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public override async Task InitAsync()
         {
-            OdutelepList = await _apiService.GetAllOdutelepAsync(_settingsService.ForceRefresh);
-            _settingsService.ForceRefresh = false;
+            OdutelepList = await _apiService.GetAllOdutelepAsync();
         }
 
         protected async Task RefreshAsync()

@@ -101,12 +101,11 @@ namespace MadarfigyeloApp.ViewModels
         {
             OduSelected = false;
             SelectedOduId = 0;
-            await Task.WhenAll(
-                PopulateOdutelepDropdown(_settingsService.ForceRefresh),
-                PopulateOduList(_settingsService.ForceRefresh)
-            );
-            _settingsService.ForceRefresh = false;
 
+            await Task.WhenAll(
+                PopulateOdutelepDropdown(false),
+                PopulateOduList(false)
+            );
             await GetLocation();
         }
 

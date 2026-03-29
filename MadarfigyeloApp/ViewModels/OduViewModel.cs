@@ -71,10 +71,9 @@ namespace MadarfigyeloApp.ViewModels
         public override async Task InitAsync()
         {
             await Task.WhenAll(
-                PopulateOdutelepDropdown(_settingsService.ForceRefresh),
-                PopulateOduList(_settingsService.ForceRefresh)
+                PopulateOdutelepDropdown(),
+                PopulateOduList()
             );
-            _settingsService.ForceRefresh = false;
         }
 
         protected async Task RefreshAsync()
@@ -86,7 +85,7 @@ namespace MadarfigyeloApp.ViewModels
                 .ContinueWith(t => IsRefreshing = false);
         }
 
-        private async Task PopulateOduList(bool forceRefresh)
+        private async Task PopulateOduList(bool forceRefresh = false)
         {
             if (_settingsService.SelectedOdutelepId == 0)
             {
@@ -98,7 +97,7 @@ namespace MadarfigyeloApp.ViewModels
             }
         }
 
-        private async Task PopulateOdutelepDropdown(bool forceRefresh)
+        private async Task PopulateOdutelepDropdown(bool forceRefresh = false)
         {
             var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
             if (_odutelepList.Count == 1 || forceRefresh)

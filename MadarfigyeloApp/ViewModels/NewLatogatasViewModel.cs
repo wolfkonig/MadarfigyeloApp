@@ -131,7 +131,6 @@ namespace MadarfigyeloApp.ViewModels
                 if (success)
                 {
                     await _navigationService.ShowAlertAsync(string.Format(Resources.AppRes.SaveSuccessful, Resources.AppRes.Latogatas));
-                    _settingsService.ForceRefresh = true;
                     await _navigationService.PopAsync();
                 }
             }
@@ -142,8 +141,7 @@ namespace MadarfigyeloApp.ViewModels
             _errors.Clear();
             if (SelectedOdu is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Odu)));
             if (Tevekenyseg is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Tevekenyseg)));
-            if (Allapot is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Allapot)));
-            if (string.IsNullOrEmpty(Faj)) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Faj)));           
+            if (Allapot is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Allapot)));  
 
             if (HasErrors)
             {

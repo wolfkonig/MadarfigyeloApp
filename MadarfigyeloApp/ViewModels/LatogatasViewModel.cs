@@ -34,9 +34,12 @@ namespace MadarfigyeloApp.ViewModels
             {
                 _settingsService.SelectedOduId = value?.Id ?? 0;
                 SetProperty(ref _selectedOdu, value);
-                OnPropertyChanged(nameof(LatogatasList));               
+                OnPropertyChanged(nameof(LatogatasList));
+                OnPropertyChanged(nameof(SelectedOdutelep));
             }
         }
+
+        public Odutelep SelectedOdutelep => SelectedOdu?.Odutelep ?? Odutelep.Empty;
 
         public bool IsRefreshing
         {
@@ -99,11 +102,15 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task PopulateOduDropdown(bool forceRefresh = false)
         {
-            var oduk = await _apiService.GetAllOduAsync(forceRefresh);
-            if (_oduList.Count == 1 || forceRefresh)
+            if (_settingsService.SelectedOdutelepId == 0)
             {
-                OduList = [Odu.Empty, .. oduk];
+                OduList = await _apiService.GetAllOduAsync(forceRefresh);
             }
+            else
+            {
+                OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
+            }
+            
             SelectedOdu = OduList.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId) ?? OduList[0];
         }
 

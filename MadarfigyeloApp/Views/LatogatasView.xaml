@@ -20,7 +20,7 @@
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
 
-        <Grid ColumnDefinitions="40,2*,5*,3*"
+        <Grid ColumnDefinitions="40,3*,3*,2*"
               Grid.Row="0"
               BackgroundColor="{StaticResource White}"
               Opacity="0.6">
@@ -31,10 +31,10 @@
                          Margin="5,0,0,0"
                          Grid.Column="0" />
 
-            <Label Text="{x:Static res:AppRes.Odu}"
+            <Label Text="{Binding SelectedOdutelep.Azonosito}"
                    FontSize="Medium"
                    Grid.Column="1"
-                   HorizontalOptions="End"
+                   HorizontalOptions="Center"
                    Padding="10,0,10,5" />
 
             <Picker ItemsSource="{Binding OduList}"
@@ -79,36 +79,36 @@
                                     </Grid>
                                 </toolkit:Expander.Header>
 
-                                <Grid ColumnDefinitions="*,*,*"
-                                      RowDefinitions="30,60">
-                                    <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
-                                           Grid.Column="0"
-                                           Grid.Row="0"
-                                           Style="{StaticResource ListText}" />
-                                    <Label Text="{Binding Faj}"
-                                           Grid.Column="1"
-                                           Grid.Row="0"
-                                           Style="{StaticResource ListText}" />
-                                    <Label Text="{Binding TojasSzam, StringFormat={x:Static res:AppRes.TojasokSzamaX}}"
-                                           Grid.Column="2"
-                                           Grid.Row="0"
-                                           Style="{StaticResource ListText}" />
+                                <Grid ColumnDefinitions="*,*">
+                                    <FlexLayout Grid.Row="0"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                JustifyContent="SpaceBetween"
+                                                Wrap="Wrap">
+                                        <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
+                                               IsVisible="{Binding Allapot, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
+                                        
+                                        <Label Text="{Binding Faj}"
+                                               IsVisible="{Binding Faj, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
+                                        
+                                        <Label Text="{Binding TojasSzam, StringFormat={x:Static res:AppRes.TojasokSzamaX}}"
+                                               IsVisible="{Binding TojasSzam, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding FiokaSzam, StringFormat={x:Static res:AppRes.FiokakSzamaX}}"
-                                           Grid.Column="0"
-                                           Grid.Row="1"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding FiokaSzam, StringFormat={x:Static res:AppRes.FiokakSzamaX}}"
+                                               IsVisible="{Binding FiokaSzam, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding FiokakKora, StringFormat={x:Static res:AppRes.FiokakKoraX}}"
-                                           Grid.Column="1"
-                                           Grid.Row="1"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding FiokakKora, StringFormat={x:Static res:AppRes.FiokakKoraX}}"
+                                               IsVisible="{Binding FiokakKora, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding Megjegyzesek}"
-                                           Grid.Column="2"
-                                           Grid.Row="1"
-                                           Style="{StaticResource ListText}" />
-
+                                        <Label Text="{Binding Megjegyzesek}"
+                                               IsVisible="{Binding Megjegyzesek, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                                               Style="{StaticResource ListText}" />
+                                    </FlexLayout>
                                 </Grid>
                             </toolkit:Expander>
                         </Border>

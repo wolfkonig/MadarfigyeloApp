@@ -57,7 +57,7 @@
                             <toolkit:Expander>
                                 <toolkit:Expander.Header>
                                     <Grid ColumnDefinitions="2*,3*,2*"
-                                          RowDefinitions="30">
+                                          RowDefinitions="35">
                                         <Label Text="{Binding OduAzonosito}"
                                                Grid.Column="0"
                                                Style="{StaticResource ListTextHeader}" />
@@ -70,65 +70,63 @@
                                     </Grid>
                                 </toolkit:Expander.Header>
 
-                                <Grid ColumnDefinitions="*,*,*"
-                                      RowDefinitions="30,30,30,30">
-                                    <Label Text="{Binding GpsLatitude}"
-                                           Grid.Column="0"
-                                           Grid.Row="0"
-                                           Style="{StaticResource ListText}" />
-                                    <Label Text="{Binding GpsLongitude}"
-                                           Grid.Column="1"
-                                           Grid.Row="0"
-                                           Style="{StaticResource ListText}" />
-                                    <Label Text="{Binding BejaratiNyilasMm}"
-                                           Grid.Column="2"
-                                           Grid.Row="0"
-                                           Style="{StaticResource ListText}" />
+                                <Grid ColumnDefinitions="*,*"
+                                      RowDefinitions="*,30">
+                                    <FlexLayout Grid.Row="0"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                JustifyContent="SpaceBetween"
+                                                Wrap="Wrap">
+                                        <Label Text="{Binding GpsLatitude, StringFormat={x:Static res:AppRes.GpsLatitudeX}}"
+                                               IsVisible="{Binding GpsLatitude, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding Elohelykod}"
-                                           Grid.Column="0"
-                                           Grid.Row="1"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding GpsLongitude, StringFormat={x:Static res:AppRes.GpsLongitudeX}}"
+                                               IsVisible="{Binding GpsLongitude, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding MireVanHelyezve}"
-                                           Grid.Column="1"
-                                           Grid.Row="1"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding BejaratiNyilasMm, StringFormat={x:Static res:AppRes.BejaratiNyilasX}}"
+                                               IsVisible="{Binding BejaratiNyilasMm, Converter={toolkit:IsNotNullConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding FelhelyezesModja}"
-                                           Grid.Column="2"
-                                           Grid.Row="1"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding Elohelykod, StringFormat={x:Static res:AppRes.ElohelykodX}}"
+                                               IsVisible="{Binding Elohelykod, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding OduTajolasa}"
-                                           Grid.Column="0"
-                                           Grid.Row="2"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding MireVanHelyezve, StringFormat={x:Static res:AppRes.MireVanHelyezveX}}"
+                                               IsVisible="{Binding MireVanHelyezve, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding OdutTartoNovenyfaj}"
-                                           Grid.Column="1"
-                                           Grid.Row="2"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding FelhelyezesModja, StringFormat={x:Static res:AppRes.FelhelyezesModjaX}}"
+                                               IsVisible="{Binding FelhelyezesModja, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                                               Style="{StaticResource ListText}" />
 
-                                    <Label Text="{Binding MagassagMeter}"
-                                           Grid.Column="2"
-                                           Grid.Row="2"
-                                           Style="{StaticResource ListText}" />
+                                        <Label Text="{Binding OduTajolasa, Converter={toolkit:TextCaseConverter}, ConverterParameter={x:Static toolkit:TextCaseType.Upper}, StringFormat={x:Static res:AppRes.OduTajolasaX}}"
+                                               IsVisible="{Binding OduTajolasa, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                                               Style="{StaticResource ListText}" />
+
+                                        <Label Text="{Binding OdutTartoNovenyfaj, StringFormat={x:Static res:AppRes.OdutTartoNovenyfajX}}"
+                                               IsVisible="{Binding OdutTartoNovenyfaj, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                                               Style="{StaticResource ListText}" />
+
+                                        <Label Text="{Binding MagassagMeter, StringFormat={x:Static res:AppRes.MagassagMeterX}}"
+                                               IsVisible="{Binding MagassagMeter, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                                               Style="{StaticResource ListText}" />
+                                    </FlexLayout>
 
                                     <Button Text="{x:Static res:AppRes.EditOdu}"
                                             Margin="0"
                                             Padding="0"
                                             Grid.Column="0"
-                                            Grid.Row="3"
-                                            Grid.ColumnSpan="2"
+                                            Grid.Row="1"
                                             Command="{Binding BindingContext.EditOduCommand, Source={x:Reference oduRoot}}"
                                             CommandParameter="{Binding Id}" />
 
                                     <Button Text="{x:Static res:AppRes.Latogatasok}"
                                             Margin="5,0,0,0"
                                             Padding="0"
-                                            Grid.Column="2"
-                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            Grid.Row="1"
                                             Command="{Binding BindingContext.LatogatasokCommand, Source={x:Reference oduRoot}}"
                                             CommandParameter="{Binding Id}" />
                                 </Grid>

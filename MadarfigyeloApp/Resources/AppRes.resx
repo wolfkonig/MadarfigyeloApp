@@ -349,7 +349,7 @@
     <value>A két jelszó nem egyezik</value>
   </data>
   <data name="TojasokSzamaX" xml:space="preserve">
-    <value>Tojások száma: {0}</value>
+    <value>{0} tojás</value>
   </data>
   <data name="FiokakSzamaX" xml:space="preserve">
     <value>Fiókák száma: {0}</value>
@@ -410,5 +410,35 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Módosítás</value>
+  </data>
+  <data name="BejaratiNyilasX" xml:space="preserve">
+    <value>Bejárat: {0} mm</value>
+  </data>
+  <data name="ElohelykodX" xml:space="preserve">
+    <value>Élőhelykód: {0}</value>
+  </data>
+  <data name="MireVanHelyezveX" xml:space="preserve">
+    <value>Erre van helyezve: {0}</value>
+  </data>
+  <data name="FelhelyezesModjaX" xml:space="preserve">
+    <value>Felhelyezés módja: {0}</value>
+  </data>
+  <data name="OduTajolasaX" xml:space="preserve">
+    <value>Tájolás: {0}</value>
+  </data>
+  <data name="OdutTartoNovenyfajX" xml:space="preserve">
+    <value>Odút tartja: {0}</value>
+  </data>
+  <data name="MagassagMeterX" xml:space="preserve">
+    <value>Magasság: {0} m</value>
+  </data>
+  <data name="GpsLatitudeX" xml:space="preserve">
+    <value>GPS szél: {0}</value>
+  </data>
+  <data name="GpsLongitudeX" xml:space="preserve">
+    <value>GPS hossz: {0}</value>
+  </data>
+  <data name="FajX" xml:space="preserve">
+    <value>Faj: {0}</value>
   </data>
 </root>

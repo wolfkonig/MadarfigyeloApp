@@ -142,6 +142,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bejárat: {0} mm.
+        /// </summary>
+        internal static string BejaratiNyilasX {
+            get {
+                return ResourceManager.GetString("BejaratiNyilasX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mégsem.
         /// </summary>
         internal static string Cancel {
@@ -205,6 +214,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Élőhelykód: {0}.
+        /// </summary>
+        internal static string ElohelykodX {
+            get {
+                return ResourceManager.GetString("ElohelykodX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail cím.
         /// </summary>
         internal static string Email {
@@ -237,6 +255,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string Faj {
             get {
                 return ResourceManager.GetString("Faj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faj: {0}.
+        /// </summary>
+        internal static string FajX {
+            get {
+                return ResourceManager.GetString("FajX", resourceCulture);
             }
         }
         
@@ -282,6 +309,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string FelhelyezesModja {
             get {
                 return ResourceManager.GetString("FelhelyezesModja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felhelyezés módja: {0}.
+        /// </summary>
+        internal static string FelhelyezesModjaX {
+            get {
+                return ResourceManager.GetString("FelhelyezesModjaX", resourceCulture);
             }
         }
         
@@ -358,11 +394,29 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GPS szél: {0}.
+        /// </summary>
+        internal static string GpsLatitudeX {
+            get {
+                return ResourceManager.GetString("GpsLatitudeX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GPS hosszúság.
         /// </summary>
         internal static string GpsLongitude {
             get {
                 return ResourceManager.GetString("GpsLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPS hossz: {0}.
+        /// </summary>
+        internal static string GpsLongitudeX {
+            get {
+                return ResourceManager.GetString("GpsLongitudeX", resourceCulture);
             }
         }
         
@@ -565,6 +619,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Magasság: {0} m.
+        /// </summary>
+        internal static string MagassagMeterX {
+            get {
+                return ResourceManager.GetString("MagassagMeterX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Megjegyzés.
         /// </summary>
         internal static string Megjegyzes {
@@ -597,6 +660,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string MireVanHelyezve {
             get {
                 return ResourceManager.GetString("MireVanHelyezve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erre van helyezve: {0}.
+        /// </summary>
+        internal static string MireVanHelyezveX {
+            get {
+                return ResourceManager.GetString("MireVanHelyezveX", resourceCulture);
             }
         }
         
@@ -673,6 +745,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tájolás: {0}.
+        /// </summary>
+        internal static string OduTajolasaX {
+            get {
+                return ResourceManager.GetString("OduTajolasaX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odútelep.
         /// </summary>
         internal static string Odutelep {
@@ -705,6 +786,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string OdutTartoNovenyfaj {
             get {
                 return ResourceManager.GetString("OdutTartoNovenyfaj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odút tartja: {0}.
+        /// </summary>
+        internal static string OdutTartoNovenyfajX {
+            get {
+                return ResourceManager.GetString("OdutTartoNovenyfajX", resourceCulture);
             }
         }
         
@@ -853,7 +943,7 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tojások száma: {0}.
+        ///   Looks up a localized string similar to {0} tojás.
         /// </summary>
         internal static string TojasokSzamaX {
             get {

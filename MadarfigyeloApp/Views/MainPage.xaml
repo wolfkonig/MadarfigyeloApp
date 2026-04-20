@@ -11,7 +11,7 @@
     <Grid RowDefinitions="50,*,30">
 
         <Grid ColumnDefinitions="Auto,*,40"
-              BackgroundColor="White"
+              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
               Opacity="0.5"
               Grid.Row="0"
               ZIndex="1">
@@ -24,7 +24,7 @@
             <ImageButton Grid.Column="2"
                          Margin="0,5,10,5"
                          HeightRequest="35"
-                         Source="logout"
+                         Source="{AppThemeBinding Light=logout.png, Dark=logout_white.png}"
                          Command="{Binding LogoutCommand}" />
         </Grid>
 

@@ -21,11 +21,11 @@
                VerticalOptions="Fill" />
 
         <Grid ColumnDefinitions="40,2*,3*" 
-              Grid.Row="0" 
-              BackgroundColor="{StaticResource White}" 
+              Grid.Row="0"
+              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
               Opacity="0.6">
-            
-            <ImageButton Source="refresh.png"
+
+            <ImageButton Source="{AppThemeBinding Light=refresh.png, Dark=refresh_white.png}"
                          Command="{Binding RefreshCommand}"
                          HorizontalOptions="End"
                          Margin="5,0,0,0"

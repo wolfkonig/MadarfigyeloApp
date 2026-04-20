@@ -102,15 +102,17 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task PopulateOduDropdown(bool forceRefresh = false)
         {
+            List<Odu> oduList;
             if (_settingsService.SelectedOdutelepId == 0)
             {
-                OduList = await _apiService.GetAllOduAsync(forceRefresh);
+                oduList = await _apiService.GetAllOduAsync(forceRefresh);
             }
             else
             {
-                OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
+                oduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
             }
-            
+
+            OduList = [Odu.Empty, .. oduList];
             SelectedOdu = OduList.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId) ?? OduList[0];
         }
 

@@ -11,7 +11,7 @@ public partial class OduMapView : BasePage
     public OduMapView(OduMapViewModel viewModel) : base(viewModel)
 	{
 		InitializeComponent();
-
+        
         OduMap.MapClicked += (s, e) =>
         {
             ViewModel.SelectedOduId = 0;

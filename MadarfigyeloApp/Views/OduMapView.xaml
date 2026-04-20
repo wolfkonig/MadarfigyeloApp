@@ -17,7 +17,7 @@
               ZIndex="1"
               HeightRequest="50"
               VerticalOptions="Start"
-              BackgroundColor="{StaticResource White}"
+              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
               Opacity="0.6">
 
             <CheckBox Grid.Column="0" 
@@ -46,7 +46,7 @@
                     Grid.Column="3" />
         </Grid>
 
-        <maps:Map Grid.Row="1" 
+        <maps:Map Grid.Row="1"
                   x:Name="OduMap"
                   MapType="{Binding MapType}"
                   IsShowingUser="True"

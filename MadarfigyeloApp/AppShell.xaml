@@ -5,9 +5,6 @@
        xmlns:local="clr-namespace:MadarfigyeloApp"
        xmlns:views="clr-namespace:MadarfigyeloApp.Views"
        xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
-       BackgroundColor="{StaticResource Primary}"
-       FlyoutBackgroundColor="{StaticResource Primary}"
-       TitleColor="{StaticResource Accent}"
        Title="MadarfigyeloApp">
 
     <TabBar Route="home">

@@ -119,7 +119,7 @@ namespace MadarfigyeloApp.ViewModels
                     Datum = Datum,
                     Tevekenyseg = Tevekenyseg.Value,
                     Allapot = Allapot.Value,
-                    Faj = Faj,
+                    Faj = Faj ?? string.Empty,
                     TojasSzam = TojasSzam,
                     FiokaSzam = FiokaSzam,
                     FiokakKora = FiokakKora,

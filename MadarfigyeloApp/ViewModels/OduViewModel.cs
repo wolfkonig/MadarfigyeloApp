@@ -31,7 +31,11 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdutelep;
             set
             {
-                _settingsService.SelectedOdutelepId = value?.Id ?? 0;
+                if (!IsBusy)
+                {
+                    // Should not set SelectedOdutelepId during init
+                    _settingsService.SelectedOdutelepId = value?.Id ?? 0;
+                }
                 SetProperty(ref _selectedOdutelep, value);
                 OnPropertyChanged(nameof(OduList));
             }

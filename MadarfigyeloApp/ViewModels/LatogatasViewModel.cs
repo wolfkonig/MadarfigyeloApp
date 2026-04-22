@@ -32,7 +32,11 @@ namespace MadarfigyeloApp.ViewModels
             get => _selectedOdu;
             set
             {
-                _settingsService.SelectedOduId = value?.Id ?? 0;
+                if (!IsBusy)
+                {
+                    // Should not set SelectedOduId during init
+                    _settingsService.SelectedOduId = value?.Id ?? 0;
+                }
                 SetProperty(ref _selectedOdu, value);
                 OnPropertyChanged(nameof(LatogatasList));
                 OnPropertyChanged(nameof(SelectedOdutelep));

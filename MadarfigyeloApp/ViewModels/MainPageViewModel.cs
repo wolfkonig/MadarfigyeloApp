@@ -22,22 +22,32 @@ namespace MadarfigyeloApp.ViewModels
         public MainPageViewModel(INavigationService navigationService, IUserService userService) : base(navigationService)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            LogoutCommand = new(async () =>
-            {
-               var confirmed = await _navigationService.ShowQuestionAsync(AppRes.Logout, AppRes.LogoutConfirm);
-                if (confirmed)
-                {
-                    _userService.LogOutUser();
-                    await _navigationService.GoToAsync($"//{Constants.RouteLogin}");
-                }
-            });
+            LogoutCommand = new(() => LogoutAsync(true));
             Version = AppInfo.VersionString;
         }
 
-        public override Task InitAsync()
+        public override async Task InitAsync()
         {
-            LoggedInUser = _userService.GetLoggedInUser()?.Email ?? string.Empty;
-            return Task.CompletedTask;
+            var loggedinUser = _userService.GetLoggedInUser();
+            if (loggedinUser == null)
+            {
+                await LogoutAsync(false);
+            }
+            else
+            {
+                LoggedInUser = loggedinUser.Email ?? string.Empty;
+                return;
+            }
+        }
+
+        private async Task LogoutAsync(bool needConfirmation)
+        {
+            var confirmed = !needConfirmation || await _navigationService.ShowQuestionAsync(AppRes.Logout, AppRes.LogoutConfirm);
+            if (confirmed)
+            {
+                _userService.LogOutUser();
+                await _navigationService.GoToAsync($"//{Constants.RouteLogin}");
+            }
         }
     }
 }

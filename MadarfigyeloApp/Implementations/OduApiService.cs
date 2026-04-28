@@ -1,7 +1,6 @@
 ﻿using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
-using static MadarfigyeloApp.Implementations.OdutelepApiService;
 
 namespace MadarfigyeloApp.Implementations
 {
@@ -52,6 +51,17 @@ namespace MadarfigyeloApp.Implementations
             if (await HandleResponseAsync(response))
             {
                 InvalidateCache(odu, ModifiedAction.Updated);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteOduAsync(int id)
+        {
+            var response = await _oduApi.DeleteAsync(id);
+            if (response.IsSuccessStatusCode)
+            {
+                InvalidateCache(new Odu { Id = id }, ModifiedAction.Deleted);
                 return true;
             }
             return false;

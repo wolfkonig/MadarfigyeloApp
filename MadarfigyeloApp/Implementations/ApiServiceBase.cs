@@ -4,7 +4,6 @@ using MadarfigyeloApp.Resources;
 using MonkeyCache.FileStore;
 using Refit;
 using System.Text;
-using static MadarfigyeloApp.Implementations.OdutelepApiService;
 
 namespace MadarfigyeloApp.Implementations
 {

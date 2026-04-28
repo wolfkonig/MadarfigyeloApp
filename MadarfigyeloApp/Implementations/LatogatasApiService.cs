@@ -1,7 +1,7 @@
 ﻿using MadarfigyeloApp.API;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
-using static MadarfigyeloApp.Implementations.OdutelepApiService;
+
 
 namespace MadarfigyeloApp.Implementations
 {
@@ -53,6 +53,28 @@ namespace MadarfigyeloApp.Implementations
             if (await HandleResponseAsync(response))
             {
                 InvalidateCache(latogatas, ModifiedAction.Created);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateLatogatasAsync(Latogatas latogatas)
+        {
+           var response = await _latogatasApi.PutAsync(latogatas.Id, latogatas);
+            if (response.IsSuccessStatusCode)
+            {
+                InvalidateCache(latogatas, ModifiedAction.Updated);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteLatogatasAsync(int id)
+        {
+            var response = await _latogatasApi.DeleteAsync(id);
+            if (response.IsSuccessStatusCode)
+            {
+                InvalidateCache(new Latogatas { Id = id }, ModifiedAction.Deleted);
                 return true;
             }
             return false;

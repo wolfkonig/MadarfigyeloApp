@@ -18,5 +18,8 @@ namespace MadarfigyeloApp.API
 
         [Put("/{id}")]
         Task<IApiResponse> PutAsync(int id, [Body] T payload);
+
+        [Delete("/{id}")]
+        Task<IApiResponse> DeleteAsync(int id);
     }
 }

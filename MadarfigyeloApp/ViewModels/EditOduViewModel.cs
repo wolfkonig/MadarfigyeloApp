@@ -5,17 +5,18 @@ using MadarfigyeloApp.Resources;
 namespace MadarfigyeloApp.ViewModels
 {
     public class EditOduViewModel(
-        IApiService apiService,
+        IOduApiService oduApiService,
+        IOdutelepApiService odutelepApiService,
         INavigationService navigationService,
         ILocationService locationService,
         ISettingsService settingsService,
-        ILoggerService logger) : NewOduViewModel(apiService, navigationService, locationService, settingsService, logger)
+        ILoggerService logger) : NewOduViewModel(oduApiService, odutelepApiService, navigationService, locationService, settingsService, logger)
     {
         public override async Task InitAsync()
         {
             if (_settingsService.SelectedOduId != 0)
             {
-                var odu = await _apiService.GetOduAsync(_settingsService.SelectedOduId);
+                var odu = await _oduApi.GetOduAsync(_settingsService.SelectedOduId);
                 if (odu is not null)
                 {
                     OduAzonosito = odu.OduAzonosito;
@@ -63,7 +64,7 @@ namespace MadarfigyeloApp.ViewModels
                 MagassagMeter = MagassagMeter
             };
 
-            var success = await _apiService.UpdateOduAsync(odu);
+            var success = await _oduApi.UpdateOduAsync(odu);
 
             if (success)
             {

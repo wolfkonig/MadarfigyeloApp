@@ -6,7 +6,8 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class OduViewModel : BaseViewModel
     {
-        private readonly IApiService _apiService;
+        private readonly IOdutelepApiService _odutelepApi;
+        private readonly IOduApiService _oduApi;
         private readonly ISettingsService _settingsService;
 
         private List<Odu> _oduList = [];
@@ -52,9 +53,14 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand<int> EditOduCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
 
-        public OduViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
+        public OduViewModel(
+            IOdutelepApiService odutelepApiService, 
+            IOduApiService oduApiService, 
+            INavigationService navigationService, 
+            ISettingsService settingsService) : base(navigationService)
         {
-            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _odutelepApi = odutelepApiService ?? throw new ArgumentNullException(nameof(odutelepApiService));
+            _oduApi = oduApiService ?? throw new ArgumentNullException(nameof(oduApiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
@@ -93,17 +99,17 @@ namespace MadarfigyeloApp.ViewModels
         {
             if (_settingsService.SelectedOdutelepId == 0)
             {
-                OduList = await _apiService.GetAllOduAsync(forceRefresh);
+                OduList = await _oduApi.GetAllOduAsync(forceRefresh);
             }
             else
             {
-                OduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
+                OduList = await _oduApi.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
             }
         }
 
         private async Task PopulateOdutelepDropdown(bool forceRefresh = false)
         {
-            var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
+            var odutelepek = await _odutelepApi.GetAllOdutelepAsync(forceRefresh);
             if (_odutelepList.Count == 1 || forceRefresh)
             {
                 OdutelepList = [Odutelep.Empty, .. odutelepek];

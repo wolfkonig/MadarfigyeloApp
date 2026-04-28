@@ -7,7 +7,8 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class NewOduViewModel : BaseViewModel
     {
-        protected readonly IApiService _apiService;
+        protected readonly IOduApiService _oduApi;
+        protected readonly IOdutelepApiService _odutelepApi;
         protected readonly ILocationService _locationService;
         protected readonly ILoggerService _logger;
         protected readonly ISettingsService _settingsService;
@@ -30,13 +31,15 @@ namespace MadarfigyeloApp.ViewModels
         public virtual AsyncRelayCommand SaveCommand { get; set; }
 
         public NewOduViewModel(
-            IApiService apiService, 
+            IOduApiService apiService, 
+            IOdutelepApiService odutelepApiService,
             INavigationService navigationService, 
             ILocationService locationService,
             ISettingsService settingsService,
             ILoggerService logger) : base(navigationService)
         {
-            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _oduApi = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _odutelepApi = odutelepApiService ?? throw new ArgumentNullException(nameof(odutelepApiService));
             _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -45,7 +48,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public override async Task InitAsync()
         {
-            Odutelepek = await _apiService.GetAllOdutelepAsync();
+            Odutelepek = await _odutelepApi.GetAllOdutelepAsync();
             SelectedOdutelep = Odutelepek.SingleOrDefault(x => x.Id == _settingsService.SelectedOdutelepId);
             await GetLocation();
         }
@@ -196,7 +199,7 @@ namespace MadarfigyeloApp.ViewModels
                     MagassagMeter = MagassagMeter
                 };
 
-                var success = await _apiService.PostOduAsync(odu);
+                var success = await _oduApi.PostOduAsync(odu);
 
                 if (success)
                 {

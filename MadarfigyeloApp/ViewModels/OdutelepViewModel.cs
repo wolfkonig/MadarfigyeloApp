@@ -6,7 +6,7 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class OdutelepViewModel : BaseViewModel
     {
-        private readonly IApiService _apiService;
+        private readonly IOdutelepApiService _odutelepApiService;
         private readonly ISettingsService _settingsService;
 
         private List<Odutelep> _odutelepList = [];
@@ -29,9 +29,9 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand<int> OduMapCommand { get; private set; }
         public AsyncRelayCommand RefreshCommand { get; private set; }
 
-        public OdutelepViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
+        public OdutelepViewModel(IOdutelepApiService odutelepApiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {
-            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _odutelepApiService = odutelepApiService ?? throw new ArgumentNullException(nameof(odutelepApiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             NewOdutelepCommand = new(NewOdutelep);
             OdukCommand = new(OdukAsync);
@@ -41,7 +41,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public override async Task InitAsync()
         {
-            OdutelepList = await _apiService.GetAllOdutelepAsync();
+            OdutelepList = await _odutelepApiService.GetAllOdutelepAsync();
         }
 
         protected async Task RefreshAsync()
@@ -49,7 +49,7 @@ namespace MadarfigyeloApp.ViewModels
             IsRefreshing = true;
             try
             {
-                OdutelepList = await _apiService.GetAllOdutelepAsync(forceRefresh: true);
+                OdutelepList = await _odutelepApiService.GetAllOdutelepAsync(forceRefresh: true);
             }
             finally
             {

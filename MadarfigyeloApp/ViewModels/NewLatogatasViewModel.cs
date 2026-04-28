@@ -6,7 +6,8 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class NewLatogatasViewModel : BaseViewModel
     {
-        private readonly IApiService _apiService;
+        private readonly IOduApiService _oduApi;
+        private readonly ILatogatasApiService _latogatasApi;
         private readonly ISettingsService _settingsService;
 
         // Backing fields
@@ -21,9 +22,10 @@ namespace MadarfigyeloApp.ViewModels
         private string? _megjegyzesek;
         private List<Odu> _oduk = new();
 
-        public NewLatogatasViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService ) : base(navigationService)
+        public NewLatogatasViewModel(IOduApiService oduApiService, ILatogatasApiService latogatasApiService, INavigationService navigationService, ISettingsService settingsService ) : base(navigationService)
         {
-            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _oduApi = oduApiService ?? throw new ArgumentNullException(nameof(oduApiService));
+            _latogatasApi = latogatasApiService ?? throw new ArgumentNullException(nameof(latogatasApiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
             SaveCommand = new(SaveAsync);
         }
@@ -32,7 +34,7 @@ namespace MadarfigyeloApp.ViewModels
 
         public override async Task InitAsync()
         {
-            Oduk = await _apiService.GetAllOduAsync();
+            Oduk = await _oduApi.GetAllOduAsync();
             SelectedOdu = Oduk.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId);
         }
 
@@ -126,7 +128,7 @@ namespace MadarfigyeloApp.ViewModels
                     Megjegyzesek = Megjegyzesek
                 };
 
-                var success = await _apiService.PostLatogatasAsync(ltg);
+                var success = await _latogatasApi.PostLatogatasAsync(ltg);
 
                 if (success)
                 {

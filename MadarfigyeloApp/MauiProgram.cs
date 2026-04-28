@@ -60,7 +60,9 @@ namespace MadarfigyeloApp
             builder.Services.AddSingleton<ISettingsService, SettingsService>();
             builder.Services.AddSingleton<ILoggerService, ConsoleLogger>();
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
-            builder.Services.AddSingleton<IApiService, ApiService>();
+            builder.Services.AddSingleton<IOdutelepApiService, OdutelepApiService>();
+            builder.Services.AddSingleton<IOduApiService, OduApiService>();
+            builder.Services.AddSingleton<ILatogatasApiService, LatogatasApiService>();
             builder.Services.AddSingleton<ILocationService, LocationService>();
             builder.Services.AddSingleton<IUserService, UserService>();
             return builder;

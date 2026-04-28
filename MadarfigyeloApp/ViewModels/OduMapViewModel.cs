@@ -8,7 +8,8 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class OduMapViewModel : BaseViewModel
     {
-        private readonly IApiService _apiService;
+        private readonly IOduApiService _oduApiService;
+        private readonly IOdutelepApiService _odutelepApiService;
         private readonly ILocationService _locationService;
         private readonly ISettingsService _settingsService;
 
@@ -74,14 +75,16 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand LatogatasokCommand { get; private set; }
 
         public OduMapViewModel(
-            IApiService apiService, 
+            IOduApiService oduApiService, 
             INavigationService navigationService, 
             ILocationService locationService,
-            ISettingsService settingsService) : base(navigationService)
+            ISettingsService settingsService,
+            IOdutelepApiService odutelepApiService) : base(navigationService)
         {
-            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _oduApiService = oduApiService ?? throw new ArgumentNullException(nameof(oduApiService));
             _locationService = locationService ?? throw new ArgumentNullException(nameof(locationService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
+            _odutelepApiService = odutelepApiService ?? throw new ArgumentNullException(nameof(odutelepApiService));
             LatogatasokCommand = new(LatogatasokAsync);
 
             PropertyChanged += async (s, e) =>
@@ -115,7 +118,7 @@ namespace MadarfigyeloApp.ViewModels
             {
                 return;
             }
-            var oduk = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
+            var oduk = await _oduApiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
             if (oduk.Count > 1)
             {
                 var mapCircle = Utilities.LocationHelpers.GetMinimumBoundingCircle(oduk.Select(o => o.Location).ToList());
@@ -134,7 +137,7 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task PopulateOdutelepDropdown(bool forceRefresh)
         {
-            var odutelepek = await _apiService.GetAllOdutelepAsync(forceRefresh);
+            var odutelepek = await _odutelepApiService.GetAllOdutelepAsync(forceRefresh);
             if (_odutelepList.Count == 1)
             {
                 OdutelepList = [new Odutelep() { Id = 0, Azonosito = AppRes.ShowEmptyMap }, .. odutelepek];

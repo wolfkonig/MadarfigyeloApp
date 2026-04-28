@@ -7,7 +7,8 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class LatogatasViewModel : BaseViewModel
     {
-        private readonly IApiService _apiService;
+        private readonly ILatogatasApiService _latogatasApi;
+        private readonly IOduApiService _oduApi;
         private readonly ISettingsService _settingsService;
 
         private List<Latogatas> _latogatasList = [];
@@ -55,9 +56,10 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand RefreshCommand { get; private set; }
         public AsyncRelayCommand<int> EditOduCommand { get; private set; }
 
-        public LatogatasViewModel(IApiService apiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
+        public LatogatasViewModel(IOduApiService oduApiService, ILatogatasApiService latogatasApiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {            
-            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
+            _oduApi = oduApiService ?? throw new ArgumentNullException(nameof(oduApiService));
+            _latogatasApi = latogatasApiService ?? throw new ArgumentNullException(nameof(latogatasApiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
 
             NewLatogatasCommand = new(NewLatogatasAsync);
@@ -96,11 +98,11 @@ namespace MadarfigyeloApp.ViewModels
         {
             if(_settingsService.SelectedOduId == 0)
             {
-                LatogatasList = await _apiService.GetAllLatogatasAsync(forceRefresh);
+                LatogatasList = await _latogatasApi.GetAllLatogatasAsync(forceRefresh);
             }
             else
             {
-                LatogatasList = await _apiService.GetLatogatasByOduAsync(_settingsService.SelectedOduId, forceRefresh);
+                LatogatasList = await _latogatasApi.GetLatogatasByOduAsync(_settingsService.SelectedOduId, forceRefresh);
             }            
         }
 
@@ -109,11 +111,11 @@ namespace MadarfigyeloApp.ViewModels
             List<Odu> oduList;
             if (_settingsService.SelectedOdutelepId == 0)
             {
-                oduList = await _apiService.GetAllOduAsync(forceRefresh);
+                oduList = await _oduApi.GetAllOduAsync(forceRefresh);
             }
             else
             {
-                oduList = await _apiService.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
+                oduList = await _oduApi.GetOduByOdutelepAsync(_settingsService.SelectedOdutelepId, forceRefresh);
             }
 
             OduList = [Odu.Empty, .. oduList];

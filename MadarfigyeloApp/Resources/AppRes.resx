@@ -441,4 +441,10 @@
   <data name="FajX" xml:space="preserve">
     <value>Faj: {0}</value>
   </data>
+  <data name="DeleteOdu" xml:space="preserve">
+    <value>Odú törlése</value>
+  </data>
+  <data name="ConfirmDeleteOdu" xml:space="preserve">
+    <value>Biztosan törölni szeretnéd ezt a odút?</value>
+  </data>
 </root>

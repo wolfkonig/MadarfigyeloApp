@@ -70,11 +70,11 @@
                                     </Grid>
                                 </toolkit:Expander.Header>
 
-                                <Grid ColumnDefinitions="*,*"
+                                <Grid ColumnDefinitions="*,*,*"
                                       RowDefinitions="*,30">
                                     <FlexLayout Grid.Row="0"
                                                 Grid.Column="0"
-                                                Grid.ColumnSpan="2"
+                                                Grid.ColumnSpan="3"
                                                 JustifyContent="SpaceBetween"
                                                 Wrap="Wrap">
                                         <Label Text="{Binding GpsLatitude, StringFormat={x:Static res:AppRes.GpsLatitudeX}}"
@@ -125,9 +125,17 @@
                                     <Button Text="{x:Static res:AppRes.Latogatasok}"
                                             Margin="5,0,0,0"
                                             Padding="0"
-                                            Grid.Column="1"
+                                            Grid.Column="2"
                                             Grid.Row="1"
                                             Command="{Binding BindingContext.LatogatasokCommand, Source={x:Reference oduRoot}}"
+                                            CommandParameter="{Binding Id}" />
+
+                                    <Button Text="{x:Static res:AppRes.DeleteOdu}"
+                                            Margin="5,0,0,0"
+                                            Padding="0"
+                                            Grid.Column="1"
+                                            Grid.Row="1"
+                                            Command="{Binding BindingContext.DeleteOduCommand, Source={x:Reference oduRoot}}"
                                             CommandParameter="{Binding Id}" />
                                 </Grid>
                             </toolkit:Expander>

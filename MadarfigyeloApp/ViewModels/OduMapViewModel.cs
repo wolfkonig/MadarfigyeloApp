@@ -71,8 +71,8 @@ namespace MadarfigyeloApp.ViewModels
 
         public int SelectedOduId { get; set; }
 
-        public AsyncRelayCommand NewOduCommand { get; private set; }
-        public AsyncRelayCommand LatogatasokCommand { get; private set; }
+        public AsyncRelayCommand NewOduCommand { get; }
+        public AsyncRelayCommand LatogatasokCommand { get; }
 
         public OduMapViewModel(
             IOduApiService oduApiService, 

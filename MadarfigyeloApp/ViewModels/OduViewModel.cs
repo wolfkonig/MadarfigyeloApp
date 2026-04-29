@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Resources;
 
 namespace MadarfigyeloApp.ViewModels
 {
@@ -48,10 +49,11 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _isRefreshing, value);
         }
 
-        public AsyncRelayCommand NewOduCommand { get; private set; }
-        public AsyncRelayCommand<int> LatogatasokCommand { get; private set; }
-        public AsyncRelayCommand<int> EditOduCommand { get; private set; }
-        public AsyncRelayCommand RefreshCommand { get; private set; }
+        public AsyncRelayCommand NewOduCommand { get; }
+        public AsyncRelayCommand<int> LatogatasokCommand { get; }
+        public AsyncRelayCommand<int> EditOduCommand { get; }
+        public AsyncRelayCommand<int> DeleteOduCommand { get; }
+        public AsyncRelayCommand RefreshCommand { get; }
 
         public OduViewModel(
             IOdutelepApiService odutelepApiService, 
@@ -62,10 +64,12 @@ namespace MadarfigyeloApp.ViewModels
             _odutelepApi = odutelepApiService ?? throw new ArgumentNullException(nameof(odutelepApiService));
             _oduApi = oduApiService ?? throw new ArgumentNullException(nameof(oduApiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
+
             NewOduCommand = new(NewOduAsync);
             LatogatasokCommand = new(LatogatasokAsync);
             EditOduCommand = new(EditOduAsync);
             RefreshCommand = new(RefreshAsync);
+            DeleteOduCommand = new(DeleteOduAsync);
 
             PropertyChanged += async (s, e) =>
             {
@@ -126,6 +130,35 @@ namespace MadarfigyeloApp.ViewModels
         {
             _settingsService.SelectedOduId = oduId;
             await _navigationService.GoToAsync(Constants.RouteEditOdu);
+        }
+
+        private async Task DeleteOduAsync(int oduId)
+        {
+            await _navigationService.ShowQuestionAsync(AppRes.DeleteOdu, AppRes.ConfirmDeleteOdu, AppRes.Yes, AppRes.No)
+                .ContinueWith(async t =>
+                {
+                    if (!t.Result)
+                    {
+                        return;
+                    }
+
+                    var deleted = await _oduApi.DeleteOduAsync(oduId);
+
+                    // TODO show error message if delete failed
+                    if (!deleted)
+                    {
+                        return;
+                    }
+
+                    if (_settingsService.SelectedOduId == oduId)
+                    {
+                        _settingsService.SelectedOduId = 0;
+                    }
+                    IsBusy = true;
+                    await PopulateOduList(true);
+                    IsBusy = false;
+                });
+
         }
 
         private async Task LatogatasokAsync(int oduId)

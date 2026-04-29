@@ -160,6 +160,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Biztosan törölni szeretnéd ezt a odút?.
+        /// </summary>
+        internal static string ConfirmDeleteOdu {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteOdu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Csere.
         /// </summary>
         internal static string Csere {
@@ -174,6 +183,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string Datum {
             get {
                 return ResourceManager.GetString("Datum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odú törlése.
+        /// </summary>
+        internal static string DeleteOdu {
+            get {
+                return ResourceManager.GetString("DeleteOdu", resourceCulture);
             }
         }
         

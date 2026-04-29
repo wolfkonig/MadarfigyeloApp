@@ -24,10 +24,10 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _isRefreshing, value);
         }
 
-        public AsyncRelayCommand NewOdutelepCommand { get; private set; }
-        public AsyncRelayCommand<int> OdukCommand { get; private set; }
-        public AsyncRelayCommand<int> OduMapCommand { get; private set; }
-        public AsyncRelayCommand RefreshCommand { get; private set; }
+        public AsyncRelayCommand NewOdutelepCommand { get; }
+        public AsyncRelayCommand<int> OdukCommand { get; }
+        public AsyncRelayCommand<int> OduMapCommand { get; }
+        public AsyncRelayCommand RefreshCommand { get; }
 
         public OdutelepViewModel(IOdutelepApiService odutelepApiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {

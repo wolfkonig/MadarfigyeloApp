@@ -52,9 +52,9 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _isRefreshing, value);
         }
 
-        public AsyncRelayCommand NewLatogatasCommand { get; private set; }
-        public AsyncRelayCommand RefreshCommand { get; private set; }
-        public AsyncRelayCommand<int> EditOduCommand { get; private set; }
+        public AsyncRelayCommand NewLatogatasCommand { get; }
+        public AsyncRelayCommand RefreshCommand { get; }
+        public AsyncRelayCommand<int> EditOduCommand { get; }
 
         public LatogatasViewModel(IOduApiService oduApiService, ILatogatasApiService latogatasApiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
         {            

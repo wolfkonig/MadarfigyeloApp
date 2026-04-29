@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MadarfigyeloApp.Contracts;
 using MadarfigyeloApp.Models;
+using MadarfigyeloApp.Resources;
 
 
 namespace MadarfigyeloApp.ViewModels
@@ -55,9 +56,15 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand NewLatogatasCommand { get; }
         public AsyncRelayCommand RefreshCommand { get; }
         public AsyncRelayCommand<int> EditOduCommand { get; }
+        public AsyncRelayCommand<int> EditLatogatasCommand { get; }
+        public AsyncRelayCommand<int> DeleteLatogatasCommand { get; }
 
-        public LatogatasViewModel(IOduApiService oduApiService, ILatogatasApiService latogatasApiService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
-        {            
+        public LatogatasViewModel(
+            IOduApiService oduApiService, 
+            ILatogatasApiService latogatasApiService, 
+            INavigationService navigationService, 
+            ISettingsService settingsService) : base(navigationService)
+        {
             _oduApi = oduApiService ?? throw new ArgumentNullException(nameof(oduApiService));
             _latogatasApi = latogatasApiService ?? throw new ArgumentNullException(nameof(latogatasApiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
@@ -65,6 +72,8 @@ namespace MadarfigyeloApp.ViewModels
             NewLatogatasCommand = new(NewLatogatasAsync);
             RefreshCommand = new(RefreshAsync);
             EditOduCommand = new(EditOduAsync);
+            EditLatogatasCommand = new(EditLatogatasAsync);
+            DeleteLatogatasCommand = new(DeleteLatogatasAsync);
 
             PropertyChanged += async (s, e) =>
             {
@@ -96,14 +105,14 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task PopulateLatogatasList(bool forceRefresh = false)
         {
-            if(_settingsService.SelectedOduId == 0)
+            if (_settingsService.SelectedOduId == 0)
             {
                 LatogatasList = await _latogatasApi.GetAllLatogatasAsync(forceRefresh);
             }
             else
             {
                 LatogatasList = await _latogatasApi.GetLatogatasByOduAsync(_settingsService.SelectedOduId, forceRefresh);
-            }            
+            }
         }
 
         private async Task PopulateOduDropdown(bool forceRefresh = false)
@@ -124,13 +133,42 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task NewLatogatasAsync()
         {
-            await _navigationService.GoToAsync(Constants.RouteNewLatogatas);            
+            await _navigationService.GoToAsync(Constants.RouteNewLatogatas);
         }
 
         private async Task EditOduAsync(int oduId)
         {
             _settingsService.SelectedOduId = oduId;
             await _navigationService.GoToAsync(Constants.RouteEditOdu);
+        }
+
+        private async Task EditLatogatasAsync(int latogatasId)
+        {
+            await _navigationService.GoToAsync(Constants.RouteEditLatogatas);
+        }
+
+        private async Task DeleteLatogatasAsync(int latogatasId)
+        {
+            await _navigationService.ShowQuestionAsync(AppRes.DeleteLatogatas, AppRes.ConfirmDeleteLatogatas, AppRes.Yes, AppRes.No)
+                .ContinueWith(async t =>
+                {
+                    if (!t.Result)
+                    {
+                        return;
+                    }
+
+                    var deleted = await _latogatasApi.DeleteLatogatasAsync(latogatasId);
+
+                    // TODO show error message if delete failed
+                    if (!deleted)
+                    {
+                        return;
+                    }
+
+                    IsBusy = true;
+                    await PopulateLatogatasList(forceRefresh: true)
+                        .ContinueWith(t => IsBusy = false);
+                });
         }
     }
 }

@@ -9,7 +9,8 @@
                 xmlns:util="clr-namespace:MadarfigyeloApp.Utilities"
                 x:Class="MadarfigyeloApp.Views.LatogatasView"
                 x:DataType="vm:LatogatasViewModel"
-                Title="{x:Static res:AppRes.Latogatasok}">
+                Title="{x:Static res:AppRes.Latogatasok}"
+                x:Name="latogatasRoot">
 
     <Grid RowDefinitions="50,*,50">
         <Image Grid.Row="0"
@@ -82,10 +83,11 @@
                                     </Grid>
                                 </toolkit:Expander.Header>
 
-                                <Grid ColumnDefinitions="*,*">
+                                <Grid ColumnDefinitions="*,*"
+                                      RowDefinitions="*,30">
                                     <FlexLayout Grid.Row="0"
                                                 Grid.Column="0"
-                                                Grid.ColumnSpan="2"
+                                                Grid.ColumnSpan="3"
                                                 JustifyContent="SpaceBetween"
                                                 Wrap="Wrap">
                                         <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
@@ -112,6 +114,23 @@
                                                IsVisible="{Binding Megjegyzesek, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
                                                Style="{StaticResource ListText}" />
                                     </FlexLayout>
+
+                                    <Button Text="{x:Static res:AppRes.EditLatogatas}"
+                                            Margin="0"
+                                            Padding="0"
+                                            Grid.Column="0"
+                                            Grid.Row="1"
+                                            Command="{Binding BindingContext.EditLatogatasCommand, Source={x:Reference latogatasRoot}}"
+                                            CommandParameter="{Binding Id}" />
+
+                                    <Button Text="{x:Static res:AppRes.DeleteLatogatas}"
+                                            Margin="5,0,0,0"
+                                            Padding="0"
+                                            Grid.Column="1"
+                                            Grid.Row="1"
+                                            Command="{Binding BindingContext.DeleteLatogatasCommand, Source={x:Reference latogatasRoot}}"
+                                            CommandParameter="{Binding Id}" />
+
                                 </Grid>
                             </toolkit:Expander>
                         </Border>

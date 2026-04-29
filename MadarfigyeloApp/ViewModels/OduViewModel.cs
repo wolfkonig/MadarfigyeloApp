@@ -155,8 +155,8 @@ namespace MadarfigyeloApp.ViewModels
                         _settingsService.SelectedOduId = 0;
                     }
                     IsBusy = true;
-                    await PopulateOduList(true);
-                    IsBusy = false;
+                    await PopulateOduList(forceRefresh: true)
+                        .ContinueWith(_ => IsBusy = false);
                 });
 
         }

@@ -445,6 +445,15 @@
     <value>Odú törlése</value>
   </data>
   <data name="ConfirmDeleteOdu" xml:space="preserve">
-    <value>Biztosan törölni szeretnéd ezt a odút?</value>
+    <value>Biztosan törölni szeretnéd ezt az odút?</value>
+  </data>
+  <data name="ConfirmDeleteLatogatas" xml:space="preserve">
+    <value>Biztosan törölni szeretnéd ezt a biotikát?</value>
+  </data>
+  <data name="DeleteLatogatas" xml:space="preserve">
+    <value>Biotika törlése</value>
+  </data>
+  <data name="EditLatogatas" xml:space="preserve">
+    <value>Látogatás módosítása</value>
   </data>
 </root>

@@ -160,7 +160,16 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Biztosan törölni szeretnéd ezt a odút?.
+        ///   Looks up a localized string similar to Biztosan törölni szeretnéd ezt a biotikát?.
+        /// </summary>
+        internal static string ConfirmDeleteLatogatas {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteLatogatas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biztosan törölni szeretnéd ezt az odút?.
         /// </summary>
         internal static string ConfirmDeleteOdu {
             get {
@@ -187,6 +196,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Biotika törlése.
+        /// </summary>
+        internal static string DeleteLatogatas {
+            get {
+                return ResourceManager.GetString("DeleteLatogatas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odú törlése.
         /// </summary>
         internal static string DeleteOdu {
@@ -201,6 +219,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Látogatás módosítása.
+        /// </summary>
+        internal static string EditLatogatas {
+            get {
+                return ResourceManager.GetString("EditLatogatas", resourceCulture);
             }
         }
         

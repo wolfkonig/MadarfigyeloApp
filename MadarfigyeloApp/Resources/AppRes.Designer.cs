@@ -196,6 +196,15 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Törlés sikertelen..
+        /// </summary>
+        internal static string DeleteFailed {
+            get {
+                return ResourceManager.GetString("DeleteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Biotika törlése.
         /// </summary>
         internal static string DeleteLatogatas {
@@ -1029,6 +1038,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string UjOdutelep {
             get {
                 return ResourceManager.GetString("UjOdutelep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Módosítás sikertelen..
+        /// </summary>
+        internal static string UpdateFailed {
+            get {
+                return ResourceManager.GetString("UpdateFailed", resourceCulture);
             }
         }
         

@@ -8,7 +8,7 @@
                 xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
                 x:Class="MadarfigyeloApp.Views.NewLatogatasView"
                 x:DataType="vm:NewLatogatasViewModel"
-                Title="{x:Static res:AppRes.UjLatogatas}">
+                Title="{Binding PageTitle}">
 
     <ScrollView>
         <Grid Padding="20"

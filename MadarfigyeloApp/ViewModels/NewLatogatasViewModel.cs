@@ -6,9 +6,9 @@ namespace MadarfigyeloApp.ViewModels
 {
     public class NewLatogatasViewModel : BaseViewModel
     {
-        private readonly IOduApiService _oduApi;
-        private readonly ILatogatasApiService _latogatasApi;
-        private readonly ISettingsService _settingsService;
+        protected readonly IOduApiService _oduApi;
+        protected readonly ILatogatasApiService _latogatasApi;
+        protected readonly ISettingsService _settingsService;
 
         // Backing fields
         private Odu? _selectedOdu;
@@ -30,7 +30,9 @@ namespace MadarfigyeloApp.ViewModels
             SaveCommand = new(SaveAsync);
         }
 
-        public AsyncRelayCommand SaveCommand { get; }
+        public virtual AsyncRelayCommand SaveCommand { get; protected set; }
+
+        public virtual string PageTitle => Resources.AppRes.UjLatogatas;
 
         public override async Task InitAsync()
         {
@@ -111,7 +113,7 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _megjegyzesek, value);
         }
 
-        public async Task SaveAsync()
+        protected virtual async Task SaveAsync()
         {
             if (await Validate())
             {
@@ -138,7 +140,7 @@ namespace MadarfigyeloApp.ViewModels
             }
         }
 
-        private async Task<bool> Validate()
+        protected async Task<bool> Validate()
         {
             _errors.Clear();
             if (SelectedOdu is null) _errors.Add(string.Format(Resources.AppRes.ErrorEmpty, nameof(Odu)));

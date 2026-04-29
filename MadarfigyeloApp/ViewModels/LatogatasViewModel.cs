@@ -144,31 +144,28 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task EditLatogatasAsync(int latogatasId)
         {
-            await _navigationService.GoToAsync(Constants.RouteEditLatogatas);
+            await _navigationService.GoToAsync($"{Constants.RouteEditLatogatas}?{Constants.KeySelectedLatogatasId}={latogatasId}");
         }
 
         private async Task DeleteLatogatasAsync(int latogatasId)
         {
-            await _navigationService.ShowQuestionAsync(AppRes.DeleteLatogatas, AppRes.ConfirmDeleteLatogatas, AppRes.Yes, AppRes.No)
-                .ContinueWith(async t =>
-                {
-                    if (!t.Result)
-                    {
-                        return;
-                    }
+            if (!await _navigationService.ShowQuestionAsync(AppRes.DeleteLatogatas, AppRes.ConfirmDeleteLatogatas, AppRes.Yes, AppRes.No))
+            {
+                return;
+            }
 
-                    var deleted = await _latogatasApi.DeleteLatogatasAsync(latogatasId);
+            var deleted = await _latogatasApi.DeleteLatogatasAsync(latogatasId);
 
-                    // TODO show error message if delete failed
-                    if (!deleted)
-                    {
-                        return;
-                    }
-
-                    IsBusy = true;
-                    await PopulateLatogatasList(forceRefresh: true)
-                        .ContinueWith(t => IsBusy = false);
-                });
+            if (deleted)
+            {
+                IsBusy = true;
+                await PopulateLatogatasList(forceRefresh: true)
+                    .ContinueWith(t => IsBusy = false);
+            }
+            else
+            {
+                await _navigationService.ShowAlertAsync(AppRes.DeleteFailed);
+            }
         }
     }
 }

@@ -20,7 +20,7 @@
         <Setter Property="FontAttributes"
                 Value="Bold" />
         <Setter Property="FontSize"
-                Value="Medium" />
+                Value="Small" />
         <Setter Property="Margin"
                 Value="0" />
     </Style>

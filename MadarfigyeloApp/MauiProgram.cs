@@ -46,11 +46,13 @@ namespace MadarfigyeloApp
             builder.Services.AddTransient<LatogatasViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<OduMapViewModel>();
+            builder.Services.AddTransient<EditLatogatasViewModel>();
 
             builder.Services.AddTransientWithShellRoute<NewOdutelepView, NewOdutelepViewModel>(Constants.RouteNewOdutelep);
             builder.Services.AddTransientWithShellRoute<NewOduView, NewOduViewModel>(Constants.RouteNewOdu);
             builder.Services.AddTransientWithShellRoute<NewLatogatasView, NewLatogatasViewModel>(Constants.RouteNewLatogatas);
             builder.Services.AddTransientWithShellRoute<EditOduView, EditOduViewModel>(Constants.RouteEditOdu);
+            builder.Services.AddTransientWithShellRoute<EditLatogatasView, EditLatogatasViewModel>(Constants.RouteEditLatogatas);
 
             return builder;
         }

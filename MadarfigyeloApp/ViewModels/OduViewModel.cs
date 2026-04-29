@@ -134,30 +134,28 @@ namespace MadarfigyeloApp.ViewModels
 
         private async Task DeleteOduAsync(int oduId)
         {
-            await _navigationService.ShowQuestionAsync(AppRes.DeleteOdu, AppRes.ConfirmDeleteOdu, AppRes.Yes, AppRes.No)
-                .ContinueWith(async t =>
+            if (!await _navigationService.ShowQuestionAsync(AppRes.DeleteOdu, AppRes.ConfirmDeleteOdu, AppRes.Yes, AppRes.No))
+            {
+                return;
+            }
+
+            var deleted = await _oduApi.DeleteOduAsync(oduId);
+
+            if (deleted)
+            {
+
+                if (_settingsService.SelectedOduId == oduId)
                 {
-                    if (!t.Result)
-                    {
-                        return;
-                    }
-
-                    var deleted = await _oduApi.DeleteOduAsync(oduId);
-
-                    // TODO show error message if delete failed
-                    if (!deleted)
-                    {
-                        return;
-                    }
-
-                    if (_settingsService.SelectedOduId == oduId)
-                    {
-                        _settingsService.SelectedOduId = 0;
-                    }
-                    IsBusy = true;
-                    await PopulateOduList(forceRefresh: true)
-                        .ContinueWith(_ => IsBusy = false);
-                });
+                    _settingsService.SelectedOduId = 0;
+                }
+                IsBusy = true;
+                await PopulateOduList(forceRefresh: true)
+                    .ContinueWith(_ => IsBusy = false);
+            }
+            else
+            {
+                await _navigationService.ShowAlertAsync(AppRes.DeleteFailed);
+            }
 
         }
 

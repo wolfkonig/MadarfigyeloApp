@@ -456,4 +456,10 @@
   <data name="EditLatogatas" xml:space="preserve">
     <value>Látogatás módosítása</value>
   </data>
+  <data name="UpdateFailed" xml:space="preserve">
+    <value>Módosítás sikertelen.</value>
+  </data>
+  <data name="DeleteFailed" xml:space="preserve">
+    <value>Törlés sikertelen.</value>
+  </data>
 </root>

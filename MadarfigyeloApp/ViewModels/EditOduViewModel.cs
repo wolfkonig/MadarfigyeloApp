@@ -68,8 +68,13 @@ namespace MadarfigyeloApp.ViewModels
 
             if (success)
             {
-                await _navigationService.ShowAlertAsync(string.Format(AppRes.SaveSuccessful, AppRes.Odu));
-                await _navigationService.PopAsync();
+                await _navigationService
+                    .ShowAlertAsync(string.Format(AppRes.SaveSuccessful, AppRes.Odu))
+                    .ContinueWith(_ => _navigationService.PopAsync());
+            }
+            else
+            {
+                await _navigationService.ShowAlertAsync(AppRes.UpdateFailed);
             }
         }
     }

@@ -232,7 +232,7 @@ namespace MadarfigyeloApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Látogatás módosítása.
+        ///   Looks up a localized string similar to Biotika módosítása.
         /// </summary>
         internal static string EditLatogatas {
             get {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-ios;net9.0-android36.0</TargetFrameworks>
+		<TargetFrameworks>net10.0-ios;net10.0-android</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>Terepnaplo</RootNamespace>
@@ -27,7 +27,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net9.0-android'">
+	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0-android'">
 		<RuntimeIdentifier>android-arm64</RuntimeIdentifier>
 		<!-- Optional: to create .aab -->
 		<AndroidPackageFormat>aab</AndroidPackageFormat>
@@ -55,16 +55,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="14.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.60" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.7" />
 
 		<PackageReference Include="MonkeyCache.FileStore" Version="2.1.1" />
-		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.120" />
-		<PackageReference Include="Refit" Version="9.0.2" />
-		<PackageReference Include="Refit.HttpClientFactory" Version="9.0.2" />
-		<PackageReference Include="Refit.Newtonsoft.Json" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="10.0.60" />
+		<PackageReference Include="Refit" Version="10.1.6" />
+		<PackageReference Include="Refit.HttpClientFactory" Version="10.1.6" />
+		<PackageReference Include="Refit.Newtonsoft.Json" Version="10.1.6" />
 	</ItemGroup>
 
 	<ItemGroup>

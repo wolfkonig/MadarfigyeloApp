@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
+using Terepnaplo.Models;
+using Terepnaplo.Contracts;
 
-namespace MadarfigyeloApp.ViewModels
+namespace Terepnaplo.ViewModels
 {
     public class NewOdutelepViewModel : BaseViewModel
     {

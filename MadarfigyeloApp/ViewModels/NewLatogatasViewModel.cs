@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
+using Terepnaplo.Contracts;
+using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.ViewModels
+namespace Terepnaplo.ViewModels
 {
     public class NewLatogatasViewModel : BaseViewModel
     {

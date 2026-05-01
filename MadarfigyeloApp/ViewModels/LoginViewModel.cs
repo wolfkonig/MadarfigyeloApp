@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
-using MadarfigyeloApp.Resources;
+using Terepnaplo.Models;
+using Terepnaplo.Resources;
 using System.Text.RegularExpressions;
+using Terepnaplo;
+using Terepnaplo.Contracts;
+using Terepnaplo.ViewModels;
 
-namespace MadarfigyeloApp.ViewModels
+namespace Terepnaplo.ViewModels
 {
     public partial class LoginViewModel : BaseViewModel
     {

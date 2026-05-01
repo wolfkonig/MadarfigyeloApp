@@ -1,14 +1,17 @@
 ﻿using CommunityToolkit.Maui;
-using MadarfigyeloApp.API;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Implementations;
-using MadarfigyeloApp.Models;
-using MadarfigyeloApp.ViewModels;
-using MadarfigyeloApp.Views;
+using Terepnaplo;
+using Terepnaplo.ViewModels;
+using Terepnaplo.Views;
 using Microsoft.Extensions.Logging;
 using Refit;
+using Terepnaplo.API;
+using Terepnaplo.Contracts;
+using Terepnaplo.Implementations;
+using Terepnaplo.Models;
+using Terepnaplo.ViewModels;
+using Terepnaplo.Views;
 
-namespace MadarfigyeloApp
+namespace Terepnaplo
 {
     public static class MauiProgram
     {
@@ -30,7 +33,7 @@ namespace MadarfigyeloApp
                 .RegisterServices()
                 .RegisterViewModels();
 
-            MonkeyCache.FileStore.Barrel.ApplicationId = "MadarfigyeloApp";
+            MonkeyCache.FileStore.Barrel.ApplicationId = "Terepnaplo";
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

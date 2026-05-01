@@ -1,9 +1,10 @@
-﻿using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
+using Terepnaplo;
+using Terepnaplo.Contracts;
+using Terepnaplo.Models;
 
 
-namespace MadarfigyeloApp.API;
+namespace Terepnaplo.API;
 
 public class TokenAuthHandler : DelegatingHandler
 {

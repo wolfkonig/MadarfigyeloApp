@@ -1,7 +1,8 @@
-﻿namespace MadarfigyeloApp.Implementations
+﻿namespace Terepnaplo.Implementations
 {
-    using MadarfigyeloApp.Contracts;
     using System;
+    using Terepnaplo;
+    using Terepnaplo.Contracts;
 
     public sealed class LocationService : ILocationService
     {       

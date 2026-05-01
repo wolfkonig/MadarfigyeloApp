@@ -1,7 +1,7 @@
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
-namespace MadarfigyeloApp.Utilities
+namespace Terepnaplo.Utilities
 {
     public static class MinimumBoundingCircle
     {

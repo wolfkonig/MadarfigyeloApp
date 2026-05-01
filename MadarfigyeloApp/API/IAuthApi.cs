@@ -1,7 +1,7 @@
-﻿using MadarfigyeloApp.Models;
-using Refit;
+﻿using Refit;
+using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.API
+namespace Terepnaplo.API
 {
     public interface IAuthApi
     {

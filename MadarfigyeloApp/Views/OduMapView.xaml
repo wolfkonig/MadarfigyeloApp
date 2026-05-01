@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <pages:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
-                xmlns:models="clr-namespace:MadarfigyeloApp.Models"
-                xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
-                xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
-                xmlns:util="clr-namespace:MadarfigyeloApp.Utilities"
+                xmlns:vm="clr-namespace:Terepnaplo.ViewModels"
+                xmlns:models="clr-namespace:Terepnaplo.Models"
+                xmlns:pages="clr-namespace:Terepnaplo.Views"
+                xmlns:res="clr-namespace:Terepnaplo.Resources"
+                xmlns:util="clr-namespace:Terepnaplo.Utilities"
                 xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
-                x:Class="MadarfigyeloApp.Views.OduMapView"
+                x:Class="Terepnaplo.Views.OduMapView"
                 x:DataType="vm:OduMapViewModel"
                 Title="{x:Static res:AppRes.OduMap}">
 

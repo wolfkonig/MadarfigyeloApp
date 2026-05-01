@@ -1,6 +1,7 @@
-using MadarfigyeloApp.ViewModels;
+using Terepnaplo.ViewModels;
+using Terepnaplo.Views;
 
-namespace MadarfigyeloApp.Views;
+namespace Terepnaplo.Views;
 
 public partial class OduView : BasePage
 {

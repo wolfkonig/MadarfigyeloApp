@@ -1,7 +1,8 @@
-﻿using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
+﻿using Terepnaplo;
+using Terepnaplo.Contracts;
+using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.Implementations
+namespace Terepnaplo.Implementations
 {
     public class SettingsService : ISettingsService
     {

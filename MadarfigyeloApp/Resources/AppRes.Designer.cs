@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MadarfigyeloApp.Resources {
+namespace Terepnaplo.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MadarfigyeloApp.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MadarfigyeloApp.Resources.AppRes", typeof(AppRes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Terepnaplo.Resources.AppRes", typeof(AppRes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -975,6 +975,15 @@ namespace MadarfigyeloApp.Resources {
         internal static string TeruletNev {
             get {
                 return ResourceManager.GetString("TeruletNev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to test.
+        /// </summary>
+        internal static string test {
+            get {
+                return ResourceManager.GetString("test", resourceCulture);
             }
         }
         

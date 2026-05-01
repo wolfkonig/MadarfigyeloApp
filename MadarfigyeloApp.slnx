@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="MadarfigyeloApp/MadarfigyeloApp.csproj" />
+  <Project Path="MadarfigyeloApp/Terepnaplo.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
 </Solution>

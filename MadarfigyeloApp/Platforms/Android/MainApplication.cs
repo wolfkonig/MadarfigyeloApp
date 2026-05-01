@@ -1,7 +1,8 @@
 ﻿using Android.App;
 using Android.Runtime;
+using Terepnaplo;
 
-namespace MadarfigyeloApp.Platforms.Android
+namespace Terepnaplo.Platforms.Android
 {
     [Application]
     public class MainApplication : MauiApplication

@@ -1,6 +1,6 @@
 ﻿using Refit;
 
-namespace MadarfigyeloApp.API
+namespace Terepnaplo.API
 {
     public interface IGenericApi<T> where T : class
     {

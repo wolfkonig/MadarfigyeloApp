@@ -1,6 +1,6 @@
-using MadarfigyeloApp.ViewModels;
+using Terepnaplo.ViewModels;
 
-namespace MadarfigyeloApp.Views;
+namespace Terepnaplo.Views;
 
 public abstract class BasePage : ContentPage
 {

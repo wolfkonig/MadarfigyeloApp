@@ -1,4 +1,4 @@
-﻿using MadarfigyeloApp.Resources;
+﻿using Terepnaplo.Resources;
 
 public static class EnumExtensions
 {

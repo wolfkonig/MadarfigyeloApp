@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Resources;
+using Terepnaplo.Resources;
+using Terepnaplo;
+using Terepnaplo.Contracts;
 
-namespace MadarfigyeloApp.ViewModels
+namespace Terepnaplo.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {

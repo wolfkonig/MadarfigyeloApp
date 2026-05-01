@@ -1,8 +1,9 @@
-using MadarfigyeloApp.ViewModels;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using Terepnaplo.ViewModels;
+using Terepnaplo.Views;
 
-namespace MadarfigyeloApp.Views;
+namespace Terepnaplo.Views;
 
 public partial class OduMapView : BasePage
 {

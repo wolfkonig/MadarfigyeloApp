@@ -1,4 +1,4 @@
-﻿namespace MadarfigyeloApp.Models
+﻿namespace Terepnaplo.Models
 {
     public class AuthResponseDto
     {

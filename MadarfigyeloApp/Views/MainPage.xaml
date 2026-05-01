@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:vm="clr-namespace:MadarfigyeloApp.ViewModels"
-                xmlns:pages="clr-namespace:MadarfigyeloApp.Views"
-                xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
+                xmlns:vm="clr-namespace:Terepnaplo.ViewModels"
+                xmlns:pages="clr-namespace:Terepnaplo.Views"
+                xmlns:res="clr-namespace:Terepnaplo.Resources"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-                x:Class="MadarfigyeloApp.Views.MainPage"
+                x:Class="Terepnaplo.Views.MainPage"
                 x:DataType="vm:MainPageViewModel"
                 Title="{x:Static res:AppRes.AppTitle}">
 

@@ -1,6 +1,7 @@
-using MadarfigyeloApp.ViewModels;
+using Terepnaplo.Views;
+using Terepnaplo.ViewModels;
 
-namespace MadarfigyeloApp.Views
+namespace Terepnaplo.Views
 {
     public class EditLatogatasView : NewLatogatasView
     {

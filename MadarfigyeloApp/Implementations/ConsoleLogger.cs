@@ -1,6 +1,6 @@
-﻿using MadarfigyeloApp.Contracts;
+﻿using Terepnaplo.Contracts;
 
-namespace MadarfigyeloApp.Implementations
+namespace Terepnaplo.Implementations
 {
     public class ConsoleLogger : ILoggerService
     {

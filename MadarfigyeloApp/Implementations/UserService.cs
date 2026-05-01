@@ -1,9 +1,10 @@
-﻿using MadarfigyeloApp.API;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
-using MonkeyCache.FileStore;
+﻿using MonkeyCache.FileStore;
+using Terepnaplo;
+using Terepnaplo.API;
+using Terepnaplo.Contracts;
+using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.Implementations
+namespace Terepnaplo.Implementations
 {
     public class UserService : IUserService
     {

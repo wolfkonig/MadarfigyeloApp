@@ -1,6 +1,6 @@
-﻿using MadarfigyeloApp.Views;
+﻿using Terepnaplo.Views;
 
-namespace MadarfigyeloApp.Contracts
+namespace Terepnaplo.Contracts
 {
     public interface INavigationService
     {

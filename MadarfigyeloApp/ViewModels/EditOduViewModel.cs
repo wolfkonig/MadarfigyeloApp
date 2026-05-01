@@ -1,8 +1,8 @@
-﻿using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
-using MadarfigyeloApp.Resources;
+﻿using Terepnaplo.Models;
+using Terepnaplo.Resources;
+using Terepnaplo.Contracts;
 
-namespace MadarfigyeloApp.ViewModels
+namespace Terepnaplo.ViewModels
 {
     public class EditOduViewModel(
         IOduApiService oduApiService,

@@ -462,4 +462,7 @@
   <data name="DeleteFailed" xml:space="preserve">
     <value>Törlés sikertelen.</value>
   </data>
+  <data name="test" xml:space="preserve">
+    <value>test</value>
+  </data>
 </root>

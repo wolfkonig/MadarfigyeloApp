@@ -1,9 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
-using MadarfigyeloApp.Resources;
+using Terepnaplo.Resources;
+using Terepnaplo;
+using Terepnaplo.Contracts;
+using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.ViewModels
+namespace Terepnaplo.ViewModels
 {
     public class OduViewModel : BaseViewModel
     {

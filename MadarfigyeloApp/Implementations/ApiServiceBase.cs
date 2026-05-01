@@ -1,11 +1,12 @@
-﻿using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
-using MadarfigyeloApp.Resources;
+﻿using Terepnaplo.Resources;
 using MonkeyCache.FileStore;
 using Refit;
 using System.Text;
+using Terepnaplo;
+using Terepnaplo.Contracts;
+using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.Implementations
+namespace Terepnaplo.Implementations
 {
     public abstract class ApiServiceBase
     {

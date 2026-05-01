@@ -1,4 +1,4 @@
-﻿namespace MadarfigyeloApp.Contracts
+﻿namespace Terepnaplo.Contracts
 {
     public interface ILoggerService
     {

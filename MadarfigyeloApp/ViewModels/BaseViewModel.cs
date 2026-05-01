@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Resources;
+using Terepnaplo.Resources;
+using Terepnaplo.Contracts;
 
-namespace MadarfigyeloApp.ViewModels
+namespace Terepnaplo.ViewModels
 {
     public abstract class BaseViewModel : ObservableObject
     {

@@ -1,8 +1,8 @@
-﻿using MadarfigyeloApp.API;
-using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Models;
+﻿using Terepnaplo.API;
+using Terepnaplo.Contracts;
+using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.Implementations
+namespace Terepnaplo.Implementations
 {
     public class OduApiService : ApiServiceBase, IOduApiService
     {

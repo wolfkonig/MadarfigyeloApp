@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace MadarfigyeloApp
+namespace Terepnaplo.Platforms.iOS
 {
     public class Program
     {

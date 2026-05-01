@@ -1,7 +1,8 @@
 ﻿using MonkeyCache.FileStore;
-using MadarfigyeloApp.Contracts;
+using Terepnaplo.Contracts;
+using Terepnaplo;
 
-namespace MadarfigyeloApp.API
+namespace Terepnaplo.API
 {
     public class CachingHandler : TokenAuthHandler
     {

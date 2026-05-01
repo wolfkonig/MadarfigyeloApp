@@ -1,7 +1,7 @@
-﻿using MadarfigyeloApp.Contracts;
-using MadarfigyeloApp.Views;
+﻿using Terepnaplo.Contracts;
+using Terepnaplo.Views;
 
-namespace MadarfigyeloApp.Implementations
+namespace Terepnaplo.Implementations
 {
     public class ShellNavigationService : INavigationService
     {

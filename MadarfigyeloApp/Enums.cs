@@ -1,4 +1,4 @@
-﻿namespace MadarfigyeloApp
+﻿namespace Terepnaplo
 {
     public enum Environment
     {

@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Text;
 
-namespace MadarfigyeloApp.API;
+namespace Terepnaplo.API;
 
 public class BasicAuthHandler : DelegatingHandler
 {

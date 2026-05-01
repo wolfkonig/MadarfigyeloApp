@@ -1,7 +1,7 @@
-﻿using MadarfigyeloApp.Resources;
+﻿using Terepnaplo.Resources;
 using System.Globalization;
 
-namespace MadarfigyeloApp.Utilities
+namespace Terepnaplo.Utilities
 {
     public class StringToResxConverter : IValueConverter
     {

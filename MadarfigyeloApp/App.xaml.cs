@@ -1,4 +1,6 @@
-﻿namespace MadarfigyeloApp;
+﻿using Terepnaplo;
+
+namespace Terepnaplo;
 
 public partial class App : Application
 {

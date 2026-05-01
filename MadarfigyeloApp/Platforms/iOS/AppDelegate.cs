@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace MadarfigyeloApp
+namespace Terepnaplo.Platforms.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

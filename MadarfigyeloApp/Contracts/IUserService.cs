@@ -1,6 +1,6 @@
-﻿using MadarfigyeloApp.Models;
+﻿using Terepnaplo.Models;
 
-namespace MadarfigyeloApp.Contracts
+namespace Terepnaplo.Contracts
 {
     public interface IUserService
     {

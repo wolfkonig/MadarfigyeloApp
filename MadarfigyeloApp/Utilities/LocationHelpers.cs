@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Maps;
 
-namespace MadarfigyeloApp.Utilities
+namespace Terepnaplo.Utilities
 {
     public static class LocationHelpers
     {

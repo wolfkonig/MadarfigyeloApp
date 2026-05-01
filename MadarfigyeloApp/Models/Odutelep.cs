@@ -1,7 +1,7 @@
-﻿using MadarfigyeloApp.Resources;
+﻿using Terepnaplo.Resources;
 using System.Text.Json.Serialization;
 
-namespace MadarfigyeloApp.Models
+namespace Terepnaplo.Models
 {
     public class Odutelep
     {

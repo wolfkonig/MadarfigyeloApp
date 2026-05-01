@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell x:Class="MadarfigyeloApp.AppShell"
+<Shell x:Class="Terepnaplo.AppShell"
        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:local="clr-namespace:MadarfigyeloApp"
-       xmlns:views="clr-namespace:MadarfigyeloApp.Views"
-       xmlns:res="clr-namespace:MadarfigyeloApp.Resources"
-       Title="MadarfigyeloApp">
+       xmlns:local="clr-namespace:Terepnaplo"
+       xmlns:views="clr-namespace:Terepnaplo.Views"
+       xmlns:res="clr-namespace:Terepnaplo.Resources"
+       Title="Terepnaplo">
 
     <TabBar Route="home">
         <ShellContent Title="{x:Static res:AppRes.Home}"

@@ -10,11 +10,14 @@ namespace MadarfigyeloApp.ViewModels
     {
         private readonly ILatogatasApiService _latogatasApi;
         private readonly IOduApiService _oduApi;
+        private readonly IOdutelepApiService _odutelepApi;
         private readonly ISettingsService _settingsService;
 
         private List<Latogatas> _latogatasList = [];
         private List<Odu> _oduList = [Odu.Empty];
+        private List<Odutelep> _odutelepList = [Odutelep.Empty];
         private Odu _selectedOdu;
+        private Odutelep _selectedOdutelep;
         private bool _isRefreshing;
 
         public List<Latogatas> LatogatasList
@@ -29,6 +32,12 @@ namespace MadarfigyeloApp.ViewModels
             set => SetProperty(ref _oduList, value);
         }
 
+        public List<Odutelep> OdutelepList
+        {
+            get => _odutelepList;
+            set => SetProperty(ref _odutelepList, value);
+        }
+
         public Odu SelectedOdu
         {
             get => _selectedOdu;
@@ -40,12 +49,22 @@ namespace MadarfigyeloApp.ViewModels
                     _settingsService.SelectedOduId = value?.Id ?? 0;
                 }
                 SetProperty(ref _selectedOdu, value);
-                OnPropertyChanged(nameof(LatogatasList));
-                OnPropertyChanged(nameof(SelectedOdutelep));
             }
         }
 
-        public Odutelep SelectedOdutelep => SelectedOdu?.Odutelep ?? Odutelep.Empty;
+        public Odutelep SelectedOdutelep
+        {
+            get => _selectedOdutelep;
+            set
+            {
+                if (!IsBusy)
+                {
+                    // Should not set SelectedOdutelepId during init
+                    _settingsService.SelectedOdutelepId = value?.Id ?? 0;
+                }
+                SetProperty(ref _selectedOdutelep, value);
+            }
+        }
 
         public bool IsRefreshing
         {
@@ -60,11 +79,13 @@ namespace MadarfigyeloApp.ViewModels
         public AsyncRelayCommand<int> DeleteLatogatasCommand { get; }
 
         public LatogatasViewModel(
+            IOdutelepApiService odutelepApiService,
             IOduApiService oduApiService, 
             ILatogatasApiService latogatasApiService, 
             INavigationService navigationService, 
             ISettingsService settingsService) : base(navigationService)
         {
+            _odutelepApi = odutelepApiService ?? throw new ArgumentNullException(nameof(odutelepApiService));
             _oduApi = oduApiService ?? throw new ArgumentNullException(nameof(oduApiService));
             _latogatasApi = latogatasApiService ?? throw new ArgumentNullException(nameof(latogatasApiService));
             _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
@@ -77,11 +98,26 @@ namespace MadarfigyeloApp.ViewModels
 
             PropertyChanged += async (s, e) =>
             {
-                if (e.PropertyName == nameof(SelectedOdu) && !IsRefreshing && !IsBusy)
+                if(IsRefreshing || IsBusy)
+                {
+                    return;
+                }
+
+                if (e.PropertyName == nameof(SelectedOdu))
                 {
                     IsBusy = true;
                     await PopulateLatogatasList(forceRefresh: false)
                         .ContinueWith(t => IsBusy = false);
+                }
+                else if (e.PropertyName == nameof(SelectedOdutelep))
+                {
+                    IsBusy = true;
+                    // Reset Odu selection when Odutelep changes
+                    _settingsService.SelectedOduId = 0;
+                    await Task.WhenAll(
+                        PopulateOduDropdown(forceRefresh: true),
+                        PopulateLatogatasList(forceRefresh: true)
+                    ).ContinueWith(t => IsBusy = false);
                 }
             };
         }
@@ -90,6 +126,7 @@ namespace MadarfigyeloApp.ViewModels
         {
             await Task.WhenAll(
                 PopulateOduDropdown(),
+                PopulateOdutelepDropdown(),
                 PopulateLatogatasList()
             );
         }
@@ -99,6 +136,7 @@ namespace MadarfigyeloApp.ViewModels
             IsRefreshing = true;
             await Task.WhenAll(
                 PopulateOduDropdown(forceRefresh: true),
+                PopulateOdutelepDropdown(forceRefresh: true),
                 PopulateLatogatasList(forceRefresh: true)
             ).ContinueWith(t => IsRefreshing = false);
         }
@@ -129,6 +167,12 @@ namespace MadarfigyeloApp.ViewModels
 
             OduList = [Odu.Empty, .. oduList];
             SelectedOdu = OduList.FirstOrDefault(x => x.Id == _settingsService.SelectedOduId) ?? OduList[0];
+        }
+
+        private async Task PopulateOdutelepDropdown(bool forceRefresh = false)
+        {
+            OdutelepList = [Odutelep.Empty, .. await _odutelepApi.GetAllOdutelepAsync(forceRefresh)];
+            SelectedOdutelep = OdutelepList.FirstOrDefault(x => x.Id == _settingsService.SelectedOdutelepId) ?? OdutelepList[0];
         }
 
         private async Task NewLatogatasAsync()

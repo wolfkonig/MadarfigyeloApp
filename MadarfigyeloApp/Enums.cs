@@ -4,6 +4,6 @@
     {
         Dev,
         DevLocal,
-        Prod
+        Production
     }
 }

@@ -12,7 +12,7 @@ namespace MadarfigyeloApp
 {
     public static class MauiProgram
     {
-        public static Environment CurrentEnvironment { get; } = Environment.Dev;
+        public static Environment CurrentEnvironment { get; } = Environment.Production;
 
         public static MauiApp CreateMauiApp()
         {
@@ -83,7 +83,7 @@ namespace MadarfigyeloApp
                 // Accept all SSL certificates (including self-signed) for local development
                 var acceptAllClientHandler = new HttpClientHandler
                 {
-                    ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                    
+                    ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
                 };
 
                 builder.Services.AddRefitClient<IAuthApi>(refitSettings)
@@ -104,7 +104,7 @@ namespace MadarfigyeloApp
                     .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.LocalBaseUrlHttps + Constants.LatogatasEndpoint))
                     .ConfigurePrimaryHttpMessageHandler(() => acceptAllClientHandler)
                     .AddHttpMessageHandler<TokenAuthHandler>();
-      
+
             }
             else if (CurrentEnvironment == Environment.Dev)
             {
@@ -121,6 +121,20 @@ namespace MadarfigyeloApp
 
                 builder.Services.AddRefitClient<IGenericApi<Latogatas>>(refitSettings)
                     .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttp + Constants.LatogatasEndpoint))
+                    .AddHttpMessageHandler<CachingHandler>();
+            }
+            else if (CurrentEnvironment == Environment.Production)
+            {
+                builder.Services.AddRefitClient<IAuthApi>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttps));
+                builder.Services.AddRefitClient<IGenericApi<Odutelep>>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttps + Constants.OdutelepEndpoint))
+                    .AddHttpMessageHandler<CachingHandler>();
+                builder.Services.AddRefitClient<IGenericApi<Odu>>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttps + Constants.OduEndpoint))
+                    .AddHttpMessageHandler<CachingHandler>();
+                builder.Services.AddRefitClient<IGenericApi<Latogatas>>(refitSettings)
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Constants.BaseUrlHttps + Constants.LatogatasEndpoint))
                     .AddHttpMessageHandler<CachingHandler>();
             }
             else

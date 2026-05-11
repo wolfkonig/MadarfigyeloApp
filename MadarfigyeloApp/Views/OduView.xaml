@@ -41,7 +41,8 @@
                     ItemDisplayBinding="{Binding Azonosito}"
                     SelectedItem="{Binding SelectedOdutelep}"
                     FontSize="Medium"
-                    Grid.Column="2" />
+                    Grid.Column="2"
+                    Style="{StaticResource FilterPicker}" />
         </Grid>
         <RefreshView Grid.Row="1"
                      IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"

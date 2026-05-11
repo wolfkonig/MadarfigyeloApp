@@ -83,7 +83,7 @@
                        Text="{x:Static res:AppRes.Password}" />
                 <Entry Grid.Row="3"
                        Grid.Column="1"
-                       IsPassword="True"
+                       IsPassword="True"                   
                        Text="{Binding Password}" />
                 <Label Grid.Row="4"
                        Grid.Column="0"

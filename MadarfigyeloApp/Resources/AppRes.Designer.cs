@@ -898,6 +898,15 @@ namespace Terepnaplo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Válassz egyet.
+        /// </summary>
+        internal static string PleaseChoose {
+            get {
+                return ResourceManager.GetString("PleaseChoose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regisztráció.
         /// </summary>
         internal static string Register {

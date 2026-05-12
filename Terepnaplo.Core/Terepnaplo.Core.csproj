@@ -1,12 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-	</ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Maui">
+      <HintPath>..\..\..\..\ng\microsoft.maui.core\10.0.60\lib\net10.0-ios26.0\Microsoft.Maui.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Maui.Controls">
+      <HintPath>..\..\..\..\ng\microsoft.maui.controls.core\10.0.60\lib\net10.0-ios26.0\Microsoft.Maui.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Maui.Essentials">
+      <HintPath>..\..\..\..\ng\microsoft.maui.essentials\10.0.60\lib\net10.0-ios26.0\Microsoft.Maui.Essentials.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

@@ -36,9 +36,9 @@ namespace Terepnaplo.Models
         public ICollection<Latogatas>? Latogatasok { get; set; }
 
         [JsonIgnore]
-        public static Odu Empty => new() { Id = 0, OduAzonosito = AppRes.NoneSelected };
+        public static Odu Empty => new() { Id = 0 };
 
         [JsonIgnore]
-        public Location Location => new Location((double)GpsLatitude, (double)GpsLongitude);
+        public Location Location => new((double)GpsLatitude, (double)GpsLongitude);
     }
 }

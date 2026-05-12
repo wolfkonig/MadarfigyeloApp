@@ -5,6 +5,7 @@
                 xmlns:vm="clr-namespace:Terepnaplo.ViewModels"
                 xmlns:models="clr-namespace:Terepnaplo.Models"
                 xmlns:pages="clr-namespace:Terepnaplo.Views"
+                xmlns:conv="clr-namespace:Terepnaplo.Converters"
                 xmlns:res="clr-namespace:Terepnaplo.Resources"
                 x:Class="Terepnaplo.Views.NewOduView"
                 x:DataType="vm:NewOduViewModel"
@@ -25,7 +26,7 @@
                     Grid.Column="1"
                     ItemsSource="{Binding Odutelepek}"
                     SelectedItem="{Binding SelectedOdutelep}"
-                    ItemDisplayBinding="{Binding Azonosito}" />
+                    ItemDisplayBinding="{Binding Azonosito, Converter={conv:EmptyToNoneSelectedConverter}}" />
 
             <Label Text="{x:Static res:AppRes.OduAzonosito}"
                    Grid.Row="1"

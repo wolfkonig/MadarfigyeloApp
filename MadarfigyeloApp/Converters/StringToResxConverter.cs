@@ -1,7 +1,7 @@
 ﻿using Terepnaplo.Resources;
 using System.Globalization;
 
-namespace Terepnaplo.Utilities
+namespace Terepnaplo.Converters
 {
     public class StringToResxConverter : IValueConverter
     {
@@ -18,24 +18,6 @@ namespace Terepnaplo.Utilities
             }
             catch { }
             return text;
-        }
-
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class EnumToResxConverter : IValueConverter
-    {
-        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            if (value is Enum enumValue)
-            {
-                return enumValue.GetResxText();
-            }
-
-            throw new ArgumentException();
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

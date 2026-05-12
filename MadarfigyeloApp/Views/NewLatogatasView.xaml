@@ -5,6 +5,7 @@
                 xmlns:vm="clr-namespace:Terepnaplo.ViewModels"
                 xmlns:models="clr-namespace:Terepnaplo.Models"
                 xmlns:pages="clr-namespace:Terepnaplo.Views"
+                xmlns:conv="clr-namespace:Terepnaplo.Converters"
                 xmlns:res="clr-namespace:Terepnaplo.Resources"
                 x:Class="Terepnaplo.Views.NewLatogatasView"
                 x:DataType="vm:NewLatogatasViewModel"
@@ -25,7 +26,7 @@
                     Grid.Column="1"
                     ItemsSource="{Binding Oduk}"
                     SelectedItem="{Binding SelectedOdu}"
-                    ItemDisplayBinding="{Binding OduAzonosito}" />
+                    ItemDisplayBinding="{Binding OduAzonosito, Converter={conv:EmptyToNoneSelectedConverter}}" />
 
             <Label Text="{x:Static res:AppRes.Datum}"
                    Grid.Row="1"
@@ -43,7 +44,7 @@
                     Grid.Column="1"
                     ItemsSource="{Binding Tevekenysegek}"
                     SelectedItem="{Binding Tevekenyseg}"               
-                    ItemDisplayBinding="{Binding Name}"
+                    ItemDisplayBinding="{Binding Converter={conv:EnumToResxConverter}}"
                     />
 
             <Label Text="{x:Static res:AppRes.Allapot}"
@@ -54,7 +55,7 @@
                     Grid.Column="1"
                     ItemsSource="{Binding Allapotok}"
                     SelectedItem="{Binding Allapot}"
-                    ItemDisplayBinding="{Binding Name}" />
+                    ItemDisplayBinding="{Binding Converter={conv:EnumToResxConverter}}" />
 
             <Label Text="{x:Static res:AppRes.Faj}"
                    Grid.Row="4"

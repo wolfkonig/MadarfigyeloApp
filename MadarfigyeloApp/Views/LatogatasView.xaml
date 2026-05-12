@@ -6,7 +6,7 @@
                 xmlns:models="clr-namespace:Terepnaplo.Models"
                 xmlns:pages="clr-namespace:Terepnaplo.Views"
                 xmlns:res="clr-namespace:Terepnaplo.Resources"
-                xmlns:util="clr-namespace:Terepnaplo.Utilities"
+                xmlns:conv="clr-namespace:Terepnaplo.Converters"
                 x:Class="Terepnaplo.Views.LatogatasView"
                 x:DataType="vm:LatogatasViewModel"
                 Title="{x:Static res:AppRes.Latogatasok}"
@@ -21,7 +21,7 @@
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
 
-        <Grid ColumnDefinitions="40,4*,3*,2*"
+        <Grid ColumnDefinitions="40,6*,6*,5*"
               Grid.Row="0"
               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
               Opacity="0.6">
@@ -33,14 +33,14 @@
                          Grid.Column="0" />
 
             <Picker ItemsSource="{Binding OdutelepList}"
-                    ItemDisplayBinding="{Binding Azonosito}"
+                    ItemDisplayBinding="{Binding Azonosito, Converter={conv:EmptyToNoneSelectedConverter}}"
                     SelectedItem="{Binding SelectedOdutelep}"
                     FontSize="Medium"
                     Grid.Column="1" 
                     Style="{StaticResource FilterPicker}" />
 
             <Picker ItemsSource="{Binding OduList}"
-                    ItemDisplayBinding="{Binding OduAzonosito}"
+                    ItemDisplayBinding="{Binding OduAzonosito, Converter={conv:EmptyToNoneSelectedConverter}}"
                     SelectedItem="{Binding SelectedOdu}"
                     FontSize="Medium"
                     Grid.Column="2" 
@@ -78,7 +78,7 @@
                                                Grid.Column="1"
                                                HorizontalOptions="Center"
                                                Style="{StaticResource ListTextHeader}" />
-                                        <Label Text="{Binding Tevekenyseg, Converter={util:EnumToResxConverter}}"
+                                        <Label Text="{Binding Tevekenyseg, Converter={conv:EnumToResxConverter}}"
                                                Grid.Column="2"
                                                HorizontalOptions="End"
                                                Style="{StaticResource ListTextHeader}" />
@@ -92,7 +92,7 @@
                                                 Grid.ColumnSpan="3"
                                                 JustifyContent="SpaceBetween"
                                                 Wrap="Wrap">
-                                        <Label Text="{Binding Allapot, Converter={util:EnumToResxConverter}}"
+                                        <Label Text="{Binding Allapot, Converter={conv:EnumToResxConverter}}"
                                                IsVisible="{Binding Allapot, Converter={toolkit:IsNotNullConverter}}"
                                                Style="{StaticResource ListText}" />
 

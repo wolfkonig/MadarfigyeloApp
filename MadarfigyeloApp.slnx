@@ -2,4 +2,5 @@
   <Project Path="MadarfigyeloApp/Terepnaplo.csproj">
     <Deploy Solution="Debug|*" />
   </Project>
+  <Project Path="Terepnaplo.Core/Terepnaplo.Core.csproj" Id="b577f056-4fb1-4cdf-a0f5-0f03bb663678" />
 </Solution>

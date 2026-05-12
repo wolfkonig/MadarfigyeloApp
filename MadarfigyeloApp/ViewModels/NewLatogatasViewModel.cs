@@ -13,8 +13,8 @@ namespace Terepnaplo.ViewModels
         // Backing fields
         private Odu? _selectedOdu;
         private DateTime _datum = DateTime.Now;
-        private TevekenysegModel? _tevekenyseg;
-        private AllapotModel? _allapot;
+        private Tevekenyseg? _tevekenyseg;
+        private Allapot? _allapot;
         private string? _faj;
         private int _tojasSzam;
         private int _fiokaSzam;
@@ -47,13 +47,9 @@ namespace Terepnaplo.ViewModels
             private set => SetProperty(ref _oduk, value);
         }
 
-        public List<TevekenysegModel> Tevekenysegek { get; } = Enum.GetValues<Tevekenyseg>()
-            .Select(t => new TevekenysegModel(t))
-            .ToList();
+        public List<Tevekenyseg> Tevekenysegek { get; } = [.. Enum.GetValues<Tevekenyseg>()];
 
-        public List<AllapotModel> Allapotok { get; } = Enum.GetValues<Allapot>()            
-            .Select(a=>new AllapotModel(a))
-            .ToList();
+        public List<Allapot> Allapotok { get; } = [.. Enum.GetValues<Allapot>()];
 
         public Odu? SelectedOdu
         {
@@ -71,13 +67,13 @@ namespace Terepnaplo.ViewModels
             set => SetProperty(ref _datum, value);
         }
 
-        public TevekenysegModel Tevekenyseg
+        public Tevekenyseg? Tevekenyseg
         {
             get => _tevekenyseg;
             set => SetProperty(ref _tevekenyseg, value);
         }
 
-        public AllapotModel Allapot
+        public Allapot? Allapot
         {
             get => _allapot;
             set => SetProperty(ref _allapot, value);

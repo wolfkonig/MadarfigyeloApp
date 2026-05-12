@@ -40,8 +40,8 @@ namespace Terepnaplo.ViewModels
 
             SelectedOdu = Oduk.FirstOrDefault(x => x.Id == latogatas.OduId);
             Datum = latogatas.Datum;
-            Tevekenyseg = Tevekenysegek.FirstOrDefault(x => x.Value == latogatas.Tevekenyseg);
-            Allapot = Allapotok.FirstOrDefault(x => x.Value == latogatas.Allapot);
+            Tevekenyseg = latogatas.Tevekenyseg;
+            Allapot = latogatas.Allapot;
             Faj = latogatas.Faj;
             TojasSzam = latogatas.TojasSzam;
             FiokaSzam = latogatas.FiokaSzam;

@@ -27,6 +27,6 @@ namespace Terepnaplo.Models
         [JsonIgnore]
         public ICollection<Odu>? Oduk {  get; set; }
         [JsonIgnore]
-        public static Odutelep Empty => new() { Id = 0, Azonosito = AppRes.NoneSelected };
+        public static Odutelep Empty => new() { Id = 0 };
     }
 }

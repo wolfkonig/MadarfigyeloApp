@@ -6,6 +6,7 @@
                 xmlns:models="clr-namespace:Terepnaplo.Models"
                 xmlns:pages="clr-namespace:Terepnaplo.Views"
                 xmlns:res="clr-namespace:Terepnaplo.Resources"
+                xmlns:conv="clr-namespace:Terepnaplo.Converters"
                 x:Class="Terepnaplo.Views.OduView"
                 x:DataType="vm:OduViewModel"
                 Title="{x:Static res:AppRes.Oduk}"
@@ -38,7 +39,7 @@
                    Padding="10,0,10,5" />
             
             <Picker ItemsSource="{Binding OdutelepList}"
-                    ItemDisplayBinding="{Binding Azonosito}"
+                    ItemDisplayBinding="{Binding Azonosito, Converter={conv:EmptyToNoneSelectedConverter}}"
                     SelectedItem="{Binding SelectedOdutelep}"
                     FontSize="Medium"
                     Grid.Column="2"

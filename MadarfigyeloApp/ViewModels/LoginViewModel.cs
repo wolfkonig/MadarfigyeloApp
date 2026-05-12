@@ -114,6 +114,7 @@ namespace Terepnaplo.ViewModels
                 };
 
                 var success = await _userService.RegisterUser(newUser);
+                IsBusy = false;
                 IsRegistering = !success;
             }
         }
